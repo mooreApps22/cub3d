@@ -1,0 +1,47 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_structures.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/05/19 15:56:15 by mcoskune          #+#    #+#             */
+/*   Updated: 2025/05/19 16:01:01 by mcoskune         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cube.h"
+
+void	init_mlx(t_cube *lux)
+{
+	// if (lux == NULL)
+	// 	exit_cleanup("Error - Lux is missing at mlx_init", NULL, -7);
+	// lux->mlx_ptr = mlx_init();
+	// if (lux->mlx_ptr == NULL)
+	// 	exit_cleanup ("Error - `mlx_init`\n", lux, errno);
+	// lux->win_ptr = mlx_new_window(lux->mlx_ptr, WINDOW_WIDTH, \
+	// 		WINDOW_HEIGHT, "minirt");
+	// if (lux->win_ptr == NULL)
+	// 	exit_cleanup ("Error - `mlx_new_win`\n", lux, errno);
+	// lux->image.img = mlx_new_image(lux->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	// if (lux->image.img == NULL)
+	// 	exit_cleanup ("Error - `mlx_new_image`\n", lux, errno);
+}
+
+void	init_data(t_cube *data)
+{
+	if (data == NULL)
+		exit_cleanup("Error - Lux could not be passed to init!\n", NULL, errno);
+	// lux->mlx_ptr = NULL;
+	// lux->win_ptr = NULL;
+	// lux->image.img = NULL;
+	// lux->image.addr = NULL;
+	// lux->image.bpp = -1;
+	// lux->image.line_len = -1;
+	// lux->image.endian = -1;
+	// lux->p_light = NULL;
+	// lux->a_light = NULL;
+	// lux->camera = NULL;
+	// lux->objects = NULL;
+	// lux->file_fd = -1;
+}

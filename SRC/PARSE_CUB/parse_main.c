@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 15:29:19 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/19 16:05:57 by mcoskune         ###   ########.fr       */
+/*   Created: 2025/05/19 15:57:39 by mcoskune          #+#    #+#             */
+/*   Updated: 2025/05/19 15:58:40 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-int	main(int ac, char **av)
+void	parse_main(t_cube *data, char *filename)
 {
-	t_cube	data;
 	
-	validate_input(ac, av);
-	parse_main(&data, av[1]);
-	return (0);
 }
