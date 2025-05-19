@@ -6,73 +6,73 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:37:04 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/04/11 12:52:57 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:39:42 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minirt.h"
+#include "cube.h"
 
-static void	clear_mlx(t_rayt *lux)
-{
-	if (!lux)
-		return;
+// static void	clear_mlx(t_rayt *lux)
+// {
+// 	if (!lux)
+// 		return;
 		
-	if (lux->win_ptr)
-	{
-		mlx_destroy_window(lux->mlx_ptr, lux->win_ptr);
-		lux->win_ptr = NULL;
-	}
+// 	if (lux->win_ptr)
+// 	{
+// 		mlx_destroy_window(lux->mlx_ptr, lux->win_ptr);
+// 		lux->win_ptr = NULL;
+// 	}
 	
-	if (lux->image.img)
-	{
-		mlx_destroy_image(lux->mlx_ptr, lux->image.img);
-		lux->image.img = NULL;
-	}
+// 	if (lux->image.img)
+// 	{
+// 		mlx_destroy_image(lux->mlx_ptr, lux->image.img);
+// 		lux->image.img = NULL;
+// 	}
 	
-	if (lux->mlx_ptr)
-	{
-		mlx_destroy_display(lux->mlx_ptr);
-		free(lux->mlx_ptr);
-		lux->mlx_ptr = NULL;
-	}
+// 	if (lux->mlx_ptr)
+// 	{
+// 		mlx_destroy_display(lux->mlx_ptr);
+// 		free(lux->mlx_ptr);
+// 		lux->mlx_ptr = NULL;
+// 	}
 	
-	lux->image.addr = NULL;
-}
+// 	lux->image.addr = NULL;
+// }
 
-/**
- * Frees a camera and all of its associated matrices.
- * 
- * @param camera Pointer to the camera to free
- */
-static void	free_camera(t_camera *camera)
-{
-	if (!camera)
-		return;
+// /**
+//  * Frees a camera and all of its associated matrices.
+//  * 
+//  * @param camera Pointer to the camera to free
+//  */
+// static void	free_camera(t_camera *camera)
+// {
+// 	if (!camera)
+// 		return;
 		
-	// if (camera->origin)
-	// 	free_matrix(camera->origin);
+// 	// if (camera->origin)
+// 	// 	free_matrix(camera->origin);
 		
-	// if (camera->v_orient)
-	// 	free_matrix(camera->v_orient);
+// 	// if (camera->v_orient)
+// 	// 	free_matrix(camera->v_orient);
 		
-	free(camera);
-}
+// 	free(camera);
+// }
 
-/**
- * Frees a point light and all of its associated matrices.
- * 
- * @param light Pointer to the point light to free
- */
-static void	free_point_light(t_light *light)
-{
-	if (!light)
-		return;
+// /**
+//  * Frees a point light and all of its associated matrices.
+//  * 
+//  * @param light Pointer to the point light to free
+//  */
+// static void	free_point_light(t_light *light)
+// {
+// 	if (!light)
+// 		return;
 		
-	// if (light->origin)
-	// 	free_matrix(light->origin);
+// 	// if (light->origin)
+// 	// 	free_matrix(light->origin);
 		
-	free(light);
-}
+// 	free(light);
+// }
 
 
 void	exit_cleanup(char *msg, t_rayt *lux, int exit_code)
