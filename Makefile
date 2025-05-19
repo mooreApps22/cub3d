@@ -1,55 +1,145 @@
-NAME = cub3D 
+NAME = minirt
+VALGRIND = memorytester
+CC = cc
+CFLAGS = -Wall -Wextra -Werror -g3 #-O2
+CFLAGS += -fno-omit-frame-pointer
+SANITIZE_FLAGS = -fsanitize=address -fsanitize=undefined #-fno-sanitize-recover=all
+DUNITY_FLAGS = -DUNITY_INCLUDE_DOUBLE -DUNITY_DOUBLE_PRECISION=1e-12
 
-INC = ./inc
-HEADER = $(INC)/data.h
-MLX = -L./minilibx_linux -lmlx -lXext -lX11
+MLX_PATH = ./LIB/minilibx-linux/
+MLX_NAME = libmlx.a
+MLX = $(MLX_PATH)$(MLX_NAME)
+MLX_FLAGS = -L$(MLX_PATH) -lmlx -L/usr/lib/X11 -lXext -lX11
 
-CC = cc 
-CFLAGS = -Wall -Werror -Wextra -g3 
+LIBFT_PATH = ./LIB/LIBFT/
+LIBFT_NAME = libft
+LIBFT = $(LIBFT_PATH)$(LIBFT_NAME)
 
-RED = \033[0;31m
-GREEN = \033[0;32m
-YELLOW = \033[0;33m
-NC = \033[0m
+MUK_LIB_PATH = ./LIB/muk_lib/
+MUK_LIB_NAME = muk_lib
+MUK_LIB = $(MUK_LIB_PATH)$(MUK_LIB_NAME)
 
-SRC_DIR = ./src
-OBJ_DIR = ./bin
+INCLUDES =	-I/usr/include \
+			-I$(MLX_PATH) \
+			-I$(LIBFT_PATH) \
+			-I$(MUK_LIB_PATH) \
+			-I./INC
 
-SRCS = $(SRC_DIR)/main.c 
-#	$(SRC_DIR)/utils/utils.c \
-#	$(SRC_DIR)/utils/utils2.c
+SRC_MAIN =	./SRC/main.c
 
-OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+SRC_PATH = ./
+SRC = \
+		SRC/cleanup.c \
+		SRC/PARSE_CUB/parse_main.c \
+		SRC/PARSE_CUB/parse_map.c \
+		SRC/INITIALIZE/validate_input.c\
 
-all: $(OBJ_DIR) $(NAME)
 
-$(OBJ_DIR):
-	@echo "${YELLOW}Creating object directory $(OBJ_DIR)...${NC}"
-	@mkdir -p $(OBJ_DIR)
-	@echo "${GREEN}Object directory $(OBJ_DIR) created.${NC}"
+SRCS = $(addprefix $(SRC_PATH), $(SRC))
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER)
-	@mkdir -p $(@D)
-	@$(CC) $(CFLAGS) -I$(INC) $(MLX) -c $< -o $@
+OBJ_PATH = ./OBJ/
+OBJS = $(SRC:.c=.o)
+OBJECTS = $(addprefix $(OBJ_PATH), $(OBJS))
 
-$(NAME): $(OBJS)
-	@echo "${YELLOW} Linking...${NC}"
-	@$(CC) $(OBJS) $(CFLAGS) $(MLX) -o $(NAME)
-	@echo "${GREEN} $(NAME) executable created.${NC}"
+all: $(NAME)
+	@./$(NAME) CUBFILES/valid_file_1.cub
+
+$(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_PATH)
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(OBJ_PATH):
+	@mkdir -p $(OBJ_PATH)
+
+$(MLX):
+	@make -sC $(MLX_PATH) -w
+
+$(LIBFT):
+	@make -C $(LIBFT_PATH) all
+
+$(MUK_LIB):
+	@make -C $(MUK_LIB_PATH) all
+
+$(NAME): $(OBJECTS) $(MLX) $(LIBFT) $(MUK_LIB) $(SRC_MAIN)
+	@$(CC) $(CFLAGS) $(SANITIZE_FLAGS) $(INCLUDES) -o $(NAME) $(SRC_MAIN) $(OBJECTS) $(LIBFT) $(MUK_LIB) $(MLX_FLAGS) -lm
+
+$(VALGRIND): $(SRC_MAIN) $(OBJECTS) $(LIBFT) $(MUK_LIB) $(MLX)
+	@$(CC) $(CFLAGS) $(INCLUDES) -o $(VALGRIND) $(SRC_MAIN) $(OBJECTS) $(LIBFT) $(MUK_LIB) $(MLX_FLAGS) -lm
 
 clean:
-	@echo "${YELLOW}Removing object files...${NC}"
-	@rm -rf $(OBJ_DIR)
-	@echo "${GREEN}Object files removed.${NC}"
+	@rm -rf $(OBJ_PATH)
+	@make clean -C $(MLX_PATH)
+	@make clean -C $(LIBFT_PATH)
+	@make clean -C $(MUK_LIB_PATH)
 
-fclean:
-	@echo "${YELLOW}Removing object files...${NC}"
-	@rm -rf $(OBJ_DIR)
-	@echo "${GREEN}Object files removed.${NC}"
-	@echo "${YELLOW}Removing $(Name) executable...${NC}"
+fclean: clean
 	@rm -f $(NAME)
-	@echo "${GREEN}$(NAME) executable removed.${NC}"
+	@rm -f $(VALGRIND)
+	@make fclean -C $(LIBFT_PATH)
+	@make fclean -C $(MUK_LIB_PATH)
 
 re: fclean all
 
-.PHONY: all clean fclean re
+valgrind: $(VALGRIND)
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./$(VALGRIND) MAP/data.rt
+
+.PHONY: all clean fclean re test memory aaaa
+
+
+# NAME = cub3D 
+
+# INC = ./inc
+# HEADER = $(INC)/data.h
+# MLX = -L./minilibx_linux -lmlx -lXext -lX11
+
+# CC = cc 
+# CFLAGS = -Wall -Werror -Wextra -g3 
+
+# RED = \033[0;31m
+# GREEN = \033[0;32m
+# YELLOW = \033[0;33m
+# NC = \033[0m
+
+# SRC_DIR = ./SRC
+# OBJ_DIR = ./BIN
+
+# SRCS =	$(SRC_DIR)/main.c \
+# 		$(SRC_DIR)/cleanup.c \
+# 		$(SRC_DIR)/PARSE_CUB/parse_main.c \
+# 		$(SRC_DIR)/PARSE_CUB/parse_map.c \
+
+
+# OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
+
+# all: $(OBJ_DIR) $(NAME)
+
+# $(OBJ_DIR):
+# 	@echo "${YELLOW}Creating object directory $(OBJ_DIR)...${NC}"
+# 	@mkdir -p $(OBJ_DIR)
+# 	@echo "${GREEN}Object directory $(OBJ_DIR) created.${NC}"
+
+# $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER)
+# 	@mkdir -p $(@D)
+# 	@$(CC) $(CFLAGS) -I$(INC) $(MLX) -c $< -o $@
+
+# $(NAME): $(OBJS)
+# 	@echo "${YELLOW} Linking...${NC}"
+# 	@$(CC) $(OBJS) $(CFLAGS) $(MLX) -o $(NAME)
+# 	@echo "${GREEN} $(NAME) executable created.${NC}"
+
+# clean:
+# 	@echo "${YELLOW}Removing object files...${NC}"
+# 	@rm -rf $(OBJ_DIR)
+# 	@echo "${GREEN}Object files removed.${NC}"
+
+# fclean:
+# 	@echo "${YELLOW}Removing object files...${NC}"
+# 	@rm -rf $(OBJ_DIR)
+# 	@echo "${GREEN}Object files removed.${NC}"
+# 	@echo "${YELLOW}Removing $(Name) executable...${NC}"
+# 	@rm -f $(NAME)
+# 	@echo "${GREEN}$(NAME) executable removed.${NC}"
+
+# re: fclean all
+
+# .PHONY: all clean fclean re
