@@ -1,5 +1,8 @@
 {
 	"files.associations": {
-		"cube.h": "c"
+		"cube.h": "c",
+		"libft.h": "c",
+		"muk_lib.h": "c",
+		"structures.h": "c"
 	}
 }

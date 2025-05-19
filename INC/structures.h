@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:40:00 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/19 19:12:14 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/19 16:20:43 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,14 @@ typedef struct s_mlx
 	/* data */
 }	t_mlx;
 
+typedef struct s_map
+{
+	char	**map;
+}	t_map;
 
 typedef struct s_cube
 {
+	t_map	map_data;
 }	t_cube;
 
 typedef enum e_

@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 21:31:11 by mcoskune          #+#    #+#             */
-/*   Updated: 2024/12/03 11:47:49 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/19 18:26:02 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	check_exempt(char c, char *exempt)
 		return (0);
 	while (exempt[j] != '\0')
 	{
-		if (c == exempt[j])
+		if (c == exempt[j] || (exempt[j] == ' ' && c == 9))
 			return (1);
 		j++;
 	}
@@ -59,7 +59,7 @@ int	ft_strval(char *str, char *exempt, int flag)
 			if (check_exempt(str[i], exempt) == 0)
 				return (2);
 		}
-		else if (flag == 2 && !ft_isalnum(str[i]))
+		else if (flag == 3)
 		{
 			if (check_exempt(str[i], exempt) == 0)
 				return (3);
