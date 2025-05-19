@@ -5,7 +5,7 @@ HEADER = $(INC)/data.h
 MLX = -L./minilibx_linux -lmlx -lXext -lX11
 
 CC = cc 
-CFLAGS = -Wall -Werror -Wextra -g 
+CFLAGS = -Wall -Werror -Wextra -g3 
 
 RED = \033[0;31m
 GREEN = \033[0;32m
