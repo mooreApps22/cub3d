@@ -12,12 +12,10 @@ GREEN = \033[0;32m
 YELLOW = \033[0;33m
 NC = \033[0m
 
-SRC_DIR = ./src
-OBJ_DIR = ./bin
+SRC_DIR = ./SRC
+OBJ_DIR = ./BIN
 
 SRCS = $(SRC_DIR)/main.c 
-#	$(SRC_DIR)/utils/utils.c \
-#	$(SRC_DIR)/utils/utils2.c
 
 OBJS = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
