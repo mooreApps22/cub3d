@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:56:15 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/20 12:38:34 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:16:57 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,24 @@ void	init_textures(t_cube *data)
 	data->textures.west_wall = NULL;
 	data->textures.east_wall = NULL;
 	data->textures.floor = NULL;
-	data->textures.ground = NULL;
+	data->textures.ceiling = NULL;
 }
 
-void	init_mlx(t_cube *lux)
-{
-	// if (lux == NULL)
-	// 	exit_cleanup("Error - Lux is missing at mlx_init", NULL, -7);
-	// lux->mlx_ptr = mlx_init();
-	// if (lux->mlx_ptr == NULL)
-	// 	exit_cleanup ("Error - `mlx_init`\n", lux, errno);
-	// lux->win_ptr = mlx_new_window(lux->mlx_ptr, WINDOW_WIDTH, \
-	// 		WINDOW_HEIGHT, "minirt");
-	// if (lux->win_ptr == NULL)
-	// 	exit_cleanup ("Error - `mlx_new_win`\n", lux, errno);
-	// lux->image.img = mlx_new_image(lux->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
-	// if (lux->image.img == NULL)
-	// 	exit_cleanup ("Error - `mlx_new_image`\n", lux, errno);
-}
+// void	init_mlx(t_cube *lux)
+// {
+// 	// if (lux == NULL)
+// 	// 	exit_cleanup("Error - Lux is missing at mlx_init", NULL, -7);
+// 	// lux->mlx_ptr = mlx_init();
+// 	// if (lux->mlx_ptr == NULL)
+// 	// 	exit_cleanup ("Error - `mlx_init`\n", lux, errno);
+// 	// lux->win_ptr = mlx_new_window(lux->mlx_ptr, WINDOW_WIDTH,
+// 	// 		WINDOW_HEIGHT, "minirt");
+// 	// if (lux->win_ptr == NULL)
+// 	// 	exit_cleanup ("Error - `mlx_new_win`\n", lux, errno);
+// 	// lux->image.img = mlx_new_image(lux->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+// 	// if (lux->image.img == NULL)
+// 	// 	exit_cleanup ("Error - `mlx_new_image`\n", lux, errno);
+// }
 
 void	init_data(t_cube *data)
 {

@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:40:00 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/20 14:14:52 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:10:51 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_tex
 	char	*west_wall;
 	char	*east_wall;
 	t_rgb	*floor;
-	t_rgb	*ground;
+	t_rgb	*ceiling;
 }	t_tex;
 
 /*~~~ Main Data Structure ~~~*/
@@ -80,8 +80,9 @@ typedef enum e_dir
 	WEST = 2,
 	EAST = 3,
 	FLOOR = 4,
-	CEILING
-};
+	CEILING,
+	UNKNOWN
+}	t_dir;
 
 
 #endif

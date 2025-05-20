@@ -33,10 +33,12 @@ SRC = \
 		SRC/PARSE_CUB/parse_main.c \
 		SRC/PARSE_CUB/parse_map.c \
 		SRC/INITIALIZE/validate_input.c \
+		SRC/INITIALIZE/init_structures.c \
 		SRC/MLX_and_INPUT/key_input.c \
 		SRC/MLX_and_INPUT/moveeeee.c \
 		SRC/MLX_and_INPUT/turrrrrn.c \
 		SRC/RENDER/image.c \
+		SRC/PARSE_CUB/parse_textures_util.c \
 
 
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
