@@ -70,5 +70,32 @@ typedef struct s_cube
 	t_ply	man_data;
 }	t_cube;
 
+typedef enum e_
+{
+	NORTH = 0,	
+	SOUTH = 1,	
+	WEST = 2,
+	EAST = 3,
+	FLOOR = 4,
+	CEILING = 5
+} t_;
+
+typedef struct s_textures
+{
+	int		fd;
+	char*	north_path;
+	char*	south_path;
+	char*	east_path;
+	char*	west_path;
+	bool	no_found;
+	bool	so_found;
+	bool	ea_found;
+	bool	we_found;
+	bool	floor_found;
+	bool	ceiling_found;
+	int		floor_rgb[3];
+	int		ceiling_rgb[3];
+}	t_textures;
+
 
 #endif

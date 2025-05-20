@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.h                                            :+:      :+:    :+:   */
+/*   parse_textures_util.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 15:58:58 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/19 18:08:18 by mcoskune         ###   ########.fr       */
+/*   Created: 2025/05/19 16:18:20 by smoore            #+#    #+#             */
+/*   Updated: 2025/05/19 19:04:33 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSE_H
-# define PARSE_H
-
 #include "cube.h"
 
-void	parse_main(t_cube *data, char *filename);
-void	parse_map(t_cube *data, int fd);
+/*
+		if (all_found(data->textures))
+			break ;
+*/
 
-#endif
+bool	all_textures_found(t_textures *tex)
+{
+	
+}
