@@ -6,18 +6,20 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:02:39 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/20 11:19:10 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/20 11:30:04 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-void	turn_left(data)
+void	turn_left(t_cube *data)
 {
-	
+	(void)data;
+
 }
 
-void	turn_right(data)
+void	turn_right(t_cube *data)
 {
+	(void)data;
 
 }

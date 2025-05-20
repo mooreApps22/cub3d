@@ -37,12 +37,20 @@
 
 /*~~~ CHECKS & INITIALIZATION ~~~*/
 void	validate_input(int ac, char **av);
+void	init_textures(t_cube *data);
+
 
 /*~~~ KEY INPUTS ~~~*/
 int		handle_keys(int keysys, t_cube *data);
 int		handle_x_button(t_cube *data);
 
 /*~~~ GAMEPLAY ~~~*/
+void	move_forward(t_cube *data);
+void	move_left(t_cube *data);
+void	move_back(t_cube *data);
+void	move_right(t_cube *data);
+void	turn_left(t_cube *data);
+void	turn_right(t_cube *data);
 
 
 /*~~~ RENDERING - VISUALS ~~~*/
