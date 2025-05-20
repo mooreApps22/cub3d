@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:17:16 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/19 19:04:07 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/20 13:09:33 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,23 +92,30 @@ static void	check_map_closure_and_player_singularity(t_cube *data, char **map)
 }
 
 
-void	parse_map(t_cube *data, int fd)
+void	parse_map(t_cube *data, int fd, char **line)
 {
 	char	**map;
-	char	*line;
+	char	*temp;
+	char	*full_line;
 	size_t	max_line_len;
 
 	map = NULL;
-	line = NULL;
 	max_line_len = 0;
-	line = get_next_line(fd);
-	while (line != NULL)
+	if (*line == NULL)
+		full_line = get_next_line(fd);
+	else
 	{
-		if (ft_strlen(line) > max_line_len)
-			max_line_len = ft_strlen(line);
-		add_to_dptr((void ***)&map, (void *)line);
-		line = NULL;
-		line = get_next_line(fd);
+		temp = get_next_line(fd);
+		max_line_len = ft_strlen(*line) + ft_strlen(temp);
+		full_line = ft_strjoin(*line, temp);
+		free(temp);
+	}
+	while (full_line != NULL)
+	{
+		if (ft_strlen(full_line) > max_line_len)
+			max_line_len = ft_strlen(full_line);
+		add_to_dptr((void ***)&map, (void *)full_line);
+		full_line = get_next_line(fd);
 	}
 	check_character_validity(data, map, max_line_len);
 	check_map_closure_and_player_singularity(data, map);

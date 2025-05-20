@@ -1,4 +1,4 @@
-NAME = minirt
+NAME = BestWorstGame
 VALGRIND = memorytester
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g3 #-O2
@@ -32,7 +32,11 @@ SRC = \
 		SRC/cleanup.c \
 		SRC/PARSE_CUB/parse_main.c \
 		SRC/PARSE_CUB/parse_map.c \
-		SRC/INITIALIZE/validate_input.c\
+		SRC/INITIALIZE/validate_input.c \
+		SRC/MLX_and_INPUT/key_input.c \
+		SRC/MLX_and_INPUT/moveeeee.c \
+		SRC/MLX_and_INPUT/turrrrrn.c \
+		SRC/RENDER/image.c \
 
 
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
@@ -42,7 +46,45 @@ OBJS = $(SRC:.c=.o)
 OBJECTS = $(addprefix $(OBJ_PATH), $(OBJS))
 
 all: $(NAME)
-	@./$(NAME) CUBFILES/valid_file_1.cub
+	@./$(NAME) CUBFILES/VALID/valid_file_1.cub
+
+##############################################
+
+### ~~~ VALID MAPS ~~~ ###
+val1:
+	@./$(NAME) CUBFILES/VALID/valid_file_1.cub
+
+### ~~~ INVALID MAPS ~~~ ###
+wrongextension:
+	@./$(NAME) CUBFILES/INVALID/wrongextension.rt
+
+nopermission:
+	@./$(NAME) CUBFILES/INVALID/nopermission.cub
+
+nonorth:
+	@./$(NAME) CUBFILES/INVALID/nonorth.cub
+
+multipleplayer:
+	@./$(NAME) CUBFILES/INVALID/multipleplayer.cub
+
+opensidewall:
+	@./$(NAME) CUBFILES/INVALID/opensidewall.cub.
+
+internalspace:
+	@./$(NAME) CUBFILES/INVALID/internalspace.cub
+
+noplayer:
+	@./$(NAME) CUBFILES/INVALID/noplayer.cub
+
+nomap:
+	@./$(NAME) CUBFILES/INVALID/nomap.cub
+
+mapnotlast:
+	@./$(NAME) CUBFILES/INVALID/mapnotlast.cub
+
+
+##############################################
+
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_PATH)
 	@mkdir -p $(dir $@)
@@ -81,7 +123,7 @@ fclean: clean
 re: fclean all
 
 valgrind: $(VALGRIND)
-	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./$(VALGRIND) MAP/data.rt
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./$(VALGRIND) CUBFILES/VALID/valid_file_1.cub
 
 .PHONY: all clean fclean re test memory aaaa
 

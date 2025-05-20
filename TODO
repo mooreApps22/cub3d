@@ -1,0 +1,5 @@
+[] Parse - Connect texture and map parsing sections
+[] Parse - Error - Multiple player should fail
+[] Parse - Error - No NORTH texture should fail
+[] MLX - Create Window
+[] MLX - Test X button and Escape keys

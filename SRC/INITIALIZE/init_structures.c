@@ -6,11 +6,21 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:56:15 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/19 16:01:01 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/20 12:38:34 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
+
+void	init_textures(t_cube *data)
+{
+	data->textures.north_wall = NULL;
+	data->textures.south_wall = NULL;
+	data->textures.west_wall = NULL;
+	data->textures.east_wall = NULL;
+	data->textures.floor = NULL;
+	data->textures.ground = NULL;
+}
 
 void	init_mlx(t_cube *lux)
 {
