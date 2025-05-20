@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:37:04 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/19 15:52:17 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/20 20:16:18 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,18 @@ void	exit_cleanup(char *msg, t_cube *data, int exit_code)
 		
 	if (!data)
 		exit(exit_code);
+	if (data->wall.img)
+	{
+		mlx_destroy_image(data->mlx_data.mlx_ptr, data->wall.img);
+		free(data->wall.img);
+	}
+	if (data->view.img)
+			mlx_destroy_image(data->mlx_data.mlx_ptr, data->view.img);
+	if (data->mlx_data.win_ptr)
+		mlx_destroy_window(data->mlx_data.mlx_ptr, data->mlx_data.win_ptr);
+	if (data->mlx_data.mlx_ptr)
+		mlx_destroy_display(data->mlx_data.mlx_ptr);
+	free(data->mlx_data.mlx_ptr);
 		
 	// Clean up resources in a structured way
 	// if (lux->mlx_ptr || lux->win_ptr)

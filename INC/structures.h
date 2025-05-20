@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:40:00 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/20 14:14:52 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/20 19:19:26 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ typedef struct s_image
 	int		bpp;
 	int		line_len;
 	int		endian;
+	int		width;
+	int		height;
 }	t_image;
 
 /*~~~ MLX Window Manager Data ~~~*/
@@ -71,17 +73,20 @@ typedef struct s_cube
 	t_map	map_data;
 	t_tex	textures;
 	t_ply	player;
+	t_image	view; // image buffer for the player screen
+	t_image	wall; //static scaled wall for test
+	int		reset_frame; // signal for resetting the frame
 }	t_cube;
 
 typedef enum e_dir
 {
-	NORTH = 0,
-	SOUTH = 1,
-	WEST = 2,
-	EAST = 3,
-	FLOOR = 4,
+	NORTH,
+	SOUTH,
+	WEST,
+	EAST,
+	FLOOR,
 	CEILING
-};
+} t_dir;
 
 
 #endif
