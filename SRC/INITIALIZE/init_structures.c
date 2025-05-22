@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:56:15 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/20 17:16:57 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:43:46 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,8 @@ void	init_textures(t_cube *data)
 // 	// 	exit_cleanup ("Error - `mlx_new_image`\n", lux, errno);
 // }
 
-void	init_data(t_cube *data)
+void	initialize(t_cube *data)
 {
-	if (data == NULL)
-		exit_cleanup("Error - Lux could not be passed to init!\n", NULL, errno);
 	// lux->mlx_ptr = NULL;
 	// lux->win_ptr = NULL;
 	// lux->image.img = NULL;

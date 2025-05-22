@@ -18,14 +18,6 @@
 # include "../LIB/LIBFT/libft.h"
 # include "../LIB/muk_lib/muk_lib.h"
 
-# ifndef HEIGHT
-#  define HEIGHT 480
-# endif
-
-# ifndef WIDTH
-#  define WIDTH 600
-# endif
-
 /* 
 	ALLOWED EXTERNAL FUNCTIONS:
 		open, close, read, write,

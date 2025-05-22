@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:29:19 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/20 12:18:45 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/22 11:43:11 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ int	main(int ac, char **av)
 	
 	validate_input(ac, av);
 	parse_main(&data, av[1]);
-	// initialize(&data);
+	initialize(&data);
 	// game_start(&data);
 
 	printf("REACHED END OF MAIN\n");
+	exit_cleanup("Thanks for playing our game, we hope you hated it!", &data, 0);
 	return (0);
 }
 

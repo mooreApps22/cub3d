@@ -3,6 +3,8 @@
 		"cube.h": "c",
 		"libft.h": "c",
 		"muk_lib.h": "c",
-		"structures.h": "c"
+		"structures.h": "c",
+		"mlx.h": "c",
+		"tuple": "c"
 	}
 }
