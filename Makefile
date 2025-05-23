@@ -37,8 +37,10 @@ SRC = \
 		SRC/MLX_and_INPUT/key_input.c \
 		SRC/MLX_and_INPUT/moveeeee.c \
 		SRC/MLX_and_INPUT/turrrrrn.c \
-		SRC/RENDER/image.c \
-		SRC/PARSE_CUB/parse_textures_util.c \
+		SRC/RENDER/render_loop.c \
+		SRC/RENDER/get_asset.c \
+		SRC/RENDER/blit_utils.c \
+		SRC/PARSE_CUB/parse_textures_util.c 
 
 
 SRCS = $(addprefix $(SRC_PATH), $(SRC))

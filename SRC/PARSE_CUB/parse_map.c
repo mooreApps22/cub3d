@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:17:16 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/20 13:09:33 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/23 18:31:17 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ static void	check_character_validity(t_cube *data, char **map, size_t max_line_l
 	i = -1;
 	while(map[++i] != NULL)
 	{
+	/*
 		if (ft_strval(map[i], "nNsSwWeE01 ", 3) != 0)
 		{
 			free_dptr((void **)map);
 			exit_cleanup("Error - Illegal Map Character Detected!\n", data, 66);
 		}
+	*/
 		if (max_line_len > ft_strlen(map[i]))
 		{
 			line = safe_malloc(sizeof(char), max_line_len + 1);
@@ -100,6 +102,7 @@ void	parse_map(t_cube *data, int fd, char **line)
 	size_t	max_line_len;
 
 	map = NULL;
+	/*
 	max_line_len = 0;
 	if (*line == NULL)
 		full_line = get_next_line(fd);
@@ -110,6 +113,22 @@ void	parse_map(t_cube *data, int fd, char **line)
 		full_line = ft_strjoin(*line, temp);
 		free(temp);
 	}
+	*/
+	if (*line)
+	{
+		temp = get_next_line(fd);
+		if (!temp)
+			full_line = ft_strdup(*line);
+		else
+		{
+			max_line_len = ft_strlen(*line) + ft_strlen(temp);
+			full_line = ft_strjoin(*line, temp);
+			free(temp);
+		}
+
+	}
+	else
+		full_line = get_next_line(fd);
 	while (full_line != NULL)
 	{
 		if (ft_strlen(full_line) > max_line_len)

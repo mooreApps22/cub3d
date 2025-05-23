@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:57:39 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/23 13:15:34 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/23 18:33:00 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,12 @@ static void	add_path(t_cube *data, char **split, t_dir dir, int *error_flag)
 	{
 		if (data->textures.north_wall != NULL)
 		{
-			free(data->textures.north_wall);
+			free(data->textures.north_wall->path);
 			(*error_flag)++;
 		}
-		data->textures.north_wall = ft_strdup(split[1]);
+		data->textures.north_wall = safe_malloc(sizeof(t_image), 1);
+		data->textures.north_wall->path = ft_strdup(split[1]);
+
 	}
 	else if (dir == SOUTH)
 	{
@@ -112,7 +114,8 @@ static void	add_path(t_cube *data, char **split, t_dir dir, int *error_flag)
 			free(data->textures.south_wall);
 			(*error_flag)++;
 		}
-		data->textures.south_wall = ft_strdup(split[1]);
+		data->textures.south_wall = safe_malloc(sizeof(t_image), 1);
+		data->textures.south_wall->path = ft_strdup(split[1]);
 	}
 	else if (dir == EAST)
 	{
@@ -121,7 +124,8 @@ static void	add_path(t_cube *data, char **split, t_dir dir, int *error_flag)
 			free(data->textures.east_wall);
 			(*error_flag)++;
 		}
-		data->textures.east_wall = ft_strdup(split[1]);
+		data->textures.east_wall = safe_malloc(sizeof(t_image), 1);
+		data->textures.east_wall->path = ft_strdup(split[1]);
 	}
 	else if (dir == WEST)
 	{
@@ -130,7 +134,8 @@ static void	add_path(t_cube *data, char **split, t_dir dir, int *error_flag)
 			free(data->textures.west_wall);
 			(*error_flag)++;
 		}
-		data->textures.west_wall = ft_strdup(split[1]);
+		data->textures.west_wall = safe_malloc(sizeof(t_image), 1);
+		data->textures.west_wall->path = ft_strdup(split[1]);
 	}
 }
 
@@ -148,7 +153,7 @@ static int	parse_line(t_cube *data, char *line, int *error_flag)
 		return (1);
 	}
 	dir = find_direction(split[0]);
-	printf("DIR VARIABLE IS %d\n", dir);
+//	printf("DIR VARIABLE IS %d\n", dir);
 	if (dir == NORTH || dir == EAST || dir == SOUTH || dir == WEST)
 		add_path(data, split, dir, error_flag);
 	else if (dir == FLOOR || dir == CEILING)
@@ -200,6 +205,7 @@ void	parse_main(t_cube *data, char *filename)
 		exit_cleanup("Error - Open failed in parse!\n", data, errno);
 	line = NULL;
 	parse_textures(data, fd, &line);
+	line = NULL; // smoore added
 	parse_map(data, fd, &line);
 
 	
@@ -207,7 +213,7 @@ void	parse_main(t_cube *data, char *filename)
 	// printf("Value held by NORTH PTR %s\n", data->textures.north_wall);
 	// printf("Value held by SOUTH PTR %s\n", data->textures.south_wall);
 	// printf("Value held by WEST PTR %s\n", data->textures.west_wall);
-	// printf("Value held by EAST PTR %s\n", data->textures.east_wall);
+//	 printf("Value held by EAST PTR %s\n", data->textures.east_wall->path);
 
 	// printf("Value held by CEILING R PTR %d\n", data->textures.ceiling->r);
 	// printf("Value held by CEILING G PTR %d\n", data->textures.ceiling->g);

@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:37:04 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/22 11:50:47 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/23 18:56:11 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	clean_mlx_data(t_cube *data)
 	}
 	if (data->image.img)
 	{
+		
 		mlx_destroy_image(data->mlx_data.mlx_ptr, data->image.img);
 		data->image.img = NULL;
 	}
