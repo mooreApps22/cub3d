@@ -84,6 +84,9 @@ nomap:
 mapnotlast:
 	@./$(NAME) CUBFILES/INVALID/mapnotlast.cub
 
+missingval:
+	@./$(NAME) CUBFILES/INVALID/missingval.cub
+
 
 ##############################################
 

@@ -29,7 +29,7 @@
 
 /*~~~ CHECKS & INITIALIZATION ~~~*/
 void	validate_input(int ac, char **av);
-void	init_textures(t_cube *data);
+void	clean_initialize(t_cube *data);
 
 
 /*~~~ KEY INPUTS ~~~*/
