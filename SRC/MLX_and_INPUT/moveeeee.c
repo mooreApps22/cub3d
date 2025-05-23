@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:00:29 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/23 13:12:09 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/23 15:04:08 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	validate_movement(t_ply *player, t_tuple dir, t_map *level)
 
 
 
-static t_tuple	find_forw_vector(t_cube *data)
+t_tuple	find_forw_vector(t_cube *data)
 {
 	t_tuple	forward;
 

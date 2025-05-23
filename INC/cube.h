@@ -47,8 +47,10 @@ void	turn_right(t_cube *data);
 
 
 /*~~~ RENDERING - VISUALS ~~~*/
-int		create_image(t_cube *data);
 
+
+/*~~~ RAYS - VECTORS ~~~*/
+t_tuple	find_forw_vector(t_cube *data);
 
 /*~~~ CLEANUP ~~~*/
 void	exit_cleanup(char *msg, t_cube *data, int exit_code);

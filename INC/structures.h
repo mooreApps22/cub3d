@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:40:00 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/23 13:53:17 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/23 17:28:43 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,20 @@
 #  define MOVE_SPEED 600
 # endif
 
-# ifndef TILE_SIZE_X
-#  define TILE_SIZE_X 64
+# ifndef TILE_SIZE
+#  define TILE_SIZE 64
 # endif
 
-# ifndef TILE_SIZE_Y
-#  define TILE_SIZE_Y 64
+// # ifndef STEP_SIZE
+// #  define STEP_SIZE 1
+// # endif
+
+# ifndef FOV
+#  define FOV M_PI / 3
+# endif
+
+# ifndef TURN_SIZE
+#  define TURN_SIZE M_PI / (WIDTH * FOV)
 # endif
 
 /*~~~ Graphical Data ~~~*/
@@ -99,6 +107,13 @@ typedef struct s_tex
 	t_rgb	*floor;
 	t_rgb	*ceiling;
 }	t_tex;
+
+typedef struct s_intersect
+{
+	double	x;
+	double	y;
+	t_dir	side;
+}	t_intersect;
 
 /*~~~ Main Data Structure ~~~*/
 typedef struct s_cube
