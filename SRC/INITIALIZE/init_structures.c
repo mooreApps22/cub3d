@@ -6,52 +6,42 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:56:15 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/20 12:38:34 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/23 13:53:33 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-void	init_textures(t_cube *data)
+void	init_mlx(t_cube *data)
 {
+	data->mlx_data.mlx_ptr = mlx_init(); //we could shorten that
+	if (!data->mlx_data.mlx_ptr)
+		exit_cleanup("Error - mlx could not be passed to init!\n", NULL, errno);
+	data->mlx_data.win_ptr = mlx_new_window(data->mlx_data.mlx_ptr, WIDTH, HEIGHT, "cub3d");
+	if (!data->mlx_data.win_ptr)
+		exit_cleanup("Error - window could not be passed to init!\n", NULL, errno);
+	data->image.img = mlx_new_image(data->mlx_data.mlx_ptr, WIDTH, HEIGHT);
+	if (data->image.img == NULL)
+		exit_cleanup ("Error - `mlx_new_image`\n", data, errno);
+	data->image.addr = mlx_get_data_addr(data->image.img, &data->image.bpp,
+		&data->image.line_len, &data->image.endian);
+	data->reset_frame = 1;
+}
+
+void	clean_initialize(t_cube *data)
+{
+	data->mlx_data.mlx_ptr = NULL;
+	data->mlx_data.win_ptr = NULL;
+	data->image.img = NULL;
+	data->image.addr = NULL;
+	data->image.bpp = -1;
+	data->image.line_len = -1;
+	data->image.endian = -1;
+	data->map_data.map = NULL;
 	data->textures.north_wall = NULL;
 	data->textures.south_wall = NULL;
-	data->textures.west_wall = NULL;
 	data->textures.east_wall = NULL;
+	data->textures.west_wall = NULL;
+	data->textures.ceiling = NULL;
 	data->textures.floor = NULL;
-	data->textures.ground = NULL;
-}
-
-void	init_mlx(t_cube *lux)
-{
-	// if (lux == NULL)
-	// 	exit_cleanup("Error - Lux is missing at mlx_init", NULL, -7);
-	// lux->mlx_ptr = mlx_init();
-	// if (lux->mlx_ptr == NULL)
-	// 	exit_cleanup ("Error - `mlx_init`\n", lux, errno);
-	// lux->win_ptr = mlx_new_window(lux->mlx_ptr, WINDOW_WIDTH, \
-	// 		WINDOW_HEIGHT, "minirt");
-	// if (lux->win_ptr == NULL)
-	// 	exit_cleanup ("Error - `mlx_new_win`\n", lux, errno);
-	// lux->image.img = mlx_new_image(lux->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
-	// if (lux->image.img == NULL)
-	// 	exit_cleanup ("Error - `mlx_new_image`\n", lux, errno);
-}
-
-void	init_data(t_cube *data)
-{
-	if (data == NULL)
-		exit_cleanup("Error - Lux could not be passed to init!\n", NULL, errno);
-	// lux->mlx_ptr = NULL;
-	// lux->win_ptr = NULL;
-	// lux->image.img = NULL;
-	// lux->image.addr = NULL;
-	// lux->image.bpp = -1;
-	// lux->image.line_len = -1;
-	// lux->image.endian = -1;
-	// lux->p_light = NULL;
-	// lux->a_light = NULL;
-	// lux->camera = NULL;
-	// lux->objects = NULL;
-	// lux->file_fd = -1;
 }

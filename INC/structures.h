@@ -6,12 +6,36 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:40:00 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/20 14:14:52 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/23 13:53:17 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
+
+# ifndef HEIGHT
+#  define HEIGHT 480
+# endif
+
+# ifndef WIDTH
+#  define WIDTH 600
+# endif
+
+# ifndef TURN_RATE
+#  define TURN_RATE 1
+# endif
+
+# ifndef MOVE_SPEED
+#  define MOVE_SPEED 600
+# endif
+
+# ifndef TILE_SIZE_X
+#  define TILE_SIZE_X 64
+# endif
+
+# ifndef TILE_SIZE_Y
+#  define TILE_SIZE_Y 64
+# endif
 
 /*~~~ Graphical Data ~~~*/
 typedef struct s_image
@@ -21,6 +45,8 @@ typedef struct s_image
 	int		bpp;
 	int		line_len;
 	int		endian;
+	int		width;
+	int		height;
 }	t_image;
 
 /*~~~ MLX Window Manager Data ~~~*/
@@ -34,6 +60,8 @@ typedef struct s_mlx
 typedef struct s_map
 {
 	char	**map;
+	unsigned short	m_height;
+	unsigned short	m_width;
 }	t_map;
 
 /*~~~ Player Data ~~~*/
@@ -41,8 +69,8 @@ typedef struct s_ply
 {
 	double	x_pos;
 	double	y_pos;
-	double	alpha; // 0 deg is north
-	double	fov;
+	double	alpha;	// Angle between 0 axis (North) and player character
+	double	fov;	//Field of View (degrees)
 }	t_ply;
 
 /*~~~ Colour Data ~~~*/
@@ -53,6 +81,14 @@ typedef struct s_rgb
 	int		b;
 }	t_rgb;
 
+typedef struct s_tuple
+{
+	double	x;
+	double	y;
+	// double	z;
+	// double	w;
+}	t_tuple;
+
 /*~~~ Texture Data ~~~*/
 typedef struct s_tex
 {
@@ -61,16 +97,18 @@ typedef struct s_tex
 	char	*west_wall;
 	char	*east_wall;
 	t_rgb	*floor;
-	t_rgb	*ground;
+	t_rgb	*ceiling;
 }	t_tex;
 
 /*~~~ Main Data Structure ~~~*/
 typedef struct s_cube
 {
 	t_mlx	mlx_data;
+	t_image	image;
 	t_map	map_data;
 	t_tex	textures;
 	t_ply	player;
+	int		reset_frame; // signal for resetting the frame
 }	t_cube;
 
 typedef enum e_dir
@@ -80,8 +118,9 @@ typedef enum e_dir
 	WEST = 2,
 	EAST = 3,
 	FLOOR = 4,
-	CEILING
-};
+	CEILING,
+	UNKNOWN
+}	t_dir;
 
 
 #endif

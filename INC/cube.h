@@ -18,14 +18,6 @@
 # include "../LIB/LIBFT/libft.h"
 # include "../LIB/muk_lib/muk_lib.h"
 
-# ifndef HEIGHT
-#  define HEIGHT 480
-# endif
-
-# ifndef WIDTH
-#  define WIDTH 600
-# endif
-
 /* 
 	ALLOWED EXTERNAL FUNCTIONS:
 		open, close, read, write,
@@ -37,7 +29,8 @@
 
 /*~~~ CHECKS & INITIALIZATION ~~~*/
 void	validate_input(int ac, char **av);
-void	init_textures(t_cube *data);
+void	clean_initialize(t_cube *data);
+void	init_mlx(t_cube *data);
 
 
 /*~~~ KEY INPUTS ~~~*/
