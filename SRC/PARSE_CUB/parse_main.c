@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:57:39 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/22 19:33:05 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/23 13:15:34 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,20 +200,22 @@ void	parse_main(t_cube *data, char *filename)
 		exit_cleanup("Error - Open failed in parse!\n", data, errno);
 	line = NULL;
 	parse_textures(data, fd, &line);
-	// parse_map(data, fd, &line);
+	parse_map(data, fd, &line);
 
-	printf("Value held by NORTH PTR %s\n", data->textures.north_wall);
-	printf("Value held by SOUTH PTR %s\n", data->textures.south_wall);
-	printf("Value held by WEST PTR %s\n", data->textures.west_wall);
-	printf("Value held by EAST PTR %s\n", data->textures.east_wall);
+	
 
-	printf("Value held by CEILING R PTR %d\n", data->textures.ceiling->r);
-	printf("Value held by CEILING G PTR %d\n", data->textures.ceiling->g);
-	printf("Value held by CEILING B PTR %d\n", data->textures.ceiling->b);
+	// printf("Value held by NORTH PTR %s\n", data->textures.north_wall);
+	// printf("Value held by SOUTH PTR %s\n", data->textures.south_wall);
+	// printf("Value held by WEST PTR %s\n", data->textures.west_wall);
+	// printf("Value held by EAST PTR %s\n", data->textures.east_wall);
 
-	printf("Value held by GROUND R PTR %d\n", data->textures.floor->r);
-	printf("Value held by GROUND G PTR %d\n", data->textures.floor->g);
-	printf("Value held by GROUND B PTR %d\n", data->textures.floor->b);
+	// printf("Value held by CEILING R PTR %d\n", data->textures.ceiling->r);
+	// printf("Value held by CEILING G PTR %d\n", data->textures.ceiling->g);
+	// printf("Value held by CEILING B PTR %d\n", data->textures.ceiling->b);
+
+	// printf("Value held by GROUND R PTR %d\n", data->textures.floor->r);
+	// printf("Value held by GROUND G PTR %d\n", data->textures.floor->g);
+	// printf("Value held by GROUND B PTR %d\n", data->textures.floor->b);
 
 
 	close(fd);

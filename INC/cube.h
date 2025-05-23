@@ -30,6 +30,7 @@
 /*~~~ CHECKS & INITIALIZATION ~~~*/
 void	validate_input(int ac, char **av);
 void	clean_initialize(t_cube *data);
+void	init_mlx(t_cube *data);
 
 
 /*~~~ KEY INPUTS ~~~*/
