@@ -30,6 +30,16 @@ SRC_MAIN =	./SRC/main.c
 SRC_PATH = ./
 SRC = \
 		SRC/cleanup.c \
+		SRC/FT_STR_ARR_UTILS/ft_str_arr_add.c \
+		SRC/FT_STR_ARR_UTILS/ft_str_arr_contains.c \
+		SRC/FT_STR_ARR_UTILS/ft_str_arr_dup.c \
+		SRC/FT_STR_ARR_UTILS/ft_str_arr_free.c \
+		SRC/FT_STR_ARR_UTILS/ft_str_arr_init.c \
+		SRC/FT_STR_ARR_UTILS/ft_str_arr_len.c \
+		SRC/FT_STR_ARR_UTILS/ft_str_arr_minus.c \
+		SRC/FT_STR_ARR_UTILS/ft_str_arr_partial_free.c \
+		SRC/FT_STR_ARR_UTILS/ft_str_arr_printf.c \
+		SRC/FT_STR_ARR_UTILS/ft_strcmp.c \
 		SRC/PARSE_CUB/parse_main.c \
 		SRC/PARSE_CUB/parse_map.c \
 		SRC/INITIALIZE/validate_input.c \

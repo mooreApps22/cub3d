@@ -6,12 +6,12 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:37:04 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/23 18:56:11 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/24 19:31:11 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
-
+/*
 static void	clean_mlx_data(t_cube *data)
 {
 	if (data->mlx_data.win_ptr)
@@ -49,14 +49,17 @@ static void	clean_texture_data(t_cube *data)
 	free(data->textures.ceiling);
 	data->textures.ceiling = NULL;
 }
+*/
 
 void	exit_cleanup(char *msg, t_cube *data, int exit_code)
 {
 	if (msg)
 		ft_putstr_fd(msg, 2);
-	clean_mlx_data(data);
-	free_dptr((void **) data->map_data.map);
-	clean_texture_data(data);
+//	clean_mlx_data(data);
+//	free_dptr((void **) data->map_data.map);
+	if (data->map_data.map)
+		ft_str_arr_free(&data->map_data.map);
+//	clean_texture_data(data);
 
 	// clean_player_data(data); there is nothing malloced at player atm
 

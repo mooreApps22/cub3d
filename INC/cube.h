@@ -14,6 +14,7 @@
 # include <X11/keysym.h>
 
 # include "structures.h"
+# include "ft_str_arr_utils.h"
 # include "parse.h"
 # include "../LIB/LIBFT/libft.h"
 # include "../LIB/muk_lib/muk_lib.h"

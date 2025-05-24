@@ -6,16 +6,15 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:29:19 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/23 14:26:05 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/24 19:29:11 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
-
 int	game_start(t_cube *data)
 {
 //	mlx_loop_hook(data->mlx_data.mlx_ptr, create_image, data);
-	mlx_loop_hook(data->mlx_data.mlx_ptr, render_loop, data);
+//	mlx_loop_hook(data->mlx_data.mlx_ptr, render_loop, data);
 	mlx_hook(data->mlx_data.win_ptr, 17, 0, handle_x_button, data);
 	mlx_key_hook(data->mlx_data.win_ptr, handle_keys, data);
 	mlx_loop(data->mlx_data.mlx_ptr);
@@ -30,7 +29,7 @@ int	main(int ac, char **av)
 	validate_input(ac, av);
 	clean_initialize(&data);
 	parse_main(&data, av[1]);
-	init_mlx(&data);
+//	init_mlx(&data);
 	
 	// game_start(&data);
 
@@ -38,6 +37,3 @@ int	main(int ac, char **av)
 	exit_cleanup("Thanks for playing our game, we hope you hated it!\n", &data, 0);
 	return (0);
 }
-
-
-
