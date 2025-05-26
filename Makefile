@@ -43,6 +43,7 @@ SRC = \
 		SRC/PARSE_CUB/assign_rgb.c \
 		SRC/PARSE_CUB/parse_main.c \
 		SRC/PARSE_CUB/parse_texture_line.c \
+		SRC/PARSE_CUB/parse_map_line.c \
 		SRC/INITIALIZE/validate_input.c \
 		SRC/INITIALIZE/init_structures.c \
 		SRC/MLX_and_INPUT/key_input.c \
@@ -50,9 +51,7 @@ SRC = \
 		SRC/MLX_and_INPUT/turrrrrn.c \
 		SRC/RENDER/render_loop.c \
 		SRC/RENDER/get_asset.c \
-		SRC/RENDER/blit_utils.c \
-		SRC/PARSE_CUB/parse_textures_util.c 
-
+		SRC/RENDER/blit_utils.c
 
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
 
