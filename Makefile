@@ -40,8 +40,9 @@ SRC = \
 		SRC/FT_STR_ARR_UTILS/ft_str_arr_partial_free.c \
 		SRC/FT_STR_ARR_UTILS/ft_str_arr_printf.c \
 		SRC/FT_STR_ARR_UTILS/ft_strcmp.c \
+		SRC/PARSE_CUB/assign_rgb.c \
 		SRC/PARSE_CUB/parse_main.c \
-		SRC/PARSE_CUB/parse_map.c \
+		SRC/PARSE_CUB/parse_texture_line.c \
 		SRC/INITIALIZE/validate_input.c \
 		SRC/INITIALIZE/init_structures.c \
 		SRC/MLX_and_INPUT/key_input.c \
