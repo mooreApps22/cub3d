@@ -51,12 +51,12 @@ bool	is_line_border(char *line)
 {
 	int	i;
 
-	i = 0;
 	if (!line)
 	{
 		ft_putstr_fd("Error - Null line passed to is_line_border.\n", 2);
-		return (NULL);
+		return (false);
 	}
+	i = 0;
 	while (line[i])
 	{
 		if (line[i] != '1' && line[i] != ' ' && line[i] != '\n' && line[i] != '\t' && line[i] != '\r') //
@@ -72,13 +72,17 @@ bool	parse_map_line(t_cube *data, char *line)
 	char	*prev_line;
 	char	*dup;
 
+	ft_printf("map line: %s\n", line);
 	if (!line_valid(line))
 		return (ft_putstr_fd("Error - Invalid map character\n", 2), false);
 	len = ft_strlen(line);
 	if (len > data->map.width)
 		data->map.width = len;
 	if (data->map.height == 0 && !is_line_border(line))
-		return (ft_putstr_fd("Error - First map border line must be all 1'sXXX.\n", 2), false); //
+	{
+		ft_putstr_fd("Error - First map border line must be all 1'sXXX.\n", 2);
+		return (false); //
+	}
 	if (data->map.height > 1 && data->map.data)
 	{
 		prev_line = data->map.data[data->map.height - 2];	

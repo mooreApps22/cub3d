@@ -159,43 +159,43 @@ bool	parse_texture_line(t_cube *data, char *line)
 	ft_printf("\n");
 	if (!line[i])
 		return (true);
-	ft_printf("Checking character at position %d: '%c'\n", i + 2, line[i + 2]);
+//	ft_printf("Checking character at position %d: '%c'\n", i + 2, line[i + 2]);
 	if (ft_strncmp(&line[i], "NO", 2) == 0 && is_blank(line[i + 2]))
 	{
 		ft_putstr_fd("Found NO id.\n", 2);
 		return (check_xpm_path(data, "NO", line, i + 2));
 	}
-	ft_printf("Checking character at position %d: '%c'\n", i + 2, line[i + 2]);
+//	ft_printf("Checking character at position %d: '%c'\n", i + 2, line[i + 2]);
 	if (ft_strncmp(&line[i], "SO", 2) == 0  && is_blank(line[i + 2]))
 	{
 		ft_putstr_fd("Found SO texture.\n", 2);
 		return (check_xpm_path(data, "SO", line, i + 2));
 	}
-	ft_printf("Checking character at position %d: '%c'\n", i + 2, line[i + 2]);
+//	ft_printf("Checking character at position %d: '%c'\n", i + 2, line[i + 2]);
 	if (ft_strncmp(&line[i], "WE", 2)  == 0 && is_blank(line[i + 2]))
 	{
 		ft_putstr_fd("Found WE texture.\n", 2);
 		return (check_xpm_path(data, "WE", line, i + 2));
 	}
-	ft_printf("Checking character at position %d: '%c'\n", i + 2, line[i + 2]);
+//	ft_printf("Checking character at position %d: '%c'\n", i + 2, line[i + 2]);
 	if (ft_strncmp(&line[i], "EA", 2)  == 0 && is_blank(line[i + 2]))
 	{
 		ft_putstr_fd("Found EA texture.\n", 2);
 		return (check_xpm_path(data, "EA", line, i + 2));
 	}
-	ft_printf("Checking character at position %d: '%c'\n", i + 2, line[i + 2]);
+//	ft_printf("Checking character at position %d: '%c'\n", i + 2, line[i + 2]);
 	if (line[i] == 'F')
 	{
 		ft_putstr_fd("Found Floor color.\n", 2);
 		return (assign_rgb(&data->textures.floor, &line[skip_blanks(line, i + 1)]));
 	}
-	ft_printf("Checking character at position %d: '%c'\n", i + 2, line[i + 2]);
+//	ft_printf("Checking character at position %d: '%c'\n", i + 2, line[i + 2]);
 	if (line[i] == 'C')
 	{
 		ft_putstr_fd("Found Ceiling color.\n", 2);
 		return (assign_rgb(&data->textures.ceiling, &line[skip_blanks(line, i + 1)]));
 	}
-	ft_printf("Checking character at position %d: '%c'\n", i + 2, line[i + 2]);
+//	ft_printf("Checking character at position %d: '%c'\n", i + 2, line[i + 2]);
 	// need to check all the assignment are made, if it reach here and the assignments are incomplete, there return false otherwise return true
 	if (all_texture_assignment_complete(&data->textures))
 		return (true);

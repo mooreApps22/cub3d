@@ -59,6 +59,7 @@ bool	get_map_data(t_cube *data, int fd)
 	while (true)
 	{
 		line = get_next_line(fd);
+		ft_printf("GNL from bitmap: %s\n", line);
 		if (!line)
 			break ;
 		if (*line == '\n')
@@ -73,7 +74,8 @@ bool	get_map_data(t_cube *data, int fd)
 		}
 		free(line);
 	}
-	if (!is_line_border(data->map.data[data->map.height -1]))
+	ft_printf("Map data assignment: %s\n", data->map.data[data->map.height - 1]);
+	if (!is_line_border(data->map.data[data->map.height - 1]))
 	{
 		ft_putstr_fd("Error - Last border must be all 1's.\n", 2);
 		return(false);
@@ -101,6 +103,7 @@ bool	get_texture_data(t_cube *data, int fd)
 			free(line);
 			continue ;
 		}
+		// if a line is not a texture throw error
 		if (!parse_texture_line(data, line))
 		{
 			free(line);
@@ -112,7 +115,9 @@ bool	get_texture_data(t_cube *data, int fd)
 	ft_printf("Reached end of file - get_texture_data.\n");
 	return (true);
 }
-
+/*
+	I want to pull the the .cub input files into a char *arr[] and parse that, because keep trach of file position when useing get next line is problematic. 
+*/
 void	parse_main(t_cube *data, char *filename)
 {
 	int		fd;
