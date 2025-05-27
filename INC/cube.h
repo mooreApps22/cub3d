@@ -28,15 +28,6 @@
 		Anything in minilibx or math
 */
 
-
-/*~~~ PARSING ~~~*/
-bool	assign_rgb(t_rgb **val, char *line);
-bool	get_texture_data(t_cube *data, int fd);
-void	parse_main(t_cube *data, char *filename);
-bool	parse_texture_line(t_cube *data, char *line);
-bool	is_line_border(char *line);
-bool	parse_map_line(t_cube *data, char *line);
-
 /*~~~ CHECKS & INITIALIZATION ~~~*/
 void	validate_input(int ac, char **av);
 void	clean_initialize(t_cube *data);

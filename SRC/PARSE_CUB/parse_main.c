@@ -3,146 +3,176 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 15:57:39 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/26 20:37:37 by smoore           ###   ########.fr       */
+/*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
+/*   Updated: 2025/05/27 19:54:12 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-static int	count_player_chars(char *line)
+
+bool	trim_first_six_lines(char **map)
 {
-	int	count;
-
-	count = 0;
-	while (*line)
-	{
-		if (*line == 'N' || *line == 'S' || *line == 'E' || *line == 'W')
-			count++;
-		line++;
-	}
-	return (count);
-}
-
-
-bool	only_one_player_position(char **map)
-{
-	int	i;
-	int	count;
+	int		i;
+	char	*trim;
 
 	i = 0;
-	count = 0;
-	while (map[i])
+	while (i < 6)
 	{
-		count += count_player_chars(map[i]);
-		if (count > 1)
+		trim = ft_strtrim(map[i], " \n\t\r");
+		printf("TRIM: %s\n", trim);
+		if (!trim)
+			return (error_msg(0, "failed to trim texture line.", NULL));
+		if (map[i])
 		{
-			ft_putstr_fd("Error - You can't have more than 1 players.\n", 2);	
-			return (false);
+			free(map[i]);
+			map[i] = trim;
 		}
 		i++;
 	}
-	if (count == 0)
-	{
-		ft_putstr_fd("Error - You can't have zero player characters.\n", 2);
-		return (false);
-	}
 	return (true);
 }
 
-bool	get_map_data(t_cube *data, int fd)
+bool	assign_texture_path(char *line, char *id, char **tex_path)
 {
-	char	*line;
+	int i;
 
-	while (true)
+	if (ft_strncmp(line, id, ft_strlen(id)) == 0 && !*tex_path)
 	{
-		line = get_next_line(fd);
-		ft_printf("GNL from bitmap: %s\n", line);
-		if (!line)
-			break ;
-		if (*line == '\n')
-		{
-			free(line);
-			continue ;
-		}
-		if (!parse_map_line(data, line))
-		{
-			free(line);
-			return (ft_putstr_fd("Error - no parse_map_line.\n", 2), false);
-		}
-		free(line);
+		i = ft_strlen(id);
+		while (line[i] == ' ' || line[i] == '\t')
+			i++;
+		*tex_path = ft_strdup(line + i);
+		if (!*tex_path)
+			return (error_msg(0, "Failed to dup texture path.", NULL));
+		return (true);
 	}
-	ft_printf("Map data assignment: %s\n", data->map.data[data->map.height - 1]);
-	if (!is_line_border(data->map.data[data->map.height - 1]))
-	{
-		ft_putstr_fd("Error - Last border must be all 1's.\n", 2);
-		return(false);
-	}
-	if (!only_one_player_position(data->map.data))
-	{
-		ft_putstr_fd("Error - Can only have one player character.\n", 2);
-		return(false);
-	}
-	ft_printf("Reached end of file - get_map_data.\n");
-	return (true);
+	return (false);
 }
 
-bool	get_texture_data(t_cube *data, int fd)
+bool	chk_val(int color)
 {
-	char	*line;
-
-	while (true)
-	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		if (*line == '\n')
-		{
-			free(line);
-			continue ;
-		}
-		// if a line is not a texture throw error
-		if (!parse_texture_line(data, line))
-		{
-			free(line);
-			ft_putstr_fd("Error - no parse_text_line.\n", 2);
-			return (false);
-		}
-		free(line);
-	}
-	ft_printf("Reached end of file - get_texture_data.\n");
-	return (true);
+	return (color >= 0 && color <= 255);
 }
-/*
-	I want to pull the the .cub input files into a char *arr[] and parse that, because keep trach of file position when useing get next line is problematic. 
-*/
-void	parse_main(t_cube *data, char *filename)
+
+bool	assign_color_values(char *line, char *id, t_rgb *val)
 {
-	int		fd;
+	char	**split;
+	int		len;
 
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		exit_cleanup("Error - Open failed in parse!\n", data, errno);
-	if (!get_texture_data(data, fd))
-		exit_cleanup("Error - Failed to parse textures!\n", data, errno);
-	if (!get_map_data(data, fd))
-		exit_cleanup("Error - Failed to parse map!\n", data, errno);
-	ft_printf("TEX: %s\n", data->textures.north_wall->path);
-	ft_printf("TEX: %s\n", data->textures.south_wall->path);
-	ft_printf("TEX: %s\n", data->textures.west_wall->path);
-	ft_printf("TEX: %s\n", data->textures.east_wall->path);
+	if (ft_strncmp(line, id, ft_strlen(id)) == 0 && !val)
+	{
+		split = ft_split(line, ',');
+		len  = ft_str_arr_len((const char **)split);
+		if (!split || len < 3)
+		{
+			ft_str_arr_free(&split);
+			return (error_msg(0, "Failed to slip color values.", NULL));
+		}
+		(val)->b = ft_atoi(split[len - 1]);
+		(val)->g = ft_atoi(split[len - 2]);
+		(val)->r = ft_atoi(split[len - 3]);
+		if (!chk_val(val->r) || !chk_val(val->g) || !chk_val(val->b))
+		{
+			ft_str_arr_free(&split);
+			return (error_msg(0, "RGB values have to be 0-255.", NULL));
+		}
+		ft_str_arr_free(&split);
+	}
+	return (false);
+}
 
-	ft_printf("C R: %d\n", data->textures.ceiling->r);
-	ft_printf("C G: %d\n", data->textures.ceiling->g);
-	ft_printf("C B: %d\n", data->textures.ceiling->b);
+bool	match_texture_path(char *line, t_tex *txs)
+{
+	bool	found;
 
-	ft_printf("F R: %d\n", data->textures.floor->r);
-	ft_printf("F G: %d\n", data->textures.floor->g);
-	ft_printf("F B: %d\n", data->textures.floor->b);
+	found = false;
+	if (assign_texture_path(line, "NO ", &txs->north_wall->path))
+		found = true;
+	if (assign_texture_path(line, "SO ", &txs->south_wall->path))
+		found = true;
+	if (assign_texture_path(line, "EA ", &txs->east_wall->path))
+		found = true;
+	if (assign_texture_path(line, "WE ", &txs->west_wall->path))
+		found = true;
+	if (assign_color_values(line, "F ", txs->floor))
+		found = true;
+	if (assign_color_values(line, "C ", txs->ceiling))
+		found = true;
+	return (found);
+}
 
-	ft_str_arr_printf(data->map.data);
+void	set_init_textures_paths_to_null(t_tex *txs)
+{
+	txs->north_wall->path = NULL;
+	txs->south_wall->path = NULL;
+	txs->east_wall->path = NULL;
+	txs->west_wall->path = NULL;
+}
+
+bool	init_textures(t_tex *txs)
+{
+	txs->floor = malloc(sizeof(t_rgb));
+	if (!txs->floor)
+		return (error_msg(0, "floor failed malloc.", NULL));
+	txs->ceiling = malloc(sizeof(t_rgb));
+	if (!txs->ceiling)
+		return (error_msg(0, "Ceiling failed malloc.", NULL));
+	txs->north_wall = malloc(sizeof(t_image));
+	if (!txs->north_wall)
+		return (error_msg(0, "North Wall failed malloc.", NULL));
+	txs->south_wall = malloc(sizeof(t_image));
+	if (!txs->south_wall)
+		return (error_msg(0, "South Wall failed malloc.", NULL));
+	txs->east_wall = malloc(sizeof(t_image));
+	if (!txs->east_wall)
+		return (error_msg(0, "East Wall failed malloc.", NULL));
+	txs->west_wall = malloc(sizeof(t_image));
+	if (!txs->west_wall)
+		return (error_msg(0, "West Wall failed malloc.", NULL));
+	set_init_textures_paths_to_null(txs);
+	return (true);	
+}
+
+bool	validate_first_six_lines(char **map, t_tex *txs)
+{
+	int		i;
 	
-	close(fd);
+	i = 0;
+	if (!init_textures(txs))
+		return (error_msg(0, "t_tex failed malloc.", NULL));
+	while (i < 6)
+	{
+		match_texture_path(map[i], txs);
+		i++;
+	}
+	if (!txs->north_wall->path || !txs->south_wall->path ||
+		!txs->east_wall->path || !txs->west_wall->path ||
+		!txs->ceiling || !txs->floor)
+		return (error_msg(0, "Failed to find all textures.", NULL));
+	return (true);
+}
+
+bool	validate_cub_data(t_map *map, t_tex *txs)
+{
+	if (!map)
+		return (error_msg(0, "No map to validate.", NULL));
+	if (!trim_first_six_lines(map->data))
+		return (error_msg(0, "Failed to trim first six lines.", NULL));
+	if (!validate_first_six_lines(map->data, txs))
+		return (error_msg(0, "Failed to check order of data.", NULL));
+	return (true);	
+}
+
+bool	parse_main(t_cube *data, char *filename)
+{
+	if (!open_cub_file_and_copy_data(data, filename))
+		return (error_msg(0, "failed to extract cub file data.", NULL));
+	if (!validate_cub_data(&data->map, &data->textures))
+		return (error_msg(0, "failed to validate cub data.", NULL));
+	return (true);	
+			
+	
 }

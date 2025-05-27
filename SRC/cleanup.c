@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:37:04 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/26 16:17:09 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/27 19:24:57 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,26 @@ static void	clean_mlx_data(t_cube *data)
 
 */
 
-static void	clean_texture_image(t_image **tex)
+static void	clean_texture_image(t_image *img)
 {
-	if (!tex || !*tex)	
-		return ;
-	if ((*tex)->path)
-		free((*tex)->path);
-	free(*tex);
-	*tex = NULL;
+	if (img)
+	{
+		if (img->path)
+			free(img->path);
+		free(img);
+	}
 }
 
 static void	clean_texture_data(t_cube *data)
 {
-	clean_texture_image(&data->textures.north_wall);
-	clean_texture_image(&data->textures.south_wall);
-	clean_texture_image(&data->textures.west_wall);
-	clean_texture_image(&data->textures.east_wall);
+	clean_texture_image(data->textures.north_wall);
+	clean_texture_image(data->textures.south_wall);
+	clean_texture_image(data->textures.west_wall);
+	clean_texture_image(data->textures.east_wall);
+	if (data->textures.floor)
+		free(data->textures.floor);
+	if (data->textures.ceiling)
+		free(data->textures.ceiling);
 //	free(data->texture.floor);
 //	data->textures.floor = NULL;	
 //	free(data->texture.ceiling);

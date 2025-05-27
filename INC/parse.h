@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:58:58 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/20 17:15:18 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/27 15:26:06 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 
 #include "cube.h"
 
-void	parse_main(t_cube *data, char *filename);
-void	parse_textures(t_cube* data, int fd, char **line);
-void	parse_map(t_cube *data, int fd, char **line);
-bool	all_textures_found(t_tex *tex);
+
+bool	error_msg(int fd, char *msg, char **cub);
+bool	load_cub_file_contents(char ***cub, int fd);
+bool	open_cub_file_and_copy_data(t_cube *data, char *filename);
+
+bool	parse_main(t_cube *data, char *filename);
 
 #endif
