@@ -38,11 +38,17 @@ bool	only_one_player_position(char **map)
 	{
 		count += count_player_chars(map[i]);
 		if (count > 1)
-			return (ft_putstr_fd("Error - You can't have more than 1 players.\n", 2), false);
+		{
+			ft_putstr_fd("Error - You can't have more than 1 players.\n", 2);	
+			return (false);
+		}
 		i++;
 	}
 	if (count == 0)
-		return (ft_putstr_fd("Error - You can't have zero player characters.\n", 2), false);
+	{
+		ft_putstr_fd("Error - You can't have zero player characters.\n", 2);
+		return (false);
+	}
 	return (true);
 }
 
@@ -63,14 +69,21 @@ bool	get_map_data(t_cube *data, int fd)
 		if (!parse_map_line(data, line))
 		{
 			free(line);
-			return (false);
+			return (ft_putstr_fd("Error - no parse_map_line.\n", 2), false);
 		}
 		free(line);
 	}
 	if (!is_line_border(data->map.data[data->map.height -1]))
-		return(ft_putstr_fd("Error - Last border must be all 1's.\n", 2), false);
+	{
+		ft_putstr_fd("Error - Last border must be all 1's.\n", 2);
+		return(false);
+	}
 	if (!only_one_player_position(data->map.data))
-		return(ft_putstr_fd("Error - Can only have one player character.\n", 2), false);
+	{
+		ft_putstr_fd("Error - Can only have one player character.\n", 2);
+		return(false);
+	}
+	ft_printf("Reached end of file - get_map_data.\n");
 	return (true);
 }
 
@@ -91,10 +104,12 @@ bool	get_texture_data(t_cube *data, int fd)
 		if (!parse_texture_line(data, line))
 		{
 			free(line);
+			ft_putstr_fd("Error - no parse_text_line.\n", 2);
 			return (false);
 		}
 		free(line);
 	}
+	ft_printf("Reached end of file - get_texture_data.\n");
 	return (true);
 }
 

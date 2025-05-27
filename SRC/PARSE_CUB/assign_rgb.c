@@ -40,5 +40,6 @@ bool	assign_rgb(t_rgb **val, char *line)
 			return (ft_str_arr_free(&split),free(*val) , *val = NULL, false);
 		i++;
 	}
+	printf("All color assignments made.\n");
 	return (ft_str_arr_free(&split), true);
 }

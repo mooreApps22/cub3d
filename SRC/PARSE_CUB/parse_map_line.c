@@ -24,7 +24,7 @@ static bool	line_valid(char *line)
 	while (*line)
 	{
 		if (!is_valid_map_char(*line))
-			return (false);
+			return (ft_putstr_fd("Error -is_valid_map_char failed.\n", 2), false);
 		line++;
 	}
 	return (true);
@@ -43,7 +43,7 @@ static bool	line_begins_and_ends_with_wall(char *line)
 	while (line[end] == ' ' || line[end] == '\n')
 		end--;
 	if (start > end)
-		return (false);
+		return (ft_putstr_fd("Error - start > end.\n", 2), false);
 	return (line[start] == '1' && line[end] == '1');
 }
 
@@ -52,10 +52,15 @@ bool	is_line_border(char *line)
 	int	i;
 
 	i = 0;
+	if (!line)
+	{
+		ft_putstr_fd("Error - Null line passed to is_line_border.\n", 2);
+		return (NULL);
+	}
 	while (line[i])
 	{
 		if (line[i] != '1' && line[i] != ' ' && line[i] != '\n' && line[i] != '\t' && line[i] != '\r') //
-			return (false);
+			return (ft_putstr_fd("Error - borderline 1 screwed up.\n", 2), false);
 		i++;
 	}
 	return (true);
@@ -87,7 +92,7 @@ bool	parse_map_line(t_cube *data, char *line)
 	if (!data->map.data)
 	{
 		free(dup);
-		return (false);
+		return (ft_putstr_fd("Error - bad dup in parse_map_line.\n", 2), false);
 	}
 	data->map.height++;
 	return (true);	
