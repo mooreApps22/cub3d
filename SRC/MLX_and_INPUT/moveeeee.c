@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:00:29 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/28 11:26:36 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/28 13:10:50 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_tuple	tuple_normalize(t_tuple tuple)
 	double	len;
 	t_tuple	result;
 
+	len = 0;
 	len = tuple_magnitude(tuple);
 	if (len != 0)
 	{
@@ -38,7 +39,12 @@ t_tuple	tuple_normalize(t_tuple tuple)
 
 void	validate_movement(t_ply *player, t_tuple dir, t_map *level)
 {
-	(void)level;
+	double	check_x;
+	double	check_y;
+
+	check_x = (player->x_pos + dir.x) / TILE_SIZE;
+	check_y = (player->y_pos + dir.y) / TILE_SIZE;
+	if (level->data[(int)check_y][(int)check_x] != 0) //This needs update as entire square will be truncated!
 	{
 		printf("Hold your horses cowboy, you can't move there!\n");
 		return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/27 19:54:12 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/28 11:32:35 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,5 @@ bool	parse_main(t_cube *data, char *filename)
 		return (error_msg(0, "failed to extract cub file data.", NULL));
 	if (!validate_cub_data(&data->map, &data->textures))
 		return (error_msg(0, "failed to validate cub data.", NULL));
-	return (true);	
-			
-	
+	return (true);
 }

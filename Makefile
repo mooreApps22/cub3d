@@ -49,7 +49,9 @@ SRC = \
 		SRC/MLX_and_INPUT/turrrrrn.c \
 		SRC/RENDER/render_loop.c \
 		SRC/RENDER/get_asset.c \
-		SRC/RENDER/blit_utils.c
+		SRC/RENDER/blit_utils.c \
+		SRC/RENDER/render_timing.c \
+		SRC/RENDER/ray_casting.c \
 
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
 
@@ -57,8 +59,10 @@ OBJ_PATH = ./OBJ/
 OBJS = $(SRC:.c=.o)
 OBJECTS = $(addprefix $(OBJ_PATH), $(OBJS))
 
+MAP_NAME = CUBFILES/VALID/simple_map.cub
+
 all: $(NAME)
-	@./$(NAME) CUBFILES/VALID/valid_file_1.cub
+	@./$(NAME) $(MAP_NAME)
 
 ##############################################
 
@@ -138,7 +142,7 @@ fclean: clean
 re: fclean all
 
 valgrind: $(VALGRIND)
-	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./$(VALGRIND) CUBFILES/VALID/valid_file_1.cub
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./$(VALGRIND) $(MAP_NAME)
 
 .PHONY: all clean fclean re test memory aaaa
 
