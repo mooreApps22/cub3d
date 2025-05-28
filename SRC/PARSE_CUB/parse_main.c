@@ -6,152 +6,107 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/27 19:54:12 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/28 19:44:55 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-
-bool	trim_first_six_lines(char **map)
+bool	extract_remaining_lines(t_map *map, t_tex *txs)
 {
-	int		i;
-	char	*trim;
+	char **dup;
 
+	if (!txs || !map->data)
+		return (error_msg(0, "Map data or textures missing.", NULL));
+	dup = ft_str_arr_partial_dup(map->data, 6);
+	if (!dup)
+		return (error_msg(0, "Dup failed malloc.", NULL));
+	ft_str_arr_printf(dup);
+	ft_str_arr_free(&map->data);
+	map->data = dup;
+	return (true);
+}
+
+bool	validate_all_ones_line(char *line)
+{
+	int i;
+
+	if (!line)
+		return (error_msg(0, "Validate all ones, passed null line.", NULL));
 	i = 0;
-	while (i < 6)
+	while (line[i])
 	{
-		trim = ft_strtrim(map[i], " \n\t\r");
-		printf("TRIM: %s\n", trim);
-		if (!trim)
-			return (error_msg(0, "failed to trim texture line.", NULL));
-		if (map[i])
+		if (line[i] != '1' && line[i] != ' ' && line[i] != '\n')
+			return (error_msg(0, "Top/Bottom map line should be 1's & spaces.", NULL));
+		i++;
+	}
+	ft_printf("Found top/bottom: %s\n", line);
+	return (true);
+}
+
+bool	check_mid_line_char(char c)
+{
+	return (c != '0' && c != '1' && c != ' '
+		&& c != '\n' && c != 'N'
+		&& c != 'S' && c != 'E' && c != 'W');
+}
+
+bool	validate_mid_line(char *line)
+{
+	int i;
+
+	if (!line)
+		return (error_msg(0, "Validate mid_line, passed null line.", NULL));
+	i = 0;
+	while (line[i])
+	{
+		if (check_mid_line_char(line[i]))
+			return (error_msg(0, "Mid map line should have 1 0NSEWnewline.", NULL));
+		i++;
+	}
+	ft_printf("Found mid line: %s\n", line);
+	return (true);
+}
+
+bool	validate_map_lines(t_map *map)
+{
+	int	i;
+
+	if (!map)
+			return (error_msg(0, "Validate Map lines passed null map.", NULL));
+	i = 0;
+	while (map->data[i])
+	{
+		if ((i == 0 || i == ft_str_arr_len((const char **)map->data)))
 		{
-			free(map[i]);
-			map[i] = trim;
+			if (!validate_all_ones_line(map->data[i]))
+				return (error_msg(0, "Failed to validate all top/bottom line.", NULL));
+		}
+		else
+		{
+			if (!validate_mid_line(map->data[i]))
+				return (error_msg(0, "Failed to validate mid line.", NULL));
 		}
 		i++;
 	}
 	return (true);
 }
 
-bool	assign_texture_path(char *line, char *id, char **tex_path)
+bool	validate_space_border_lines(t_map *map)
 {
-	int i;
+	int	i;
 
-	if (ft_strncmp(line, id, ft_strlen(id)) == 0 && !*tex_path)
-	{
-		i = ft_strlen(id);
-		while (line[i] == ' ' || line[i] == '\t')
-			i++;
-		*tex_path = ft_strdup(line + i);
-		if (!*tex_path)
-			return (error_msg(0, "Failed to dup texture path.", NULL));
-		return (true);
-	}
-	return (false);
-}
-
-bool	chk_val(int color)
-{
-	return (color >= 0 && color <= 255);
-}
-
-bool	assign_color_values(char *line, char *id, t_rgb *val)
-{
-	char	**split;
-	int		len;
-
-	if (ft_strncmp(line, id, ft_strlen(id)) == 0 && !val)
-	{
-		split = ft_split(line, ',');
-		len  = ft_str_arr_len((const char **)split);
-		if (!split || len < 3)
-		{
-			ft_str_arr_free(&split);
-			return (error_msg(0, "Failed to slip color values.", NULL));
-		}
-		(val)->b = ft_atoi(split[len - 1]);
-		(val)->g = ft_atoi(split[len - 2]);
-		(val)->r = ft_atoi(split[len - 3]);
-		if (!chk_val(val->r) || !chk_val(val->g) || !chk_val(val->b))
-		{
-			ft_str_arr_free(&split);
-			return (error_msg(0, "RGB values have to be 0-255.", NULL));
-		}
-		ft_str_arr_free(&split);
-	}
-	return (false);
-}
-
-bool	match_texture_path(char *line, t_tex *txs)
-{
-	bool	found;
-
-	found = false;
-	if (assign_texture_path(line, "NO ", &txs->north_wall->path))
-		found = true;
-	if (assign_texture_path(line, "SO ", &txs->south_wall->path))
-		found = true;
-	if (assign_texture_path(line, "EA ", &txs->east_wall->path))
-		found = true;
-	if (assign_texture_path(line, "WE ", &txs->west_wall->path))
-		found = true;
-	if (assign_color_values(line, "F ", txs->floor))
-		found = true;
-	if (assign_color_values(line, "C ", txs->ceiling))
-		found = true;
-	return (found);
-}
-
-void	set_init_textures_paths_to_null(t_tex *txs)
-{
-	txs->north_wall->path = NULL;
-	txs->south_wall->path = NULL;
-	txs->east_wall->path = NULL;
-	txs->west_wall->path = NULL;
-}
-
-bool	init_textures(t_tex *txs)
-{
-	txs->floor = malloc(sizeof(t_rgb));
-	if (!txs->floor)
-		return (error_msg(0, "floor failed malloc.", NULL));
-	txs->ceiling = malloc(sizeof(t_rgb));
-	if (!txs->ceiling)
-		return (error_msg(0, "Ceiling failed malloc.", NULL));
-	txs->north_wall = malloc(sizeof(t_image));
-	if (!txs->north_wall)
-		return (error_msg(0, "North Wall failed malloc.", NULL));
-	txs->south_wall = malloc(sizeof(t_image));
-	if (!txs->south_wall)
-		return (error_msg(0, "South Wall failed malloc.", NULL));
-	txs->east_wall = malloc(sizeof(t_image));
-	if (!txs->east_wall)
-		return (error_msg(0, "East Wall failed malloc.", NULL));
-	txs->west_wall = malloc(sizeof(t_image));
-	if (!txs->west_wall)
-		return (error_msg(0, "West Wall failed malloc.", NULL));
-	set_init_textures_paths_to_null(txs);
-	return (true);	
-}
-
-bool	validate_first_six_lines(char **map, t_tex *txs)
-{
-	int		i;
-	
+	if (!map)
+		return (error_msg(0, "Validate space border lines passed null map.", NULL));
 	i = 0;
-	if (!init_textures(txs))
-		return (error_msg(0, "t_tex failed malloc.", NULL));
-	while (i < 6)
+	while (map->data[i])
 	{
-		match_texture_path(map[i], txs);
+		if ((i > 0 && i < ft_str_arr_len((const char **)map->data)))
+		{
+			ft_printf("If line contains ' ' check the space in the [i - 1] && [i + 1] for a '1'\n");	
+		}
 		i++;
 	}
-	if (!txs->north_wall->path || !txs->south_wall->path ||
-		!txs->east_wall->path || !txs->west_wall->path ||
-		!txs->ceiling || !txs->floor)
-		return (error_msg(0, "Failed to find all textures.", NULL));
 	return (true);
 }
 
@@ -162,7 +117,13 @@ bool	validate_cub_data(t_map *map, t_tex *txs)
 	if (!trim_first_six_lines(map->data))
 		return (error_msg(0, "Failed to trim first six lines.", NULL));
 	if (!validate_first_six_lines(map->data, txs))
-		return (error_msg(0, "Failed to check order of data.", NULL));
+		return (error_msg(0, "Failed to validate 1st six lines.", NULL));
+	if (!extract_remaining_lines(map, txs))
+		return (error_msg(0, "Failed to extract lines.", NULL));
+	if (!validate_map_lines(map))
+		return (error_msg(0, "Failed to validate map lines.", NULL));
+	if (!validate_space_border_lines(map))
+		return (error_msg(0, "Failed to check space borders.", NULL));
 	return (true);	
 }
 
