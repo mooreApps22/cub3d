@@ -46,7 +46,6 @@ void	move_right(t_cube *data);
 void	turn_left(t_cube *data);
 void	turn_right(t_cube *data);
 
-
 /*~~~ RENDERING - VISUALS ~~~*/
 void	iterate_down_image_buffer(t_image *buf, t_image *asset);
 void	iterate_across_image_buffer(t_image *buf, t_tex *assets);

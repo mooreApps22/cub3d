@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:29:19 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/24 19:29:11 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/27 15:31:44 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	main(int ac, char **av)
 	
 	validate_input(ac, av);
 	clean_initialize(&data);
-	parse_main(&data, av[1]);
+	if (!parse_main(&data, av[1]))
+		exit_cleanup("Error - Parsing failed\n", &data, errno);
 //	init_mlx(&data);
 	
 	// game_start(&data);

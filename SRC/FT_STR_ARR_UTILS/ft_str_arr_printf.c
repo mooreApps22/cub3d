@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 15:51:08 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/24 19:12:47 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/27 15:14:29 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_str_arr_printf(char **str_arr)
 		return ;
 	while (*str_arr)
 	{
-		ft_printf("%s\n", *str_arr);
+		ft_printf("%s", *str_arr);
 		str_arr++;
 	}
 }

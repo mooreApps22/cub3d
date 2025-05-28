@@ -3,225 +3,176 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
+/*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 15:57:39 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/24 19:35:18 by smoore           ###   ########.fr       */
+/*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
+/*   Updated: 2025/05/27 19:54:12 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-static t_dir	find_direction(char *dir)
+
+bool	trim_first_six_lines(char **map)
 {
-	if (dir == NULL)
-		return (UNKNOWN);
-	if (dir[0] == 'N' && dir[1] == 'O' && dir[2] == '\0')
-		return (NORTH);
-	else if (dir[0] == 'S' && dir[1] == 'O' && dir[2] == '\0')
-		return (SOUTH);
-	else if (dir[0] == 'W' && dir[1] == 'E' && dir[2] == '\0')
-		return (WEST);
-	else if (dir[0] == 'E' && dir[1] == 'A' && dir[2] == '\0')
-		return (EAST);
-	else if (dir[0] == 'F' && dir[1] == '\0')
-		return (FLOOR);
-	else if (dir[0] == 'C' && dir[1] == '\0')
-		return (CEILING);
-	return (UNKNOWN);
+	int		i;
+	char	*trim;
+
+	i = 0;
+	while (i < 6)
+	{
+		trim = ft_strtrim(map[i], " \n\t\r");
+		printf("TRIM: %s\n", trim);
+		if (!trim)
+			return (error_msg(0, "failed to trim texture line.", NULL));
+		if (map[i])
+		{
+			free(map[i]);
+			map[i] = trim;
+		}
+		i++;
+	}
+	return (true);
 }
 
-static int	dptr_len(void **dptr)
+bool	assign_texture_path(char *line, char *id, char **tex_path)
 {
-	int	len;
+	int i;
 
-	if (dptr == NULL)
-		return (-1);
-	len = 0;
-	while (dptr[len] != NULL)
+	if (ft_strncmp(line, id, ft_strlen(id)) == 0 && !*tex_path)
 	{
-		len++;
+		i = ft_strlen(id);
+		while (line[i] == ' ' || line[i] == '\t')
+			i++;
+		*tex_path = ft_strdup(line + i);
+		if (!*tex_path)
+			return (error_msg(0, "Failed to dup texture path.", NULL));
+		return (true);
 	}
-	return (len);
+	return (false);
 }
 
-static void	add_rgb(t_cube *data, char **split, t_dir dir, int *error_flag)
+bool	chk_val(int color)
 {
-	char	**rgb;
-
-	if (dptr_len((void **)split) != 2)
-	{
-		(*error_flag)++;
-		return ;
-	}
-	rgb = ft_split(split[1], ',');
-	if (rgb == NULL || dptr_len((void **) rgb) != 3)
-	{
-		(*error_flag)++;
-		free_dptr((void **) rgb);
-		return ;
-	}
-	if (dir == FLOOR)
-	{
-		if (data->textures.floor != NULL)
-		{
-			free(data->textures.floor);
-			(*error_flag)++;
-		}
-		data->textures.floor = safe_malloc(sizeof(t_rgb), 1);
-		data->textures.floor->r = ft_atoi(rgb[0]);
-		data->textures.floor->g = ft_atoi(rgb[1]);
-		data->textures.floor->b = ft_atoi(rgb[2]);
-	}
-	else if (dir == CEILING)
-	{
-		if (data->textures.ceiling != NULL)
-		{
-			free(data->textures.ceiling);
-			(*error_flag)++;
-		}
-		data->textures.ceiling = safe_malloc(sizeof(t_rgb), 1);
-		data->textures.ceiling->r = ft_atoi(rgb[0]);
-		data->textures.ceiling->g = ft_atoi(rgb[1]);
-		data->textures.ceiling->b = ft_atoi(rgb[2]);
-	}
-	free_dptr((void **) rgb);
-
+	return (color >= 0 && color <= 255);
 }
 
-static void	add_path(t_cube *data, char **split, t_dir dir, int *error_flag)
-{
-	if (dptr_len((void **)split) != 2)
-	{
-		(*error_flag)++;
-		return ;
-	}
-	if (dir == NORTH)
-	{
-		if (data->textures.north_wall != NULL)
-		{
-			free(data->textures.north_wall->path);
-			(*error_flag)++;
-		}
-		data->textures.north_wall = safe_malloc(sizeof(t_image), 1);
-		data->textures.north_wall->path = ft_strdup(split[1]);
-
-	}
-	else if (dir == SOUTH)
-	{
-		if (data->textures.south_wall != NULL)
-		{
-			free(data->textures.south_wall);
-			(*error_flag)++;
-		}
-		data->textures.south_wall = safe_malloc(sizeof(t_image), 1);
-		data->textures.south_wall->path = ft_strdup(split[1]);
-	}
-	else if (dir == EAST)
-	{
-		if (data->textures.east_wall != NULL)
-		{
-			free(data->textures.east_wall);
-			(*error_flag)++;
-		}
-		data->textures.east_wall = safe_malloc(sizeof(t_image), 1);
-		data->textures.east_wall->path = ft_strdup(split[1]);
-	}
-	else if (dir == WEST)
-	{
-		if (data->textures.west_wall != NULL)
-		{
-			free(data->textures.west_wall);
-			(*error_flag)++;
-		}
-		data->textures.west_wall = safe_malloc(sizeof(t_image), 1);
-		data->textures.west_wall->path = ft_strdup(split[1]);
-	}
-}
-
-static int	parse_line(t_cube *data, char *line, int *error_flag)
+bool	assign_color_values(char *line, char *id, t_rgb *val)
 {
 	char	**split;
-	t_dir	dir;
+	int		len;
 
-	split = ft_split(line, ' ');
-	if (split == NULL)
-		return (0);
-	if (split[0] == NULL)
+	if (ft_strncmp(line, id, ft_strlen(id)) == 0 && !val)
 	{
-		free_dptr((void **)split);
-		return (1);
+		split = ft_split(line, ',');
+		len  = ft_str_arr_len((const char **)split);
+		if (!split || len < 3)
+		{
+			ft_str_arr_free(&split);
+			return (error_msg(0, "Failed to slip color values.", NULL));
+		}
+		(val)->b = ft_atoi(split[len - 1]);
+		(val)->g = ft_atoi(split[len - 2]);
+		(val)->r = ft_atoi(split[len - 3]);
+		if (!chk_val(val->r) || !chk_val(val->g) || !chk_val(val->b))
+		{
+			ft_str_arr_free(&split);
+			return (error_msg(0, "RGB values have to be 0-255.", NULL));
+		}
+		ft_str_arr_free(&split);
 	}
-	dir = find_direction(split[0]);
-//	printf("DIR VARIABLE IS %d\n", dir);
-	if (dir == NORTH || dir == EAST || dir == SOUTH || dir == WEST)
-		add_path(data, split, dir, error_flag);
-	else if (dir == FLOOR || dir == CEILING)
-		add_rgb(data, split, dir, error_flag);
-	else
-		(*error_flag)++;
-	printf("ERROR FLAG VALUE IS %d\n", *error_flag);
-	free_dptr((void **)split);
-	return (1);
+	return (false);
 }
 
-void	parse_textures(t_cube* data, int fd, char **line)
+bool	match_texture_path(char *line, t_tex *txs)
 {
-	int	error_flag;
+	bool	found;
 
-	error_flag = 0;
-	while (true)
-	{
-		if (all_textures_found(&data->textures))
-			break ;
-		*line = get_next_line(fd);
-		if (!line)
-			exit_cleanup("Error - Reading .cub file!", data, 2);
-		if (parse_line(data, *line, &error_flag) == 0)
-		{
-			error_flag++;
-			break ;
-		}
-		free(*line);
-	}
-	if (error_flag != 0)
-	{
-		while (*line)
-		{
-			free(*line);
-			*line = get_next_line(fd);
-		}
-		exit_cleanup("Parsing went wrong\n", data, 3);
-	}
+	found = false;
+	if (assign_texture_path(line, "NO ", &txs->north_wall->path))
+		found = true;
+	if (assign_texture_path(line, "SO ", &txs->south_wall->path))
+		found = true;
+	if (assign_texture_path(line, "EA ", &txs->east_wall->path))
+		found = true;
+	if (assign_texture_path(line, "WE ", &txs->west_wall->path))
+		found = true;
+	if (assign_color_values(line, "F ", txs->floor))
+		found = true;
+	if (assign_color_values(line, "C ", txs->ceiling))
+		found = true;
+	return (found);
 }
 
-void	parse_main(t_cube *data, char *filename)
+void	set_init_textures_paths_to_null(t_tex *txs)
 {
-	int		fd;
-	char	**line;
+	txs->north_wall->path = NULL;
+	txs->south_wall->path = NULL;
+	txs->east_wall->path = NULL;
+	txs->west_wall->path = NULL;
+}
 
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		exit_cleanup("Error - Open failed in parse!\n", data, errno);
-	line = NULL;
-	parse_textures(data, fd, line);
-	parse_map(data, fd, line);
+bool	init_textures(t_tex *txs)
+{
+	txs->floor = malloc(sizeof(t_rgb));
+	if (!txs->floor)
+		return (error_msg(0, "floor failed malloc.", NULL));
+	txs->ceiling = malloc(sizeof(t_rgb));
+	if (!txs->ceiling)
+		return (error_msg(0, "Ceiling failed malloc.", NULL));
+	txs->north_wall = malloc(sizeof(t_image));
+	if (!txs->north_wall)
+		return (error_msg(0, "North Wall failed malloc.", NULL));
+	txs->south_wall = malloc(sizeof(t_image));
+	if (!txs->south_wall)
+		return (error_msg(0, "South Wall failed malloc.", NULL));
+	txs->east_wall = malloc(sizeof(t_image));
+	if (!txs->east_wall)
+		return (error_msg(0, "East Wall failed malloc.", NULL));
+	txs->west_wall = malloc(sizeof(t_image));
+	if (!txs->west_wall)
+		return (error_msg(0, "West Wall failed malloc.", NULL));
+	set_init_textures_paths_to_null(txs);
+	return (true);	
+}
 
+bool	validate_first_six_lines(char **map, t_tex *txs)
+{
+	int		i;
 	
+	i = 0;
+	if (!init_textures(txs))
+		return (error_msg(0, "t_tex failed malloc.", NULL));
+	while (i < 6)
+	{
+		match_texture_path(map[i], txs);
+		i++;
+	}
+	if (!txs->north_wall->path || !txs->south_wall->path ||
+		!txs->east_wall->path || !txs->west_wall->path ||
+		!txs->ceiling || !txs->floor)
+		return (error_msg(0, "Failed to find all textures.", NULL));
+	return (true);
+}
 
-	// printf("Value held by NORTH PTR %s\n", data->textures.north_wall);
-	// printf("Value held by SOUTH PTR %s\n", data->textures.south_wall);
-	// printf("Value held by WEST PTR %s\n", data->textures.west_wall);
-//	 printf("Value held by EAST PTR %s\n", data->textures.east_wall->path);
+bool	validate_cub_data(t_map *map, t_tex *txs)
+{
+	if (!map)
+		return (error_msg(0, "No map to validate.", NULL));
+	if (!trim_first_six_lines(map->data))
+		return (error_msg(0, "Failed to trim first six lines.", NULL));
+	if (!validate_first_six_lines(map->data, txs))
+		return (error_msg(0, "Failed to check order of data.", NULL));
+	return (true);	
+}
 
-	// printf("Value held by CEILING R PTR %d\n", data->textures.ceiling->r);
-	// printf("Value held by CEILING G PTR %d\n", data->textures.ceiling->g);
-	// printf("Value held by CEILING B PTR %d\n", data->textures.ceiling->b);
-
-	// printf("Value held by GROUND R PTR %d\n", data->textures.floor->r);
-	// printf("Value held by GROUND G PTR %d\n", data->textures.floor->g);
-	// printf("Value held by GROUND B PTR %d\n", data->textures.floor->b);
-
-
-	close(fd);
+bool	parse_main(t_cube *data, char *filename)
+{
+	if (!open_cub_file_and_copy_data(data, filename))
+		return (error_msg(0, "failed to extract cub file data.", NULL));
+	if (!validate_cub_data(&data->map, &data->textures))
+		return (error_msg(0, "failed to validate cub data.", NULL));
+	return (true);	
+			
+	
 }

@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:40:00 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/28 11:20:21 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:26:05 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ typedef struct s_mlx
 /*~~~ Map Data ~~~*/
 typedef struct s_map
 {
-	char	**map;
-	unsigned short	m_height;
-	unsigned short	m_width;
+	char			**data;
+	unsigned short	height;
+	unsigned short	width;
 }	t_map;
 
 /*~~~ Player Data ~~~*/
@@ -124,7 +124,7 @@ typedef struct s_cube
 {
 	t_mlx	mlx_data;
 	t_image	image;
-	t_map	map_data;
+	t_map	map;
 	t_tex	textures;
 	t_ply	player;
 	int		reset_frame; // signal for resetting the frame

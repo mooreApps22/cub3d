@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:56:15 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/24 17:46:07 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/27 15:11:28 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	clean_initialize(t_cube *data)
 	data->image.bpp = -1;
 	data->image.line_len = -1;
 	data->image.endian = -1;
-	data->map_data.map = ft_str_arr_init();
+	data->map.data = NULL;
 	data->textures.north_wall = NULL;
 	data->textures.south_wall = NULL;
 	data->textures.east_wall = NULL;
