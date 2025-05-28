@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:56:15 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/23 13:53:33 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/24 17:46:07 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ void	init_mlx(t_cube *data)
 	data->image.img = mlx_new_image(data->mlx_data.mlx_ptr, WIDTH, HEIGHT);
 	if (data->image.img == NULL)
 		exit_cleanup ("Error - `mlx_new_image`\n", data, errno);
-	data->image.addr = mlx_get_data_addr(data->image.img, &data->image.bpp,
-		&data->image.line_len, &data->image.endian);
+	data->image.addr = get_image_addr(&data->image);
 	data->reset_frame = 1;
 }
 
@@ -37,7 +36,7 @@ void	clean_initialize(t_cube *data)
 	data->image.bpp = -1;
 	data->image.line_len = -1;
 	data->image.endian = -1;
-	data->map_data.map = NULL;
+	data->map_data.map = ft_str_arr_init();
 	data->textures.north_wall = NULL;
 	data->textures.south_wall = NULL;
 	data->textures.east_wall = NULL;

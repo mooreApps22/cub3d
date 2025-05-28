@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:40:00 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/23 17:28:43 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/28 11:20:21 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,17 @@
 /*~~~ Graphical Data ~~~*/
 typedef struct s_image
 {
-	void	*img;
-	char	*addr;
-	int		bpp;
-	int		line_len;
-	int		endian;
-	int		width;
-	int		height;
+	char			*path;
+	void			*img;
+	char			*addr;
+	int				bpp;
+	int				line_len;
+	int				endian;
+	int				width;
+	int				height;
+	int				x; //
+	int				y; //
+	unsigned int	color;
 }	t_image;
 
 /*~~~ MLX Window Manager Data ~~~*/
@@ -100,10 +104,10 @@ typedef struct s_tuple
 /*~~~ Texture Data ~~~*/
 typedef struct s_tex
 {
-	char	*north_wall;
-	char	*south_wall;
-	char	*west_wall;
-	char	*east_wall;
+	t_image	*north_wall;
+	t_image	*south_wall;
+	t_image	*west_wall;
+	t_image	*east_wall;
 	t_rgb	*floor;
 	t_rgb	*ceiling;
 }	t_tex;
