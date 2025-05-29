@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/28 19:44:55 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/29 12:57:04 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ bool	validate_space_border_lines(t_map *map)
 	{
 		if ((i > 0 && i < ft_str_arr_len((const char **)map->data)))
 		{
-			ft_printf("If line contains ' ' check the space in the [i - 1] && [i + 1] for a '1'\n");	
+			ft_printf("If line contains ' ' check the space in the [i - 1] && [i + 1] for a '1'\n");
 		}
 		i++;
 	}
