@@ -62,6 +62,8 @@ char			*get_image_addr(t_image *asset);
 void			blit_pixel_color(t_image *asset, int x, int y, int color);
 int				render_loop(t_cube *data);
 int				render_timer(t_cube *data);
+double			wall_height(t_intersect *inter);
+
 
 
 /*~~~ RENDERING - GET_ASSETS ~~~*/

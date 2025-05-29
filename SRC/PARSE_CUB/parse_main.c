@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/29 11:48:57 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/29 14:17:44 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ bool	validate_all_ones_line(char *line)
 			return (error_msg(0, "Top/Bottom map line should be 1's & spaces.", NULL));
 		i++;
 	}
-	ft_printf("Found top/bottom: %s\n", line);
+	// ft_printf("Found top/bottom: %s\n", line);
 	return (true);
 }
 
@@ -64,7 +64,7 @@ bool	validate_mid_line(char *line)
 			return (error_msg(0, "Mid map line should have 1 0NSEWnewline.", NULL));
 		i++;
 	}
-	ft_printf("Found mid line: %s\n", line);
+	// ft_printf("Found mid line: %s\n", line);
 	return (true);
 }
 
@@ -103,7 +103,7 @@ bool	validate_space_border_lines(t_map *map)
 	{
 		if ((i > 0 && i < ft_str_arr_len((const char **)map->data)))
 		{
-			ft_printf("If line contains ' ' check the space in the [i - 1] && [i + 1] for a '1'\n");	
+			// ft_printf("If line contains ' ' check the space in the [i - 1] && [i + 1] for a '1'\n");	
 		}
 		i++;
 	}

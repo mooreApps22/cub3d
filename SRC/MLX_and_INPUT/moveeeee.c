@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:00:29 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/29 11:50:20 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:40:25 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	validate_movement(t_ply *player, t_tuple dir, t_map *level)
 
 	check_x = (player->pos.x + dir.x) / TILE_SIZE;
 	check_y = (player->pos.y + dir.y) / TILE_SIZE;
-	if (level->data[(int)check_y][(int)check_x] != 0) //This needs update as entire square will be truncated!
+	if (level->data[(int)check_y + 1][(int)check_x + 1] != 0) //This needs update as entire square will be truncated!
 	{
 		printf("Hold your horses cowboy, you can't move there!\n");
 		return ;

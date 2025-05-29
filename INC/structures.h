@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:40:00 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/28 17:40:38 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/29 16:52:04 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 # define STRUCTURES_H
 
 # ifndef HEIGHT
-#  define HEIGHT 200
+#  define HEIGHT 500
 # endif
 
 # ifndef WIDTH
-#  define WIDTH 320
+#  define WIDTH 640
 # endif
 
 # ifndef TURN_RATE

@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:29:19 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/28 16:20:48 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/29 17:03:15 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,18 @@ int	main(int ac, char **av)
 	if (!parse_main(&data, av[1]))
 		exit_cleanup("Error - Parsing failed\n", &data, errno);
 	init_mlx(&data);
-	data.player.alpha = 0; // PLAYER DIRECTION NOT INITIALIZED!!! 0 is east
+	
+	
+	data.player.alpha = M_PI /2; // PLAYER DIRECTION NOT INITIALIZED!!! 0 is east
+	data.player.pos.x = TILE_SIZE * 1 + TILE_SIZE / 2; // player at (1,4)
+	data.player.pos.y = TILE_SIZE * 4 + TILE_SIZE / 2;
+	data.map.width = 4;
+	data.map.height = 6;
 	gettimeofday(&data.start, NULL); //Need to get the start of game/frame time
 	
-	// game_start(&data);
+	game_start(&data);
 
-	ray_casting_main(&data);
+	// free(ray_casting_main(&data));
 
 	printf("REACHED END OF MAIN\n");
 	exit_cleanup("Thanks for playing our game, we hope you hated it!\n", &data, 0);
