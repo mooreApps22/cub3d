@@ -3,17 +3,17 @@ SO   ./TEXTURES/south.xpm
   
       
 
-
 WE ./TEXTURES/west.xpm
+
 EA ./TEXTURES/east.xpm
 F 220,100,0
 C 225,30,0
 
 
 
-1111
-1001
-1011
-1001
-1N01
+    1111111
+ 1   101 101
+1011  1   1
+10S1
+1S01
 1111

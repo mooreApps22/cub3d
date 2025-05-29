@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/29 14:04:28 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/29 15:57:33 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,22 +70,36 @@ bool	match_texture_path(char *line, t_tex *txs)
 	return (found);
 }
 
-bool	validate_first_six_lines(char **map, t_tex *txs)
+bool	validate_all_textures_are_found(t_tex *txs)
+{
+	return (txs->north_wall->path &&
+		txs->south_wall->path && 
+		txs->east_wall->path &&
+		txs->west_wall->path && 
+		txs->ceiling->r >= 0 &&
+		txs->ceiling->g >= 0 &&
+		txs->ceiling->b >= 0 &&
+		txs->floor->r >= 0 &&
+		txs->floor->g >= 0 &&
+		txs->floor->b >= 0);
+}
+
+bool	validate_first_six_lines(char **map, t_tex *txs, int *map_line_start)
 {
 	if (!init_textures(txs))
 		return (error_msg(0, "t_tex failed malloc.", NULL));
 	while (true)
 	{
-		match_texture_path(*map, txs);
-		ft_printf("Mapline$ %s\n", *map);
-		if (txs->north_wall->path && txs->south_wall->path && 
-			txs->east_wall->path && txs->west_wall->path && 
-			txs->ceiling && txs->floor)
-			break ;
 		if (!(*map))
 		{
+			if (validate_all_textures_are_found(txs))
+				break ;
 			return (error_msg(0, "Failed to match texture paths.", NULL)); //
 		}
+		match_texture_path(*map, txs);
+		(*map_line_start)++;
+		if (validate_all_textures_are_found(txs))
+			break ;
 		map++;
 	}
 	return (true);

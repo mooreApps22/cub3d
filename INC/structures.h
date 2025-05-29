@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:40:00 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/29 13:36:56 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/29 15:40:53 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_map
 	char			**data;
 	unsigned short	height;
 	unsigned short	width;
+	int				map_line_start;
 }	t_map;
 
 
