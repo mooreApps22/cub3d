@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/27 15:28:24 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/28 14:16:43 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,17 @@ bool	error_msg(int fd, char *msg, char **cub)
 		ft_str_arr_free(&cub);
 	return (false);
 }
+/*
+11111111
+10000001
+10111111
+101     
+10111001
+10000001
+11111111
 
 
+*/
 bool	load_cub_file_contents(char ***cub, int fd)
 {
 	char	*line;

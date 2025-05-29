@@ -41,6 +41,8 @@ SRC = \
 		SRC/FT_STR_ARR_UTILS/ft_str_arr_printf.c \
 		SRC/FT_STR_ARR_UTILS/ft_strcmp.c \
 		SRC/PARSE_CUB/parse_main.c \
+		SRC/PARSE_CUB/parse_first_six_lines.c \
+		SRC/PARSE_CUB/parse_first_six_lines_utils.c \
 		SRC/PARSE_CUB/open_cub_file.c \
 		SRC/INITIALIZE/validate_input.c \
 		SRC/INITIALIZE/init_structures.c \
@@ -101,6 +103,10 @@ mapnotlast:
 missingval:
 	@./$(NAME) CUBFILES/INVALID/missingval.cub
 
+gdb:
+	@gdb --args ./$(NAME) CUBFILES/VALID/valid_file_1.cub
+
+
 
 ##############################################
 
@@ -138,6 +144,7 @@ fclean: clean
 	@rm -f $(VALGRIND)
 	@make fclean -C $(LIBFT_PATH)
 	@make fclean -C $(MUK_LIB_PATH)
+	@rm -f valgrind-out.txt
 
 re: fclean all
 

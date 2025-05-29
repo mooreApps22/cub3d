@@ -52,8 +52,8 @@ void	iterate_down_image_buffer(t_image *buf, t_image *asset);
 void	iterate_across_image_buffer(t_image *buf, t_tex *assets);
 void	render_frame(t_cube *data, t_image *buf, t_tex *tx);
 
-int	ray_casting_main(t_cube *data);
-double	normalize_angle(double alpha);
+t_intersect	*ray_casting_main(t_cube *data);
+double		normalize_angle(double alpha);
 
 
 /*~~~ RENDERING - UTILS ~~~*/
