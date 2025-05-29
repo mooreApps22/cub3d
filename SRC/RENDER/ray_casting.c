@@ -6,14 +6,14 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:06:58 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/28 17:45:39 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/29 11:54:14 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
 
-double	wall_height(t_cube *data, t_intersect *inter)
+double	wall_height(t_intersect *inter)
 {
 	double	projected_slice_height;
 
@@ -26,11 +26,12 @@ double	wall_height(t_cube *data, t_intersect *inter)
 double	normalize_angle(double alpha)
 {
 	if (alpha <= M_PI || alpha >= -M_PI)
-		return ;
+		return (alpha);
 	while (alpha >= M_PI)
 		(alpha) -= M_PI;
 	while (alpha <= -M_PI)
 		(alpha) += M_PI;
+	return (alpha);
 }
 
 double	distance(t_tuple source, t_tuple destination) // there is a faster equation where dist(x)/cos(alpha)
@@ -95,7 +96,7 @@ t_intersect	find_intersection(t_cube *data, t_tuple ray, double alpha)
 	inter.x = pos.x;
 	inter.y = pos.y;
 	inter.distance = distance(pos, data->player.pos);
-	inter.distance *= cos(abs(data->player.alpha - alpha));
+	inter.distance *= cos(fabs(data->player.alpha - alpha));
 	return (inter);
 }
 

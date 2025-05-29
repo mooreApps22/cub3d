@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:40:00 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/28 17:40:38 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/29 13:36:56 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ typedef struct s_ply
 	// double	x_pos;
 	// double	y_pos;
 	t_tuple	pos;
-	double	alpha;	// Angle between 0 axis (North) and player character
+	double	alpha;	// N: M_PI/2, E: 0, W: M_PI, S:-M_PI/2 
 }	t_ply;
 
 /*~~~ Texture Data ~~~*/

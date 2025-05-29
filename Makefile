@@ -104,7 +104,7 @@ missingval:
 	@./$(NAME) CUBFILES/INVALID/missingval.cub
 
 gdb:
-	@gdb --args ./$(NAME) CUBFILES/VALID/valid_file_1.cub
+	@gdb --args ./$(NAME) $(MAP_NAME)
 
 
 
@@ -144,6 +144,7 @@ fclean: clean
 	@rm -f $(VALGRIND)
 	@make fclean -C $(LIBFT_PATH)
 	@make fclean -C $(MUK_LIB_PATH)
+	@rm -f valgrind-out.txt
 
 re: fclean all
 

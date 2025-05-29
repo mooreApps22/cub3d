@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/28 16:54:53 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/29 14:04:28 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,20 +72,21 @@ bool	match_texture_path(char *line, t_tex *txs)
 
 bool	validate_first_six_lines(char **map, t_tex *txs)
 {
-	int		i;
-	
-	i = 0;
 	if (!init_textures(txs))
 		return (error_msg(0, "t_tex failed malloc.", NULL));
-	while (i < 6)
+	while (true)
 	{
-		if (!match_texture_path(map[i], txs))
+		match_texture_path(*map, txs);
+		ft_printf("Mapline$ %s\n", *map);
+		if (txs->north_wall->path && txs->south_wall->path && 
+			txs->east_wall->path && txs->west_wall->path && 
+			txs->ceiling && txs->floor)
+			break ;
+		if (!(*map))
+		{
 			return (error_msg(0, "Failed to match texture paths.", NULL)); //
-		i++;
+		}
+		map++;
 	}
-	if (!txs->north_wall->path || !txs->south_wall->path ||
-		!txs->east_wall->path || !txs->west_wall->path ||
-		!txs->ceiling || !txs->floor)
-		return (error_msg(0, "Failed to find all textures.", NULL));
 	return (true);
 }
