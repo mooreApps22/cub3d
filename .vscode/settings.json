@@ -5,6 +5,7 @@
 		"muk_lib.h": "c",
 		"structures.h": "c",
 		"mlx.h": "c",
-		"tuple": "c"
+		"tuple": "c",
+		"cmath": "c"
 	}
 }

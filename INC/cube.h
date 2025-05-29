@@ -12,6 +12,7 @@
 
 # include <errno.h>
 # include <X11/keysym.h>
+#include <sys/time.h>
 
 # include "structures.h"
 # include "ft_str_arr_utils.h"
@@ -51,14 +52,23 @@ void	iterate_down_image_buffer(t_image *buf, t_image *asset);
 void	iterate_across_image_buffer(t_image *buf, t_tex *assets);
 void	render_frame(t_cube *data, t_image *buf, t_tex *tx);
 
+int	ray_casting_main(t_cube *data);
+double	normalize_angle(double alpha);
+
+
 /*~~~ RENDERING - UTILS ~~~*/
 unsigned int	get_color(t_image* asset, int x, int y);
 char			*get_image_addr(t_image *asset);
 void			blit_pixel_color(t_image *asset, int x, int y, int color);
 int				render_loop(t_cube *data);
+int				render_timer(t_cube *data);
+
 
 /*~~~ RENDERING - GET_ASSETS ~~~*/
 t_image			*get_asset(t_tex *assets);
+
+/*~~~ RAYS - VECTORS ~~~*/
+t_tuple	find_forw_vector(t_cube *data);
 
 /*~~~ CLEANUP ~~~*/
 void	exit_cleanup(char *msg, t_cube *data, int exit_code);

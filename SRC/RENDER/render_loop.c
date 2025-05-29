@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:58:10 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/23 17:15:32 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/28 14:24:55 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	iterate_down_image_buffer(t_image *buf, t_image *asset)
 	{
 		if (buf->y >= asset->y && buf->y <= asset->height + asset->y)
 		{
-			asset->color = get_color(asset, asset->x, asset->y);
+			asset->color = 0; get_color(asset, asset->x, asset->y);
 			blit_pixel_color(buf, buf->x, buf->y, asset->color); // skip or repeat option 
 		}
 		buf->y++;
@@ -55,10 +55,11 @@ void	render_frame(t_cube *data, t_image *buf, t_tex *tx)
 
 int	render_loop(t_cube *data)
 {
-	if (data->reset_frame)
+	if (data->reset_frame == 0)
 	{
 		render_frame(data, &data->image, &data->textures);
-		data->reset_frame = 0;
+		gettimeofday(&data->start, NULL);
 	}
+	data->reset_frame = render_timer(data);
 	return (0);
 }
