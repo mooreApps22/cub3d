@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:58:10 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/29 16:41:54 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/30 21:41:01 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	paint_walls(t_cube *data, t_image *buf, t_tex *tx, t_intersect *inter, int 
 	else if (inter->side == WEST)
 		color = t_rgb_to_hex(west);
 	wall_h = wall_height(inter);
-	printf("Wall height is %d\n", wall_h);
+	// printf("Wall height is %d\n", wall_h);
 	j = HEIGHT / 2 - wall_h / 2;
 	while (j < HEIGHT / 2 + wall_h / 2)
 	{
@@ -109,6 +109,8 @@ void	render_frame(t_cube *data, t_image *buf, t_tex *tx)
 
 int	render_loop(t_cube *data)
 {
+	// return (0);
+	data->reset_frame = 0;
 	if (data->reset_frame == 0)
 	{
 		if (data->image.img != NULL)
@@ -118,8 +120,10 @@ int	render_loop(t_cube *data)
 		render_frame(data, &data->image, &data->textures);
 		mlx_put_image_to_window(data->mlx_data.mlx_ptr, data->mlx_data.win_ptr, data->image.img, 0, 0);
 		gettimeofday(&data->start, NULL);
+		// printf("Player Location - X: %f\n", data->player.pos.x);
+		// printf("Player Location - Y: %f\n\n", data->player.pos.y);
 	}
-	data->reset_frame = render_timer(data);
+	// data->reset_frame = render_timer(data);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:06:58 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/29 16:51:12 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/30 21:49:05 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ double	wall_height(t_intersect *inter)
 
 double	normalize_angle(double alpha)
 {
-	if (alpha <= M_PI || alpha >= -M_PI)
+	if (alpha < 2 * M_PI || alpha >= 0)
 		return (alpha);
-	while (alpha >= M_PI)
+	while (alpha >= 2 * M_PI)
 		(alpha) -= M_PI;
-	while (alpha <= -M_PI)
-		(alpha) += M_PI;
+	while (alpha < 0)
+		(alpha) += 2 * M_PI;
 	return (alpha);
 }
 

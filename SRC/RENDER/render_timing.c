@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 11:51:41 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/28 12:55:39 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:18:34 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ int	render_timer(t_cube *data)
 	if (current.tv_usec - data->start.tv_usec < 1000000 / 30)
 	{
 		// printf("Not enough time passed\n");
-		return (1);
+		// return (1);
 	}
 	// gettimeofday(&start, NULL);
+		// printf("BANANANANANANNA\n\n\n");
 
 
 	// elapsed_usec = (current.tv_sec - data->start.tv_sec) * 1000000L + (current.tv_usec - data->start.tv_usec);

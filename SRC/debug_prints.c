@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate_input.c                                   :+:      :+:    :+:   */
+/*   debug_prints.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 15:53:45 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/30 16:22:16 by mcoskune         ###   ########.fr       */
+/*   Created: 2025/05/30 17:12:02 by mcoskune          #+#    #+#             */
+/*   Updated: 2025/05/30 17:19:01 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-void	validate_input(int ac, char **av)
+
+
+void	print_player_data(t_cube *data)
 {
-	if (ac != 2)
-		exit_cleanup("Error - Wrong AC\n", NULL, -1);
-	if (ft_strlen(av[1]) <= 3)
-		exit_cleanup("Error - File name too short!\n", NULL, -2);
-	if (check_extension(av[1], ".cub") != 0)
-		exit_cleanup("Error - Wrong file extension!\n", NULL, -3);
-	if (check_access(av[1], 0) != 0)
-		exit_cleanup("Error - File Permissions!\n", NULL, -4);
+	printf("Player X Grid Position: %d\n", (int)(data->player.pos.x / TILE_SIZE));
+	printf("Player Y Grid Position: %d\n\n", (int)(data->player.pos.y / TILE_SIZE));
+
+
+	printf("Player X Position: %f\n", data->player.pos.x);
+	printf("Player Y Position: %f\n\n", data->player.pos.y);
+
+	printf("Player Orientation: %f\n\n", data->player.alpha);
 }

@@ -43,6 +43,7 @@ SRC = \
 		SRC/PARSE_CUB/parse_main.c \
 		SRC/PARSE_CUB/parse_first_six_lines.c \
 		SRC/PARSE_CUB/parse_first_six_lines_utils.c \
+		SRC/PARSE_CUB/validate_player.c \
 		SRC/PARSE_CUB/open_cub_file.c \
 		SRC/INITIALIZE/validate_input.c \
 		SRC/INITIALIZE/init_structures.c \
@@ -54,6 +55,7 @@ SRC = \
 		SRC/RENDER/blit_utils.c \
 		SRC/RENDER/render_timing.c \
 		SRC/RENDER/ray_casting.c \
+		SRC/debug_prints.c \
 
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
 
@@ -104,7 +106,7 @@ missingval:
 	@./$(NAME) CUBFILES/INVALID/missingval.cub
 
 gdb:
-	@gdb --args ./$(NAME) CUBFILES/VALID/valid_file_1.cub
+	@gdb --args ./$(NAME) $(MAP_NAME)
 
 
 

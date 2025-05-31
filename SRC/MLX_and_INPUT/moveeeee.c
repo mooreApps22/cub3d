@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:00:29 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/29 16:40:25 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/30 21:53:43 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,19 @@ void	validate_movement(t_ply *player, t_tuple dir, t_map *level)
 	double	check_x;
 	double	check_y;
 
-	check_x = (player->pos.x + dir.x) / TILE_SIZE;
-	check_y = (player->pos.y + dir.y) / TILE_SIZE;
-	if (level->data[(int)check_y + 1][(int)check_x + 1] != 0) //This needs update as entire square will be truncated!
+	check_x = (player->pos.x + dir.x * 3) / TILE_SIZE;
+	check_y = (player->pos.y + dir.y * 3) / TILE_SIZE;
+
+	// printf("check x value is %d\n", (int)check_x);
+	// printf("check y value is %d\n", (int)check_y);
+	// printf("LEVEL MAP DATA %d\n", level->data[(int)check_y][(int)check_x]);
+	
+	if ((level->data[(int)check_y][(int)check_x]) != '0')
 	{
 		printf("Hold your horses cowboy, you can't move there!\n");
 		return ;
 	}
+	(void)level;
 	player->pos.x += dir.x;
 	player->pos.y += dir.y;
 }
@@ -60,10 +66,11 @@ t_tuple	find_forw_vector(t_cube *data)
 	t_tuple	forward;
 
 	forward.x = cos(data->player.alpha);
-	forward.y = sin(data->player.alpha);
+	forward.y = -sin(data->player.alpha);
 	forward = tuple_normalize(forward);
 	return (forward);
 }
+
 
 void	move_forward(t_cube *data)
 {
@@ -71,7 +78,8 @@ void	move_forward(t_cube *data)
 
 	dir = find_forw_vector(data);
 	validate_movement(&data->player, dir, &data->map);
-
+	// printf("MOVE FORWARD\n");
+	// print_player_data(data);
 }
 
 void	move_left(t_cube *data)
@@ -84,6 +92,11 @@ void	move_left(t_cube *data)
 	dir.x = -dir.y;
 	dir.y = temp;
 	validate_movement(&data->player, dir, &data->map);
+	
+	
+	// printf("MOVE LEFT\n");
+	// print_player_data(data);
+
 }
 
 void	move_back(t_cube *data)
@@ -94,6 +107,10 @@ void	move_back(t_cube *data)
 	dir.x *= -1;
 	dir.y *= -1;
 	validate_movement(&data->player, dir, &data->map);
+	
+	
+	// printf("MOVE BACK\n");
+	// print_player_data(data);
 }
 
 void	move_right(t_cube *data)
@@ -106,4 +123,8 @@ void	move_right(t_cube *data)
 	dir.x = -dir.y;
 	dir.y = -temp;
 	validate_movement(&data->player, dir, &data->map);
+	
+	
+	// printf("MOVE RIGHT\n");
+	// print_player_data(data);
 }

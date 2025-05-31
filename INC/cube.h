@@ -38,6 +38,7 @@ void	init_mlx(t_cube *data);
 /*~~~ KEY INPUTS ~~~*/
 int		handle_keys(int keysys, t_cube *data);
 int		handle_x_button(t_cube *data);
+int		mouse_input(int x, int y, t_cube *data);
 
 /*~~~ GAMEPLAY ~~~*/
 void	move_forward(t_cube *data);
@@ -75,7 +76,7 @@ t_tuple	find_forw_vector(t_cube *data);
 /*~~~ CLEANUP ~~~*/
 void	exit_cleanup(char *msg, t_cube *data, int exit_code);
 
-
-
+/*~~~ DEBUG ~~~*/
+void	print_player_data(t_cube *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:40:00 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/29 16:52:04 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/30 08:07:41 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_map
 	char			**data;
 	unsigned short	height;
 	unsigned short	width;
+	int				map_line_start;
 }	t_map;
 
 
@@ -129,7 +130,7 @@ typedef struct s_ply
 	// double	x_pos;
 	// double	y_pos;
 	t_tuple	pos;
-	double	alpha;	// Angle between 0 axis (North) and player character
+	double	alpha;	// N: M_PI/2, E: 0, W: M_PI, S:-M_PI/2 
 }	t_ply;
 
 /*~~~ Texture Data ~~~*/

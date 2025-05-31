@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/29 14:17:44 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/30 08:07:32 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ bool	extract_remaining_lines(t_map *map, t_tex *txs)
 
 	if (!txs || !map->data)
 		return (error_msg(0, "Map data or textures missing.", NULL));
-	dup = ft_str_arr_partial_dup(map->data, 6);
+	dup = ft_str_arr_partial_dup(map->data, map->map_line_start); //
 	if (!dup)
 		return (error_msg(0, "Dup failed malloc.", NULL));
 	ft_str_arr_printf(dup);
@@ -92,38 +92,79 @@ bool	validate_map_lines(t_map *map)
 	return (true);
 }
 
-bool	validate_space_border_lines(t_map *map)
+bool	is_valid_tile(char c)
+{
+	return (c == '0' || c == '1' ||  c == 'N'
+		||  c == 'S' ||  c == 'E' ||  c == 'W');
+}
+
+bool	check_bounds_are_valid(t_map *map, int i, int j)
+{
+	if (i < 0 || j < 0)	
+		return (false);
+	if (!map->data[i] || j >= (int)ft_strlen(map->data[i]))
+		return (false);
+	if (!is_valid_tile(map->data[i][j]))
+		return (false);
+	return (true);
+}
+
+
+bool	is_tile_enclosed(t_map *map, int i, int j)
+{
+	if (!check_bounds_are_valid(map, i - 1, j))
+		return (false);
+	if (!check_bounds_are_valid(map, i + 1, j))
+		return (false);
+	if (!check_bounds_are_valid(map, i, j - 1))
+		return (false);
+	if (!check_bounds_are_valid(map, i, j + 1))
+		return (false);
+	return (true);
+}
+
+
+bool	validate_floor_tiles_are_enclosed(t_map *map)
 {
 	int	i;
+	int	j;
 
-	if (!map)
-		return (error_msg(0, "Validate space border lines passed null map.", NULL));
+	if (!map || !map->data)
+		return (error_msg(0, "Map is null in enclosure check.", NULL));
 	i = 0;
 	while (map->data[i])
 	{
-		if ((i > 0 && i < ft_str_arr_len((const char **)map->data)))
+		j = 0;
+		while (map->data[i][j])
 		{
-			// ft_printf("If line contains ' ' check the space in the [i - 1] && [i + 1] for a '1'\n");	
+			if (map->data[i][j] == '0')
+			{
+				if (!is_tile_enclosed(map, i, j))
+					return (error_msg(0, "Unenclosed floor tile found.", NULL));
+			}
+			j++;
 		}
 		i++;
 	}
 	return (true);
 }
 
-bool	validate_cub_data(t_map *map, t_tex *txs)
+bool	validate_cub_data(t_map *map, t_tex *txs, t_ply *player)
 {
 	if (!map)
 		return (error_msg(0, "No map to validate.", NULL));
 	if (!trim_first_six_lines(map->data))
 		return (error_msg(0, "Failed to trim first six lines.", NULL));
-	if (!validate_first_six_lines(map->data, txs))
+	if (!validate_first_six_lines(map->data, txs, &map->map_line_start))
 		return (error_msg(0, "Failed to validate 1st six lines.", NULL));
 	if (!extract_remaining_lines(map, txs))
 		return (error_msg(0, "Failed to extract lines.", NULL));
 	if (!validate_map_lines(map))
 		return (error_msg(0, "Failed to validate map lines.", NULL));
-	if (!validate_space_border_lines(map))
-		return (error_msg(0, "Failed to check space borders.", NULL));
+	if (!validate_floor_tiles_are_enclosed(map))
+		return (error_msg(0, "Failed to validate floor tiles.", NULL));
+	if (!validate_player(map, player))
+		return (error_msg(0, "Failed to validate player.", NULL));
 	return (true);	
 }
 
@@ -131,7 +172,7 @@ bool	parse_main(t_cube *data, char *filename)
 {
 	if (!open_cub_file_and_copy_data(data, filename))
 		return (error_msg(0, "failed to extract cub file data.", NULL));
-	if (!validate_cub_data(&data->map, &data->textures))
+	if (!validate_cub_data(&data->map, &data->textures, &data->player))
 		return (error_msg(0, "failed to validate cub data.", NULL));
 	return (true);
 }
