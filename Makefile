@@ -41,7 +41,10 @@ SRC = \
 		SRC/FT_STR_ARR_UTILS/ft_str_arr_printf.c \
 		SRC/FT_STR_ARR_UTILS/ft_strcmp.c \
 		SRC/PARSE_CUB/parse_main.c \
-		SRC/PARSE_CUB/parse_map.c \
+		SRC/PARSE_CUB/parse_first_six_lines.c \
+		SRC/PARSE_CUB/parse_first_six_lines_utils.c \
+		SRC/PARSE_CUB/validate_player.c \
+		SRC/PARSE_CUB/open_cub_file.c \
 		SRC/INITIALIZE/validate_input.c \
 		SRC/INITIALIZE/init_structures.c \
 		SRC/MLX_and_INPUT/key_input.c \
@@ -50,8 +53,9 @@ SRC = \
 		SRC/RENDER/render_loop.c \
 		SRC/RENDER/get_asset.c \
 		SRC/RENDER/blit_utils.c \
-		SRC/PARSE_CUB/parse_textures_util.c 
-
+		SRC/RENDER/render_timing.c \
+		SRC/RENDER/ray_casting.c \
+		SRC/debug_prints.c \
 
 SRCS = $(addprefix $(SRC_PATH), $(SRC))
 
@@ -59,8 +63,10 @@ OBJ_PATH = ./OBJ/
 OBJS = $(SRC:.c=.o)
 OBJECTS = $(addprefix $(OBJ_PATH), $(OBJS))
 
+MAP_NAME = CUBFILES/VALID/simple_map.cub
+
 all: $(NAME)
-	@./$(NAME) CUBFILES/VALID/valid_file_1.cub
+	@./$(NAME) $(MAP_NAME)
 
 ##############################################
 
@@ -99,6 +105,10 @@ mapnotlast:
 missingval:
 	@./$(NAME) CUBFILES/INVALID/missingval.cub
 
+gdb:
+	@gdb --args ./$(NAME) $(MAP_NAME)
+
+
 
 ##############################################
 
@@ -136,11 +146,12 @@ fclean: clean
 	@rm -f $(VALGRIND)
 	@make fclean -C $(LIBFT_PATH)
 	@make fclean -C $(MUK_LIB_PATH)
+	@rm -f valgrind-out.txt
 
 re: fclean all
 
 valgrind: $(VALGRIND)
-	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./$(VALGRIND) CUBFILES/VALID/valid_file_1.cub
+	@valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=valgrind-out.txt ./$(VALGRIND) $(MAP_NAME)
 
 .PHONY: all clean fclean re test memory aaaa
 

@@ -5,223 +5,174 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 15:57:39 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/24 19:35:18 by smoore           ###   ########.fr       */
+/*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
+/*   Updated: 2025/05/30 08:07:32 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-static t_dir	find_direction(char *dir)
+bool	extract_remaining_lines(t_map *map, t_tex *txs)
 {
-	if (dir == NULL)
-		return (UNKNOWN);
-	if (dir[0] == 'N' && dir[1] == 'O' && dir[2] == '\0')
-		return (NORTH);
-	else if (dir[0] == 'S' && dir[1] == 'O' && dir[2] == '\0')
-		return (SOUTH);
-	else if (dir[0] == 'W' && dir[1] == 'E' && dir[2] == '\0')
-		return (WEST);
-	else if (dir[0] == 'E' && dir[1] == 'A' && dir[2] == '\0')
-		return (EAST);
-	else if (dir[0] == 'F' && dir[1] == '\0')
-		return (FLOOR);
-	else if (dir[0] == 'C' && dir[1] == '\0')
-		return (CEILING);
-	return (UNKNOWN);
+	char **dup;
+
+	if (!txs || !map->data)
+		return (error_msg(0, "Map data or textures missing.", NULL));
+	dup = ft_str_arr_partial_dup(map->data, map->map_line_start); //
+	if (!dup)
+		return (error_msg(0, "Dup failed malloc.", NULL));
+	ft_str_arr_printf(dup);
+	ft_str_arr_free(&map->data);
+	map->data = dup;
+	return (true);
 }
 
-static int	dptr_len(void **dptr)
+bool	validate_all_ones_line(char *line)
 {
-	int	len;
+	int i;
 
-	if (dptr == NULL)
-		return (-1);
-	len = 0;
-	while (dptr[len] != NULL)
+	if (!line)
+		return (error_msg(0, "Validate all ones, passed null line.", NULL));
+	i = 0;
+	while (line[i])
 	{
-		len++;
+		if (line[i] != '1' && line[i] != ' ' && line[i] != '\n')
+			return (error_msg(0, "Top/Bottom map line should be 1's & spaces.", NULL));
+		i++;
 	}
-	return (len);
+	// ft_printf("Found top/bottom: %s\n", line);
+	return (true);
 }
 
-static void	add_rgb(t_cube *data, char **split, t_dir dir, int *error_flag)
+bool	check_mid_line_char(char c)
 {
-	char	**rgb;
-
-	if (dptr_len((void **)split) != 2)
-	{
-		(*error_flag)++;
-		return ;
-	}
-	rgb = ft_split(split[1], ',');
-	if (rgb == NULL || dptr_len((void **) rgb) != 3)
-	{
-		(*error_flag)++;
-		free_dptr((void **) rgb);
-		return ;
-	}
-	if (dir == FLOOR)
-	{
-		if (data->textures.floor != NULL)
-		{
-			free(data->textures.floor);
-			(*error_flag)++;
-		}
-		data->textures.floor = safe_malloc(sizeof(t_rgb), 1);
-		data->textures.floor->r = ft_atoi(rgb[0]);
-		data->textures.floor->g = ft_atoi(rgb[1]);
-		data->textures.floor->b = ft_atoi(rgb[2]);
-	}
-	else if (dir == CEILING)
-	{
-		if (data->textures.ceiling != NULL)
-		{
-			free(data->textures.ceiling);
-			(*error_flag)++;
-		}
-		data->textures.ceiling = safe_malloc(sizeof(t_rgb), 1);
-		data->textures.ceiling->r = ft_atoi(rgb[0]);
-		data->textures.ceiling->g = ft_atoi(rgb[1]);
-		data->textures.ceiling->b = ft_atoi(rgb[2]);
-	}
-	free_dptr((void **) rgb);
-
+	return (c != '0' && c != '1' && c != ' '
+		&& c != '\n' && c != 'N'
+		&& c != 'S' && c != 'E' && c != 'W');
 }
 
-static void	add_path(t_cube *data, char **split, t_dir dir, int *error_flag)
+bool	validate_mid_line(char *line)
 {
-	if (dptr_len((void **)split) != 2)
-	{
-		(*error_flag)++;
-		return ;
-	}
-	if (dir == NORTH)
-	{
-		if (data->textures.north_wall != NULL)
-		{
-			free(data->textures.north_wall->path);
-			(*error_flag)++;
-		}
-		data->textures.north_wall = safe_malloc(sizeof(t_image), 1);
-		data->textures.north_wall->path = ft_strdup(split[1]);
+	int i;
 
-	}
-	else if (dir == SOUTH)
+	if (!line)
+		return (error_msg(0, "Validate mid_line, passed null line.", NULL));
+	i = 0;
+	while (line[i])
 	{
-		if (data->textures.south_wall != NULL)
-		{
-			free(data->textures.south_wall);
-			(*error_flag)++;
-		}
-		data->textures.south_wall = safe_malloc(sizeof(t_image), 1);
-		data->textures.south_wall->path = ft_strdup(split[1]);
+		if (check_mid_line_char(line[i]))
+			return (error_msg(0, "Mid map line should have 1 0NSEWnewline.", NULL));
+		i++;
 	}
-	else if (dir == EAST)
-	{
-		if (data->textures.east_wall != NULL)
-		{
-			free(data->textures.east_wall);
-			(*error_flag)++;
-		}
-		data->textures.east_wall = safe_malloc(sizeof(t_image), 1);
-		data->textures.east_wall->path = ft_strdup(split[1]);
-	}
-	else if (dir == WEST)
-	{
-		if (data->textures.west_wall != NULL)
-		{
-			free(data->textures.west_wall);
-			(*error_flag)++;
-		}
-		data->textures.west_wall = safe_malloc(sizeof(t_image), 1);
-		data->textures.west_wall->path = ft_strdup(split[1]);
-	}
+	// ft_printf("Found mid line: %s\n", line);
+	return (true);
 }
 
-static int	parse_line(t_cube *data, char *line, int *error_flag)
+bool	validate_map_lines(t_map *map)
 {
-	char	**split;
-	t_dir	dir;
+	int	i;
 
-	split = ft_split(line, ' ');
-	if (split == NULL)
-		return (0);
-	if (split[0] == NULL)
+	if (!map)
+			return (error_msg(0, "Validate Map lines passed null map.", NULL));
+	i = 0;
+	while (map->data[i])
 	{
-		free_dptr((void **)split);
-		return (1);
+		if ((i == 0 || i == ft_str_arr_len((const char **)map->data)))
+		{
+			if (!validate_all_ones_line(map->data[i]))
+				return (error_msg(0, "Failed to validate all top/bottom line.", NULL));
+		}
+		else
+		{
+			if (!validate_mid_line(map->data[i]))
+				return (error_msg(0, "Failed to validate mid line.", NULL));
+		}
+		i++;
 	}
-	dir = find_direction(split[0]);
-//	printf("DIR VARIABLE IS %d\n", dir);
-	if (dir == NORTH || dir == EAST || dir == SOUTH || dir == WEST)
-		add_path(data, split, dir, error_flag);
-	else if (dir == FLOOR || dir == CEILING)
-		add_rgb(data, split, dir, error_flag);
-	else
-		(*error_flag)++;
-	printf("ERROR FLAG VALUE IS %d\n", *error_flag);
-	free_dptr((void **)split);
-	return (1);
+	return (true);
 }
 
-void	parse_textures(t_cube* data, int fd, char **line)
+bool	is_valid_tile(char c)
 {
-	int	error_flag;
-
-	error_flag = 0;
-	while (true)
-	{
-		if (all_textures_found(&data->textures))
-			break ;
-		*line = get_next_line(fd);
-		if (!line)
-			exit_cleanup("Error - Reading .cub file!", data, 2);
-		if (parse_line(data, *line, &error_flag) == 0)
-		{
-			error_flag++;
-			break ;
-		}
-		free(*line);
-	}
-	if (error_flag != 0)
-	{
-		while (*line)
-		{
-			free(*line);
-			*line = get_next_line(fd);
-		}
-		exit_cleanup("Parsing went wrong\n", data, 3);
-	}
+	return (c == '0' || c == '1' ||  c == 'N'
+		||  c == 'S' ||  c == 'E' ||  c == 'W');
 }
 
-void	parse_main(t_cube *data, char *filename)
+bool	check_bounds_are_valid(t_map *map, int i, int j)
 {
-	int		fd;
-	char	**line;
-
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		exit_cleanup("Error - Open failed in parse!\n", data, errno);
-	line = NULL;
-	parse_textures(data, fd, line);
-	parse_map(data, fd, line);
-
-	
-
-	// printf("Value held by NORTH PTR %s\n", data->textures.north_wall);
-	// printf("Value held by SOUTH PTR %s\n", data->textures.south_wall);
-	// printf("Value held by WEST PTR %s\n", data->textures.west_wall);
-//	 printf("Value held by EAST PTR %s\n", data->textures.east_wall->path);
-
-	// printf("Value held by CEILING R PTR %d\n", data->textures.ceiling->r);
-	// printf("Value held by CEILING G PTR %d\n", data->textures.ceiling->g);
-	// printf("Value held by CEILING B PTR %d\n", data->textures.ceiling->b);
-
-	// printf("Value held by GROUND R PTR %d\n", data->textures.floor->r);
-	// printf("Value held by GROUND G PTR %d\n", data->textures.floor->g);
-	// printf("Value held by GROUND B PTR %d\n", data->textures.floor->b);
+	if (i < 0 || j < 0)	
+		return (false);
+	if (!map->data[i] || j >= (int)ft_strlen(map->data[i]))
+		return (false);
+	if (!is_valid_tile(map->data[i][j]))
+		return (false);
+	return (true);
+}
 
 
-	close(fd);
+bool	is_tile_enclosed(t_map *map, int i, int j)
+{
+	if (!check_bounds_are_valid(map, i - 1, j))
+		return (false);
+	if (!check_bounds_are_valid(map, i + 1, j))
+		return (false);
+	if (!check_bounds_are_valid(map, i, j - 1))
+		return (false);
+	if (!check_bounds_are_valid(map, i, j + 1))
+		return (false);
+	return (true);
+}
+
+
+bool	validate_floor_tiles_are_enclosed(t_map *map)
+{
+	int	i;
+	int	j;
+
+	if (!map || !map->data)
+		return (error_msg(0, "Map is null in enclosure check.", NULL));
+	i = 0;
+	while (map->data[i])
+	{
+		j = 0;
+		while (map->data[i][j])
+		{
+			if (map->data[i][j] == '0')
+			{
+				if (!is_tile_enclosed(map, i, j))
+					return (error_msg(0, "Unenclosed floor tile found.", NULL));
+			}
+			j++;
+		}
+		i++;
+	}
+	return (true);
+}
+
+bool	validate_cub_data(t_map *map, t_tex *txs, t_ply *player)
+{
+	if (!map)
+		return (error_msg(0, "No map to validate.", NULL));
+	if (!trim_first_six_lines(map->data))
+		return (error_msg(0, "Failed to trim first six lines.", NULL));
+	if (!validate_first_six_lines(map->data, txs, &map->map_line_start))
+		return (error_msg(0, "Failed to validate 1st six lines.", NULL));
+	if (!extract_remaining_lines(map, txs))
+		return (error_msg(0, "Failed to extract lines.", NULL));
+	if (!validate_map_lines(map))
+		return (error_msg(0, "Failed to validate map lines.", NULL));
+	if (!validate_floor_tiles_are_enclosed(map))
+		return (error_msg(0, "Failed to validate floor tiles.", NULL));
+	if (!validate_player(map, player))
+		return (error_msg(0, "Failed to validate player.", NULL));
+	return (true);	
+}
+
+bool	parse_main(t_cube *data, char *filename)
+{
+	if (!open_cub_file_and_copy_data(data, filename))
+		return (error_msg(0, "failed to extract cub file data.", NULL));
+	if (!validate_cub_data(&data->map, &data->textures, &data->player))
+		return (error_msg(0, "failed to validate cub data.", NULL));
+	return (true);
 }

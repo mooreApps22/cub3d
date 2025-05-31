@@ -6,11 +6,22 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 10:40:27 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/20 11:01:28 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:10:25 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
+
+int	mouse_input(int x, int y, t_cube *data)
+{
+	if (x < 0 || y < 0)
+		turn_left(data);
+	// else if (x > 0)
+	// 	turn_right(data);
+
+	// printf("Mouse moved to (%d, %d)\n", x, y);
+	return (0);
+}
 
 int	handle_keys(int keysys, t_cube *data)
 {

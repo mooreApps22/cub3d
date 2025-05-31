@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_textures.c                                   :+:      :+:    :+:   */
+/*   debug_prints.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 16:18:20 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/20 12:53:52 by mcoskune         ###   ########.fr       */
+/*   Created: 2025/05/30 17:12:02 by mcoskune          #+#    #+#             */
+/*   Updated: 2025/05/30 17:19:01 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-/*
-	NO ./TEXTURES/north.xpm
 
-	SO ./TEXTURES/south.xpm
 
-	WE ./TEXTURES/west.xpm
+void	print_player_data(t_cube *data)
+{
+	printf("Player X Grid Position: %d\n", (int)(data->player.pos.x / TILE_SIZE));
+	printf("Player Y Grid Position: %d\n\n", (int)(data->player.pos.y / TILE_SIZE));
 
-	EA ./TEXTURES/east.xpm
 
-	TO DO:
-		check for dups of paths
-		does it work in any order
-		will it stop once all 4 textures are found
+	printf("Player X Position: %f\n", data->player.pos.x);
+	printf("Player Y Position: %f\n\n", data->player.pos.y);
 
-*/
+	printf("Player Orientation: %f\n\n", data->player.alpha);
+}

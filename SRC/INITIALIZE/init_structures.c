@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:56:15 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/24 17:46:07 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/30 16:33:33 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_mlx(t_cube *data)
 {
-	data->mlx_data.mlx_ptr = mlx_init(); //we could shorten that
+	data->mlx_data.mlx_ptr = mlx_init();
 	if (!data->mlx_data.mlx_ptr)
 		exit_cleanup("Error - mlx could not be passed to init!\n", NULL, errno);
 	data->mlx_data.win_ptr = mlx_new_window(data->mlx_data.mlx_ptr, WIDTH, HEIGHT, "cub3d");
@@ -36,11 +36,13 @@ void	clean_initialize(t_cube *data)
 	data->image.bpp = -1;
 	data->image.line_len = -1;
 	data->image.endian = -1;
-	data->map_data.map = ft_str_arr_init();
+	data->map.data = NULL;
+	data->map.map_line_start = 0;
 	data->textures.north_wall = NULL;
 	data->textures.south_wall = NULL;
 	data->textures.east_wall = NULL;
 	data->textures.west_wall = NULL;
 	data->textures.ceiling = NULL;
 	data->textures.floor = NULL;
+	data->player.alpha = -1.0;
 }

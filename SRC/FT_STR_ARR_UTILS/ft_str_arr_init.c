@@ -16,9 +16,10 @@ char	**ft_str_arr_init(void)
 {
 	char	**str_arr;
 
-	str_arr = malloc(sizeof(char *) * 1);
+	str_arr = malloc(sizeof(char *) * 2);
 	if (!str_arr)
 		return (NULL);
 	str_arr[0] = NULL;
+	str_arr[1] = NULL;
 	return (str_arr);
 }
