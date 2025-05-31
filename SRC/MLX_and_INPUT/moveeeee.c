@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 11:00:29 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/30 21:53:43 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/31 14:05:29 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ void	validate_movement(t_ply *player, t_tuple dir, t_map *level)
 	// printf("check x value is %d\n", (int)check_x);
 	// printf("check y value is %d\n", (int)check_y);
 	// printf("LEVEL MAP DATA %d\n", level->data[(int)check_y][(int)check_x]);
-	
+	printf("DIRECTION X IS %f\n", dir.x);
+	printf("DIRECTION Y IS %f\n", dir.y);
+
+
 	if ((level->data[(int)check_y][(int)check_x]) != '0')
 	{
 		printf("Hold your horses cowboy, you can't move there!\n");
@@ -66,7 +69,7 @@ t_tuple	find_forw_vector(t_cube *data)
 	t_tuple	forward;
 
 	forward.x = cos(data->player.alpha);
-	forward.y = -sin(data->player.alpha);
+	forward.y = sin(data->player.alpha);
 	forward = tuple_normalize(forward);
 	return (forward);
 }
@@ -89,8 +92,8 @@ void	move_left(t_cube *data)
 
 	dir = find_forw_vector(data);
 	temp = dir.x;
-	dir.x = -dir.y;
-	dir.y = temp;
+	dir.x = dir.y;
+	dir.y = -temp;
 	validate_movement(&data->player, dir, &data->map);
 	
 	
@@ -121,7 +124,7 @@ void	move_right(t_cube *data)
 	dir = find_forw_vector(data);
 	temp = dir.x;
 	dir.x = -dir.y;
-	dir.y = -temp;
+	dir.y = temp;
 	validate_movement(&data->player, dir, &data->map);
 	
 	
