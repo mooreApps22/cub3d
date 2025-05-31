@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:58:10 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/31 13:38:01 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/31 19:32:39 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,44 +46,93 @@ void	paint_ceil_floor(t_cube *data, t_image *buf, t_tex *tx)
 	}
 }
 
+int	get_wall_color(t_intersect *inter)
+{
+	t_rgb	north; 
+	t_rgb	east;
+	t_rgb	south;
+	t_rgb	west;
+	t_rgb	def;
+
+	def.r = 255;
+	def.g = 255;
+	def.g = 255;
+	north.r = 255;
+	north.g = 0;
+	north.b = 0;
+	east.r = 0;
+	east.g = 0;
+	east.b = 255;
+	south.r = 0;
+	south.g = 255;
+	south.b = 0;
+	west.r = 255;
+	west.g = 255;
+	west.b = 0;
+	if (inter->side == NORTH)
+		return (t_rgb_to_hex(north));
+	else if (inter->side == EAST)
+		return (t_rgb_to_hex(east));
+	else if (inter->side == SOUTH)
+		return (t_rgb_to_hex(south));
+	else if (inter->side == WEST)
+		return (t_rgb_to_hex(west));
+	return (t_rgb_to_hex(def));
+}
+
+t_image	*get_wall_texture(t_tex *tx, int side)
+{
+	if (side == NORTH)
+		return (tx->north_wall);
+	if (side == SOUTH)
+		return (tx->south_wall);
+	if (side == EAST)
+		return (tx->east_wall);
+	if (side == WEST)
+		return (tx->west_wall);
+	return (NULL);
+}
+
 void	paint_walls(t_cube *data, t_image *buf, t_tex *tx, t_intersect *inter, int i)
 {
 	int		j;
-	char	*address;
-	int		offset;
-	int		color;
+	int		tex_x;
+	int		tex_y;
+	double	step;
+	double	tex_pos;
 	int		wall_h;
+	t_image	*tex;
+	char	*address;
 
+	(void)data;
 	address = buf->addr;
-	t_rgb	north; t_rgb	east; t_rgb	south; t_rgb	west;
-	north.r = 255; north.g = 0; north.b = 0;
-	east.r = 0; east.g = 0; east.b = 255;
-	south.r = 0; south.g = 255; south.b = 0;
-	west.r = 255; west.g = 255; west.b = 0;
-
-	(void)tx;
-	t_rgb	def;
-	def.r = 255; def.g = 255; def.g = 255;
-	color = t_rgb_to_hex(def);
-	if (inter->side == NORTH)
-		color = t_rgb_to_hex(north);
-	else if (inter->side == EAST)
-		color = t_rgb_to_hex(east);
-	else if (inter->side == SOUTH)
-		color = t_rgb_to_hex(south);
-	else if (inter->side == WEST)
-		color = t_rgb_to_hex(west);
+	tex = get_wall_texture(tx, inter->side);
+	if (!tex || !tex->addr)	
+		return ;
 	wall_h = wall_height(inter);
-	// printf("Wall height is %d\n", wall_h);
+	if (inter->side == EAST || inter->side == WEST)
+		tex_x = (int)inter->y % TILE_SIZE;
+	else
+		tex_y = (int)inter->x % TILE_SIZE;
+	tex_x = tex_x * tex->width / TILE_SIZE;
+	step = (double)tex->height / wall_h;
+	tex_pos = 0.0;
 	j = HEIGHT / 2 - wall_h / 2;
-	while (j < HEIGHT / 2 + wall_h / 2)
+	if (j < 0)
 	{
-			offset = j * data->image.line_len + i * (data->image.bpp / 8);
-			address[offset] = (color & 0xFF);
-			address[offset + 1] = (color >> 8) & 0xFF;
-			address[offset + 2] = (color >> 16) & 0xFF;
-			address[offset + 3] = (color >> 24) & 0xFF;
-			j++;
+		tex_pos = -j * step;
+		j = 0;
+	}
+	while (j < HEIGHT / 2 + wall_h / 2 && j < HEIGHT)
+	{
+		tex_y = (int)tex_pos;
+		tex_pos += step;
+
+		int	tex_offset = tex_y * tex->line_len + tex_x * (tex->bpp / 8);
+		int	screen_offset = j * buf->line_len + i * (buf->bpp / 8);
+		for (int k = 0; k < 4; ++k)
+			address[screen_offset + k] = tex->addr[tex_offset + k];
+		j++;
 	}
 }
 
@@ -109,7 +158,6 @@ void	render_frame(t_cube *data, t_image *buf, t_tex *tx)
 
 int	render_loop(t_cube *data)
 {
-	// return (0);
 	data->reset_frame = 0;
 	if (data->reset_frame == 0)
 	{
@@ -127,103 +175,3 @@ int	render_loop(t_cube *data)
 	return (0);
 }
 
-// void	iterate_down_image_buffer(t_image *buf, t_image *asset);
-// void	iterate_across_image_buffer(t_image *buf, t_tex *assets);
-// void	render_frame(t_cube *data, t_image *buf, t_tex *tx);
-
-// void	iterate_down_image_buffer(t_image *buf, t_image *asset)
-// {
-// 	buf->y = 0;
-// 	while (buf->y < HEIGHT)
-// 	{
-// 		if (buf->y >= asset->y && buf->y <= asset->height + asset->y)
-// 		{
-// 			asset->color = 0; //get_color(asset, asset->x, asset->y);
-// 			blit_pixel_color(buf, buf->x, buf->y, asset->color); // skip or repeat option 
-// 		}
-// 		buf->y++;
-// 	}
-// }
-
-
-// void	iterate_across_image_buffer(t_image *buf, t_tex *assets) // needs a t_ray arg 
-// {
-// 	t_image	*asset;
-
-// 	buf->x = 0;
-// 	while (buf->x < WIDTH)
-// 	{
-// 		//pick asset
-// 		asset = get_asset(assets); // needs a t_ray arg
-// 		if (buf->x >= asset->x && buf->x <= asset->width + asset->x)
-// 			iterate_down_image_buffer(buf, assets->east_wall); // 
-// 		buf->x++;
-// 	}
-// }
-
-// void	render_frame(t_cube *data, t_image *buf, t_tex *tx)
-// {
-// 	iterate_across_image_buffer(buf, tx);
-// 	mlx_put_image_to_window(data->mlx_data.mlx_ptr, data->mlx_data.win_ptr,
-// 		buf->img, 0, 0);
-// }
-
-// int	render_loop(t_cube *data)
-// {
-// 	if (data->reset_frame == 0)
-// 	{
-// 		render_frame(data, &data->image, &data->textures);
-// 		gettimeofday(&data->start, NULL);
-// 	}
-// 	data->reset_frame = render_timer(data);
-// 	return (0);
-// }
-
-
-
-
-
-// old stuff
-
-// t_tuple	ray_create(double x, double y)
-// {
-// 	t_tuple ray;
-
-// 	ray.x = x;
-// 	ray.y = y;
-// }
-
-
-// static double	tuple_dot(t_tuple tup1, t_tuple tup2)
-// {
-// 	return (tup1.x * tup2.x + tup1.y* tup2.y);
-// }
-
-// static t_dir	find_direction(t_cube *data, double x, double y, t_tuple ray)
-// {
-// 	if (ray.x == 0.0 && ray.y > 0.0)
-// 		return (NORTH);
-// 	else if (ray.x == 0.0 && ray.y < 0.0)
-// 		return (SOUTH);
-// 	else if (ray.x > 0.0 && ray.y == 0.0)
-// 		return (WEST);
-// 	else if (ray.x < 0.0 && ray.y == 0.0)
-// 		return (EAST);
-// 	else if (ray.x > 0.0 && ray.y > 0.0 && ((int)x % TILE_SIZE > 2))
-// 		return (NORTH);
-// 	else if (ray.x > 0.0 && ray.y > 0.0)
-// 		return (WEST);
-// 	else if (ray.x > 0.0 && ray.y < 0.0 && ((int)x % TILE_SIZE > 2))
-// 		return (SOUTH);
-// 	else if (ray.x > 0.0 && ray.y < 0.0)
-// 		return (WEST);
-// 	else if (ray.x < 0.0 && ray.y > 0.0 && ((int)x % TILE_SIZE > 2))
-// 		return (NORTH);
-// 	else if (ray.x < 0.0 && ray.y > 0.0)
-// 		return (EAST);
-// 	else if (ray.x < 0.0 && ray.y < 0.0 && ((int)x % TILE_SIZE > 2))
-// 		return (SOUTH);
-// 	else if (ray.x < 0.0 && ray.y < 0.0)
-// 		return (EAST);
-// 	return (NORTH);
-// }

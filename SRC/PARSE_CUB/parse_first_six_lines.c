@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/31 15:41:43 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/31 20:18:05 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,26 @@
 
 void	set_init_textures_paths_to_null(t_tex *txs)
 {
-	txs->north_wall->path = NULL;
-	txs->south_wall->path = NULL;
-	txs->east_wall->path = NULL;
-	txs->west_wall->path = NULL;
-	txs->floor->r = -1;
-	txs->floor->g = -1;
-	txs->floor->b= -1;
-	txs->ceiling->r = -1;
-	txs->ceiling->g = -1;
-	txs->ceiling->b= -1;
+	if (txs->north_wall)
+		txs->north_wall->path = NULL;
+	if (txs->south_wall)
+		txs->south_wall->path = NULL;
+	if (txs->east_wall)
+		txs->east_wall->path = NULL;
+	if (txs->west_wall)
+		txs->west_wall->path = NULL;
+	if (txs->floor)
+	{
+		txs->floor->r = -1;
+		txs->floor->g = -1;
+		txs->floor->b= -1;
+	}
+	if (txs->ceiling)
+	{
+		txs->ceiling->r = -1;
+		txs->ceiling->g = -1;
+		txs->ceiling->b= -1;
+	}
 }
 
 bool	init_textures(t_tex *txs)
@@ -35,15 +45,19 @@ bool	init_textures(t_tex *txs)
 	if (!txs->ceiling)
 		return (error_msg(0, "Ceiling failed malloc.", NULL));
 	txs->north_wall = malloc(sizeof(t_image));
+	printf("north ptr: %p\n", txs->north_wall);
 	if (!txs->north_wall)
 		return (error_msg(0, "North Wall failed malloc.", NULL));
 	txs->south_wall = malloc(sizeof(t_image));
+	printf("south ptr: %p\n", txs->south_wall);
 	if (!txs->south_wall)
 		return (error_msg(0, "South Wall failed malloc.", NULL));
 	txs->east_wall = malloc(sizeof(t_image));
+	printf("east ptr: %p\n", txs->east_wall);
 	if (!txs->east_wall)
 		return (error_msg(0, "East Wall failed malloc.", NULL));
 	txs->west_wall = malloc(sizeof(t_image));
+	printf("west ptr: %p\n", txs->west_wall);
 	if (!txs->west_wall)
 		return (error_msg(0, "West Wall failed malloc.", NULL));
 	set_init_textures_paths_to_null(txs);
@@ -87,21 +101,20 @@ bool	validate_all_textures_are_found(t_tex *txs)
 
 bool	validate_first_six_lines(char **map, t_tex *txs, int *map_line_start)
 {
+	printf("init_textures%p\n", txs);
 	if (!init_textures(txs))
 		return (error_msg(0, "t_tex failed malloc.", NULL));
-	while (true)
+	while (*map)
 	{
-		if (!(*map))
+		if (match_texture_path(*map, txs))
 		{
+			(*map_line_start)++;
 			if (validate_all_textures_are_found(txs))
 				break ;
-			return (error_msg(0, "Failed to match texture paths.", NULL)); //
 		}
-		match_texture_path(*map, txs);
-		(*map_line_start)++;
-		if (validate_all_textures_are_found(txs))
-			break ;
 		map++;
 	}
+	if (!validate_all_textures_are_found(txs))
+		return (error_msg(0, "Failed to match texture paths.", NULL)); //
 	return (true);
 }

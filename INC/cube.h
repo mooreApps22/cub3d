@@ -60,6 +60,7 @@ double		normalize_angle(double alpha);
 /*~~~ RENDERING - UTILS ~~~*/
 unsigned int	get_color(t_image* asset, int x, int y);
 char			*get_image_addr(t_image *asset);
+bool			load_texture(t_image *asset, void *mlx, char *path);
 void			blit_pixel_color(t_image *asset, int x, int y, int color);
 int				render_loop(t_cube *data);
 int				render_timer(t_cube *data);
