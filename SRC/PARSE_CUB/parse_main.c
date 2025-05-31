@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/30 08:07:32 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/31 16:43:21 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,65 @@ bool	validate_floor_tiles_are_enclosed(t_map *map)
 	return (true);
 }
 
+bool	validate_xpm_extension(char *path)
+{
+	int	fd;
+	int	len;
+
+	if (!path)
+	{
+		ft_putstr_fd("Error - no path provided.\n", 2); 
+		return(false);
+	}
+	len = ft_strlen(path);
+	if (len < 5 || ft_strncmp(path + len - 4, ".xpm", 4) != 0)
+	{
+		ft_putstr_fd("Error - texture path doesn't end with .xpm.\n", 2); 
+		return(false);
+	}
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+	{
+		ft_putstr_fd("Error - failed to open xpm path.\n", 2);
+		return(false);
+	}
+	close(fd);
+	ft_printf("Was able to validate .xpm path!!\n");
+	return (true);
+}
+
+bool	validate_xpm_extensions(t_tex *txs)
+{
+	if (!txs)
+		ft_putstr_fd("Error - failed to pass t_tex of .xpm validation.\n", 2);
+	if (!validate_xpm_extension(txs->north_wall->path))
+		ft_putstr_fd("Error - failed to validate north wall xpm ext.\n", 2);
+	if (!validate_xpm_extension(txs->south_wall->path))
+		ft_putstr_fd("Error - failed to validate south wall xpm ext.\n", 2);
+	if (!validate_xpm_extension(txs->east_wall->path))
+		ft_putstr_fd("Error - failed to validate east wall xpm ext.\n", 2);
+	if (!validate_xpm_extension(txs->west_wall->path))
+		ft_putstr_fd("Error - failed to validate west wall xpm ext.\n", 2);
+	return (true);
+}
+
+bool	validate_map_dimensions(t_map *map)
+{
+	int current_width;
+
+	if (!map)
+		ft_putstr_fd("Error - failed to pass map.\n", 2);
+	current_width = 0;
+	while (map->data[map->height])
+	{
+		current_width = ft_strlen(map->data[map->height]);
+		if (current_width >  map->width)
+			map->width = current_width;
+		map->height++;
+	}
+	return (true);
+}
+
 bool	validate_cub_data(t_map *map, t_tex *txs, t_ply *player)
 {
 	if (!map)
@@ -157,6 +216,8 @@ bool	validate_cub_data(t_map *map, t_tex *txs, t_ply *player)
 		return (error_msg(0, "Failed to trim first six lines.", NULL));
 	if (!validate_first_six_lines(map->data, txs, &map->map_line_start))
 		return (error_msg(0, "Failed to validate 1st six lines.", NULL));
+	if (!validate_xpm_extensions(txs))
+		return (error_msg(0, "Failed to validate .xpm extensions.", NULL));
 	if (!extract_remaining_lines(map, txs))
 		return (error_msg(0, "Failed to extract lines.", NULL));
 	if (!validate_map_lines(map))
@@ -165,6 +226,8 @@ bool	validate_cub_data(t_map *map, t_tex *txs, t_ply *player)
 		return (error_msg(0, "Failed to validate floor tiles.", NULL));
 	if (!validate_player(map, player))
 		return (error_msg(0, "Failed to validate player.", NULL));
+	if (!validate_map_dimensions(map))
+		return (error_msg(0, "Failed to validate map height/width.", NULL));
 	return (true);	
 }
 

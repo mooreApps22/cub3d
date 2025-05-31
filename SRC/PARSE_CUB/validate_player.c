@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:32:32 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/29 18:20:24 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/31 16:28:07 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ bool	calculate_player_direction(t_map *map, int i, int j,
 	else if (c == 'W')
 		player->alpha = M_PI;
 	printf("Player Alpha: %f\n", player->alpha);
+	map->data[i][j] = '0';
+	player->pos.x = j * TILE_SIZE + TILE_SIZE / 2;
+	player->pos.y = i * TILE_SIZE + TILE_SIZE / 2;
 	return (true);
 }
 

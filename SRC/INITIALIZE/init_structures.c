@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:56:15 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/30 16:33:33 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/31 16:37:00 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ void	init_mlx(t_cube *data)
 	data->mlx_data.mlx_ptr = mlx_init();
 	if (!data->mlx_data.mlx_ptr)
 		exit_cleanup("Error - mlx could not be passed to init!\n", NULL, errno);
-	data->mlx_data.win_ptr = mlx_new_window(data->mlx_data.mlx_ptr, WIDTH, HEIGHT, "cub3d");
+	data->mlx_data.win_ptr = mlx_new_window(data->mlx_data.mlx_ptr,
+		WIDTH, HEIGHT, "cub3d");
 	if (!data->mlx_data.win_ptr)
-		exit_cleanup("Error - window could not be passed to init!\n", NULL, errno);
+		exit_cleanup("Error - window could not be passed to init!\n",
+			NULL, errno);
 	data->image.img = mlx_new_image(data->mlx_data.mlx_ptr, WIDTH, HEIGHT);
 	if (data->image.img == NULL)
 		exit_cleanup ("Error - `mlx_new_image`\n", data, errno);
@@ -37,6 +39,8 @@ void	clean_initialize(t_cube *data)
 	data->image.line_len = -1;
 	data->image.endian = -1;
 	data->map.data = NULL;
+	data->map.height = 0;
+	data->map.width = 0;
 	data->map.map_line_start = 0;
 	data->textures.north_wall = NULL;
 	data->textures.south_wall = NULL;

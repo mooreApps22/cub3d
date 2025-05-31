@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/29 15:57:33 by smoore           ###   ########.fr       */
+/*   Updated: 2025/05/31 15:41:43 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ bool	match_texture_path(char *line, t_tex *txs)
 
 bool	validate_all_textures_are_found(t_tex *txs)
 {
+	
 	return (txs->north_wall->path &&
 		txs->south_wall->path && 
 		txs->east_wall->path &&

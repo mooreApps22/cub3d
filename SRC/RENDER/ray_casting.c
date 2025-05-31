@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:06:58 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/31 14:03:41 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/31 16:27:07 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ static char	check_tile(t_cube *data, double x, double y)
 
 	map_x = (int)(x / TILE_SIZE);
 	map_y = (int)(y / TILE_SIZE);
+	if (map_y < 0 || map_y >= data->map.height)
+		return (' ');
+	if (map_x < 0 || map_x >= data->map.width)
+		return (' ');
 	return (data->map.data[map_y][map_x]);
 }
 
