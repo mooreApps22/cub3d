@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:06:58 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/30 21:49:05 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/31 13:41:38 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@ double	wall_height(t_intersect *inter)
 {
 	double	projected_slice_height;
 
-	projected_slice_height = (int)(TILE_SIZE / inter->distance * DIST_TO_PP) % HEIGHT;
+	projected_slice_height = (int)(TILE_SIZE / inter->distance * DIST_TO_PP); // % HEIGHT;
 
+	if (projected_slice_height > HEIGHT)
+	{
+		return (HEIGHT);
+	}
 	return (projected_slice_height); //place wall in the middle so half of this is above middle and other half is below!
 }
 
