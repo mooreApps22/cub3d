@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:06:58 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/31 13:41:38 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/05/31 14:03:41 by mcoskune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ double	wall_height(t_intersect *inter)
 
 double	normalize_angle(double alpha)
 {
-	if (alpha < 2 * M_PI || alpha >= 0)
+	if (alpha <= 2 * M_PI || alpha >= 0)
 		return (alpha);
-	while (alpha >= 2 * M_PI)
+	while (alpha > 2 * M_PI)
 		(alpha) -= M_PI;
 	while (alpha < 0)
 		(alpha) += 2 * M_PI;
@@ -118,7 +118,7 @@ t_intersect	*ray_casting_main(t_cube *data)
 	i = 0;
 	while (i < WIDTH)
 	{
-		angle = normalize_angle(data->player.alpha + FOV / 2 - i * FOV / (2 *WIDTH)); // current heading + left side of FOV - iterating angle to
+		angle = normalize_angle(data->player.alpha + (FOV / 2) - (i * FOV / (WIDTH))); // current heading + left side of FOV - iterating angle to
 		ray.x = cos(angle);
 		ray.y = sin(angle);
 		inter[i] = find_intersection(data, ray, angle);
