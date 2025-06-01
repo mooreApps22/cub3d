@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:37:04 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/30 13:47:44 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:42:15 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,41 +34,54 @@ static void	clean_mlx_data(t_cube *data)
 	data->image.addr = NULL;
 }
 
-static void	clean_texture_image(t_image *img)
+static void	clean_texture_image(t_image *img, void *mlx_ptr)
 {
-	if (img)
+	if (!img)
+		return ;
+	if (img->img && mlx_ptr)
 	{
-		if (img->path)
-			free(img->path);
-		free(img);
+		mlx_destroy_image(mlx_ptr, img->img);
+		img->img = NULL;
 	}
+	if (img->path)
+	{
+		free(img->path);
+		img->path = NULL;
+	}
+	free(img);
 }
 
 static void	clean_texture_data(t_cube *data)
 {
-	clean_texture_image(data->textures.north_wall);
-	clean_texture_image(data->textures.south_wall);
-	clean_texture_image(data->textures.west_wall);
-	clean_texture_image(data->textures.east_wall);
+	if (data->textures.north_wall)
+		clean_texture_image(data->textures.north_wall, data->mlx_data.mlx_ptr);
+	if (data->textures.south_wall)
+		clean_texture_image(data->textures.south_wall, data->mlx_data.mlx_ptr);
+	if (data->textures.west_wall)
+		clean_texture_image(data->textures.west_wall, data->mlx_data.mlx_ptr);
+	if (data->textures.east_wall)
+		clean_texture_image(data->textures.east_wall, data->mlx_data.mlx_ptr);
 	if (data->textures.floor)
+	{
 		free(data->textures.floor);
+		data->textures.floor = NULL;
+	}
 	if (data->textures.ceiling)
+	{
 		free(data->textures.ceiling);
-//	free(data->texture.floor);
-//	data->textures.floor = NULL;	
-//	free(data->texture.ceiling);
-//	data->textures.ceiling = NULL;	
+		data->textures.ceiling = NULL;
+	}
 }
 
 void	exit_cleanup(char *msg, t_cube *data, int exit_code)
 {
 	if (msg)
 		ft_putstr_fd(msg, 2);
+	clean_texture_data(data);
 	clean_mlx_data(data);
 	if (data->map.data)
 		free_dptr((void **)data->map.data);
 		// ft_str_arr_free(&data->map.data);
-	clean_texture_data(data);
 
 	// clean_player_data(data); there is nothing malloced at player atm
 

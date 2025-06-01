@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:58:10 by smoore            #+#    #+#             */
-/*   Updated: 2025/06/01 14:04:07 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 14:34:24 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,40 +44,6 @@ void	paint_ceil_floor(t_cube *data, t_image *buf, t_tex *tx)
 			i++;
 		}
 	}
-}
-
-int	get_wall_color(t_intersect *inter)
-{
-	t_rgb	north; 
-	t_rgb	east;
-	t_rgb	south;
-	t_rgb	west;
-	t_rgb	def;
-
-	def.r = 255;
-	def.g = 255;
-	def.g = 255;
-	north.r = 255;
-	north.g = 0;
-	north.b = 0;
-	east.r = 0;
-	east.g = 0;
-	east.b = 255;
-	south.r = 0;
-	south.g = 255;
-	south.b = 0;
-	west.r = 255;
-	west.g = 255;
-	west.b = 0;
-	if (inter->side == NORTH)
-		return (t_rgb_to_hex(north));
-	else if (inter->side == EAST)
-		return (t_rgb_to_hex(east));
-	else if (inter->side == SOUTH)
-		return (t_rgb_to_hex(south));
-	else if (inter->side == WEST)
-		return (t_rgb_to_hex(west));
-	return (t_rgb_to_hex(def));
 }
 
 t_image	*get_wall_texture(t_tex *tx, int side)
@@ -126,6 +92,10 @@ void	paint_walls(t_cube *data, t_image *buf, t_tex *tx, t_intersect *inter, int 
 	while (j < HEIGHT / 2 + wall_h / 2 && j < HEIGHT)
 	{
 		tex_y = (int)tex_pos;
+		if (tex_y >= tex->height) //
+			tex_y = tex->height - 1; //
+		if (tex_y < 0) //
+			tex_y = 0; //
 		tex_pos += step;
 
 		int	tex_offset = tex_y * tex->line_len + tex_x * (tex->bpp / 8);
@@ -135,8 +105,6 @@ void	paint_walls(t_cube *data, t_image *buf, t_tex *tx, t_intersect *inter, int 
 		j++;
 	}
 }
-
-
 
 void	render_frame(t_cube *data, t_image *buf, t_tex *tx)
 {
