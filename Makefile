@@ -58,6 +58,7 @@ SRC = \
 		SRC/RENDER/blit_utils.c \
 		SRC/RENDER/render_timing.c \
 		SRC/RENDER/ray_casting.c \
+		SRC/RENDER/paint_wall.c \
 		SRC/debug_prints.c \
 
 SRCS = $(addprefix $(SRC_PATH), $(SRC))

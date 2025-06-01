@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:40:00 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/30 08:07:41 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/06/01 16:14:19 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,22 @@ typedef struct s_intersect
 	double	distance;
 	t_dir	side;
 }	t_intersect;
+
+/*~~~ Wall Data Structure ~~~*/
+typedef struct s_wall
+{
+	int		i;
+	int		j;
+	int		tex_x;
+	int		tex_y;
+	int		wall_h;
+	int		draw_start;
+	int		draw_end;
+	double	step;
+	double	tex_pos;
+	t_image	*tex;
+	char	*addr;
+}	t_wall;
 
 /*~~~ Main Data Structure ~~~*/
 typedef struct s_cube

@@ -56,6 +56,9 @@ void	render_frame(t_cube *data, t_image *buf, t_tex *tx);
 t_intersect	*ray_casting_main(t_cube *data);
 double		normalize_angle(double alpha);
 
+t_image	*get_wall_texture(t_tex *tx, int side);
+void	paint_walls(t_image *buf, t_tex *tx, t_intersect *inter, int i);
+
 
 /*~~~ RENDERING - UTILS ~~~*/
 unsigned int	get_color(t_image* asset, int x, int y);
