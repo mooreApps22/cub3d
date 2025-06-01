@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:56:15 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/31 16:37:00 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 13:50:58 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	init_mlx(t_cube *data)
 {
 	data->mlx_data.mlx_ptr = mlx_init();
+	printf("init file mlx ptr: %p\n", data->mlx_data.mlx_ptr);
 	if (!data->mlx_data.mlx_ptr)
 		exit_cleanup("Error - mlx could not be passed to init!\n", NULL, errno);
 	data->mlx_data.win_ptr = mlx_new_window(data->mlx_data.mlx_ptr,
@@ -26,6 +27,8 @@ void	init_mlx(t_cube *data)
 	if (data->image.img == NULL)
 		exit_cleanup ("Error - `mlx_new_image`\n", data, errno);
 	data->image.addr = get_image_addr(&data->image);
+	if (!data->image.addr)
+		exit_cleanup ("Error - failed to init image address\n", data, errno);
 	data->reset_frame = 1;
 }
 

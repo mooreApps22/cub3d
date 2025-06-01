@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:29:19 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/31 17:19:41 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 12:22:39 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ int	main(int ac, char **av)
 
 	validate_input(ac, av);
 	clean_initialize(&data);
+	init_mlx(&data);
 	if (!parse_main(&data, av[1]))
 		exit_cleanup("Error - Parsing failed\n", &data, errno);
-	init_mlx(&data);
 	game_start(&data);
 	printf("REACHED END OF MAIN\n");
 	exit_cleanup("Thanks for playing our game, we hope you hated it!\n", &data, 0);

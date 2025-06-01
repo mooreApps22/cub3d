@@ -43,8 +43,11 @@ SRC = \
 		SRC/PARSE_CUB/parse_main.c \
 		SRC/PARSE_CUB/parse_first_six_lines.c \
 		SRC/PARSE_CUB/parse_first_six_lines_utils.c \
+		SRC/PARSE_CUB/validate_map_lines.c \
 		SRC/PARSE_CUB/validate_player.c \
 		SRC/PARSE_CUB/open_cub_file.c \
+		SRC/PARSE_CUB/parse_main_utils.c \
+		SRC/PARSE_CUB/parse_floor_enclosed.c \
 		SRC/INITIALIZE/validate_input.c \
 		SRC/INITIALIZE/init_structures.c \
 		SRC/MLX_and_INPUT/key_input.c \

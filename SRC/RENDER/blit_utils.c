@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 14:52:12 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/31 19:34:25 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 12:49:00 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ char	*get_image_addr(t_image *asset)
 
 bool	load_texture(t_image *asset, void *mlx, char *path)
 {
+	if (!mlx)
+		return (error_msg(0, "No mlx argument in load texture.", NULL));
+	if (!path)
+		return (error_msg(0, "No path argument in load texture.", NULL));
+	printf("attempting mlx_xpm_file_to_image() for %s\n", path);
 	asset->img = mlx_xpm_file_to_image(mlx, path, &asset->width, &asset->height);
 	if (!asset->img)
 		return (error_msg(0, "Failed to get img pointer from textures.", NULL));

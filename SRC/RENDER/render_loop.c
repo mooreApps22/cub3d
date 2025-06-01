@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:58:10 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/31 19:32:39 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 14:04:07 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	paint_walls(t_cube *data, t_image *buf, t_tex *tx, t_intersect *inter, int 
 	if (inter->side == EAST || inter->side == WEST)
 		tex_x = (int)inter->y % TILE_SIZE;
 	else
-		tex_y = (int)inter->x % TILE_SIZE;
+		tex_x = (int)inter->x % TILE_SIZE;
 	tex_x = tex_x * tex->width / TILE_SIZE;
 	step = (double)tex->height / wall_h;
 	tex_pos = 0.0;
