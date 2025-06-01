@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:58:10 by smoore            #+#    #+#             */
-/*   Updated: 2025/06/01 14:34:24 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 15:56:47 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	paint_walls(t_cube *data, t_image *buf, t_tex *tx, t_intersect *inter, int 
 	double	step;
 	double	tex_pos;
 	int		wall_h;
+	int		draw_start;
+	int		draw_end;
 	t_image	*tex;
 	char	*address;
 
@@ -82,20 +84,20 @@ void	paint_walls(t_cube *data, t_image *buf, t_tex *tx, t_intersect *inter, int 
 		tex_x = (int)inter->x % TILE_SIZE;
 	tex_x = tex_x * tex->width / TILE_SIZE;
 	step = (double)tex->height / wall_h;
+	draw_start = HEIGHT / 2 - wall_h / 2;
+	draw_end =  HEIGHT / 2 + wall_h / 2;
 	tex_pos = 0.0;
-	j = HEIGHT / 2 - wall_h / 2;
-	if (j < 0)
+	if (draw_start < 0)
 	{
-		tex_pos = -j * step;
-		j = 0;
+		tex_pos = -draw_start * step;
+		draw_start = 0;
 	}
-	while (j < HEIGHT / 2 + wall_h / 2 && j < HEIGHT)
+	if (draw_end > HEIGHT)
+		draw_end = HEIGHT;
+	j = draw_start;
+	while (j < draw_end)
 	{
 		tex_y = (int)tex_pos;
-		if (tex_y >= tex->height) //
-			tex_y = tex->height - 1; //
-		if (tex_y < 0) //
-			tex_y = 0; //
 		tex_pos += step;
 
 		int	tex_offset = tex_y * tex->line_len + tex_x * (tex->bpp / 8);

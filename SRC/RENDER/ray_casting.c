@@ -6,13 +6,13 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:06:58 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/31 16:27:07 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 15:49:50 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-
+/*
 double	wall_height(t_intersect *inter)
 {
 	double	projected_slice_height;
@@ -24,6 +24,11 @@ double	wall_height(t_intersect *inter)
 		return (HEIGHT);
 	}
 	return (projected_slice_height); //place wall in the middle so half of this is above middle and other half is below!
+}
+*/
+double	wall_height(t_intersect *inter)
+{
+	return (TILE_SIZE / inter->distance * DIST_TO_PP);
 }
 
 
