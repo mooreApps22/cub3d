@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 12:36:19 by smoore            #+#    #+#             */
-/*   Updated: 2025/06/01 12:36:32 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 17:20:07 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,9 @@ bool	extract_remaining_lines(t_map *map, t_tex *txs)
 		return (error_msg(0, "Map data or textures missing.", NULL));
 	map_len = ft_str_arr_len((const char **)map->data);
 	if (map->map_line_start < 0 || map->map_line_start >= map_len)
-		return (error_msg(0, "Invalid map_line_start index in extract_remaining_lines.", NULL));
-	dup = ft_str_arr_partial_dup(map->data, map->map_line_start); //
+		return (error_msg(0, "Invalid map_line_start index \
+			in extract_remaining_lines.", NULL));
+	dup = ft_str_arr_partial_dup(map->data, map->map_line_start);
 	if (!dup)
 		return (error_msg(0, "Dup failed malloc.", NULL));
 	ft_str_arr_printf(dup);
@@ -33,7 +34,7 @@ bool	extract_remaining_lines(t_map *map, t_tex *txs)
 
 bool	validate_all_ones_line(char *line)
 {
-	int i;
+	int	i;
 
 	if (!line)
 		return (error_msg(0, "Validate all ones, passed null line.", NULL));
@@ -41,10 +42,10 @@ bool	validate_all_ones_line(char *line)
 	while (line[i])
 	{
 		if (line[i] != '1' && line[i] != ' ' && line[i] != '\n')
-			return (error_msg(0, "Top/Bottom map line should be 1's & spaces.", NULL));
+			return (error_msg(0, "Top/Bottom map line should \
+				be 1's & spaces.", NULL));
 		i++;
 	}
-	// ft_printf("Found top/bottom: %s\n", line);
 	return (true);
 }
 
@@ -57,7 +58,7 @@ bool	check_mid_line_char(char c)
 
 bool	validate_mid_line(char *line)
 {
-	int i;
+	int	i;
 
 	if (!line)
 		return (error_msg(0, "Validate mid_line, passed null line.", NULL));
@@ -65,10 +66,10 @@ bool	validate_mid_line(char *line)
 	while (line[i])
 	{
 		if (check_mid_line_char(line[i]))
-			return (error_msg(0, "Mid map line should have 1 0NSEWnewline.", NULL));
+			return (error_msg(0, "Mid map line \
+				should have 1 0NSEWnewline.", NULL));
 		i++;
 	}
-	// ft_printf("Found mid line: %s\n", line);
 	return (true);
 }
 
@@ -77,14 +78,15 @@ bool	validate_map_lines(t_map *map)
 	int	i;
 
 	if (!map)
-			return (error_msg(0, "Validate Map lines passed null map.", NULL));
+		return (error_msg(0, "Validate Map lines passed null map.", NULL));
 	i = 0;
 	while (map->data[i])
 	{
 		if ((i == 0 || i == ft_str_arr_len((const char **)map->data)))
 		{
 			if (!validate_all_ones_line(map->data[i]))
-				return (error_msg(0, "Failed to validate all top/bottom line.", NULL));
+				return (error_msg(0, "Failed to validate\
+					all top/bottom line.", NULL));
 		}
 		else
 		{

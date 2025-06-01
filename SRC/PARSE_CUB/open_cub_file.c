@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/28 14:16:43 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 17:02:51 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,7 @@ bool	error_msg(int fd, char *msg, char **cub)
 		ft_str_arr_free(&cub);
 	return (false);
 }
-/*
-11111111
-10000001
-10111111
-101     
-10111001
-10000001
-11111111
 
-
-*/
 bool	load_cub_file_contents(char ***cub, int fd)
 {
 	char	*line;
@@ -49,11 +39,12 @@ bool	load_cub_file_contents(char ***cub, int fd)
 			free(line);
 			continue ;
 		}
-		tmp = ft_str_arr_add(*cub, line); 
+		tmp = ft_str_arr_add(*cub, line);
 		free(line);
-		if (tmp == NULL)	
+		if (tmp == NULL)
 		{
-			ft_putstr_fd("Error - failed to add line to cub double array.\n", 2);
+			ft_putstr_fd("Error - failed to add line \
+				to cub double array.\n", 2);
 			ft_str_arr_free(cub);
 			return (false);
 		}
@@ -71,7 +62,7 @@ bool	open_cub_file_and_copy_data(t_cube *data, char *filename)
 	cub = NULL;
 	if (fd < 0)
 		return (error_msg(fd, "parse_main() failed to open .cub.", cub));
-	cub = ft_str_arr_init();	
+	cub = ft_str_arr_init();
 	if (!cub)
 		return (error_msg(fd, "cub array failed to init.", cub));
 	if (!load_cub_file_contents(&cub, fd))

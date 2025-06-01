@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 12:28:34 by smoore            #+#    #+#             */
-/*   Updated: 2025/06/01 12:32:12 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 17:15:00 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 bool	is_valid_tile(char c)
 {
-	return (c == '0' || c == '1' ||  c == 'N'
-		||  c == 'S' ||  c == 'E' ||  c == 'W');
+	return (c == '0' || c == '1' || c == 'N'
+		|| c == 'S' || c == 'E' || c == 'W');
 }
 
 bool	check_bounds_are_valid(t_map *map, int i, int j)
 {
-	if (i < 0 || j < 0)	
+	if (i < 0 || j < 0)
 		return (false);
 	if (!map->data[i] || j >= (int)ft_strlen(map->data[i]))
 		return (false);
@@ -74,20 +74,20 @@ bool	validate_xpm_extension(char *path)
 
 	if (!path)
 	{
-		ft_putstr_fd("Error - no path provided.\n", 2); 
-		return(false);
+		ft_putstr_fd("Error - no path provided.\n", 2);
+		return (false);
 	}
 	len = ft_strlen(path);
 	if (len < 5 || ft_strncmp(path + len - 4, ".xpm", 4) != 0)
 	{
-		ft_putstr_fd("Error - texture path doesn't end with .xpm.\n", 2); 
-		return(false);
+		ft_putstr_fd("Error - texture path doesn't end with .xpm.\n", 2);
+		return (false);
 	}
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 	{
 		ft_putstr_fd("Error - failed to open xpm path.\n", 2);
-		return(false);
+		return (false);
 	}
 	close(fd);
 	ft_printf("Was able to validate .xpm path!!\n");

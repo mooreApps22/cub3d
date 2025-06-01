@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:37:04 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/06/01 15:42:15 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 16:49:55 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static void	clean_mlx_data(t_cube *data)
 	}
 	if (data->image.img)
 	{
-		
 		mlx_destroy_image(data->mlx_data.mlx_ptr, data->image.img);
 		data->image.img = NULL;
 	}
@@ -81,9 +80,5 @@ void	exit_cleanup(char *msg, t_cube *data, int exit_code)
 	clean_mlx_data(data);
 	if (data->map.data)
 		free_dptr((void **)data->map.data);
-		// ft_str_arr_free(&data->map.data);
-
-	// clean_player_data(data); there is nothing malloced at player atm
-
 	exit(exit_code);
 }

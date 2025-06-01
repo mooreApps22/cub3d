@@ -41,6 +41,9 @@ int		handle_x_button(t_cube *data);
 int		mouse_input(int x, int y, t_cube *data);
 
 /*~~~ GAMEPLAY ~~~*/
+double	tuple_magnitude(t_tuple tuple);
+t_tuple	tuple_normalize(t_tuple tuple);
+void	validate_movement(t_ply *player, t_tuple dir, t_map *level);
 void	move_forward(t_cube *data);
 void	move_left(t_cube *data);
 void	move_back(t_cube *data);

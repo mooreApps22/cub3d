@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:40:00 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/06/01 16:14:19 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 17:57:15 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,6 +167,23 @@ typedef struct s_wall
 	t_image	*tex;
 	char	*addr;
 }	t_wall;
+
+/*~~~ Wall Input Data Structure ~~~*/
+typedef struct s_wall_input
+{
+	t_tex		*tx;
+	t_image		*buf;
+	t_intersect	*inter;
+}	t_wall_input;
+
+
+/*~~~ Player Info Structure ~~~*/
+typedef struct s_player_info 
+{
+	t_map	*map;
+	t_ply	*player;
+	int		*count;
+}	t_player_info;
 
 /*~~~ Main Data Structure ~~~*/
 typedef struct s_cube

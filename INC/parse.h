@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:58:58 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/06/01 12:39:30 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 17:10:10 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ bool	assign_color_values(char *line, char *id, t_rgb *val);
 
 bool	init_textures(t_tex *txs);
 void	set_init_textures_paths_to_null(t_tex *txs);
+void	set_init_textures_paths_to_null(t_tex *txs);
 bool	match_texture_path(char *line, t_tex *txs);
 bool	validate_first_six_lines(char **map, t_tex *txs, int *map_line_start);
 
@@ -44,5 +45,7 @@ bool	validate_xpm_extension(char *path);
 
 bool	validate_map_dimensions(t_map *map);
 bool	validate_xpm_extensions(t_tex *txs);
+
+bool	init_textures(t_tex *txs);
 
 #endif

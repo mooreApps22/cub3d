@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/05/28 17:13:06 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 17:11:59 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ bool	trim_first_six_lines(char **map)
 
 bool	assign_texture_path(char *line, char *id, char **tex_path)
 {
-	int i;
+	int	i;
 
 	if (ft_strncmp(line, id, ft_strlen(id)) == 0 && !*tex_path)
 	{
@@ -73,16 +73,16 @@ bool	process_color_values(t_rgb *val, char **split, int len)
 	return (true);
 }
 
-
 bool	assign_color_values(char *line, char *id, t_rgb *val)
 {
 	char	**split;
 	int		len;
 
-	if (ft_strncmp(line, id, ft_strlen(id)) == 0 && (val->r == -1 && val->g == -1 && val->b == -1))
+	if (ft_strncmp(line, id, ft_strlen(id)) == 0
+		&& (val->r == -1 && val->g == -1 && val->b == -1))
 	{
 		split = ft_split(line, ',');
-		len  = ft_str_arr_len((const char **)split);
+		len = ft_str_arr_len((const char **)split);
 		if (!split || len < 3)
 		{
 			ft_str_arr_free(&split);

@@ -6,31 +6,16 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:06:58 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/06/01 15:49:50 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 18:00:24 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-/*
-double	wall_height(t_intersect *inter)
-{
-	double	projected_slice_height;
-
-	projected_slice_height = (int)(TILE_SIZE / inter->distance * DIST_TO_PP); // % HEIGHT;
-
-	if (projected_slice_height > HEIGHT)
-	{
-		return (HEIGHT);
-	}
-	return (projected_slice_height); //place wall in the middle so half of this is above middle and other half is below!
-}
-*/
 double	wall_height(t_intersect *inter)
 {
 	return (TILE_SIZE / inter->distance * DIST_TO_PP);
 }
-
 
 double	normalize_angle(double alpha)
 {
@@ -48,7 +33,8 @@ double	distance(t_tuple source, t_tuple destination) // there is a faster equati
 	double	distance;
 
 	distance = 0;
-	distance = sqrt(pow((destination.x - source.x), 2) + pow((destination.y - source.y), 2));
+	distance = sqrt(pow((destination.x - source.x), 2)
+			+ pow((destination.y - source.y), 2));
 	return (distance);
 }
 
@@ -91,9 +77,11 @@ t_intersect	find_intersection(t_cube *data, t_tuple ray, double alpha)
 
 	pos.x = data->player.pos.x;
 	pos.y = data->player.pos.y;
-	while (pos.x >= 0 && pos.x <= TILE_SIZE * data->map.width && pos.y >= 0 && pos.y <= TILE_SIZE * data->map.height)
+	while (pos.x >= 0 && pos.x <= TILE_SIZE * data->map.width
+		&& pos.y >= 0 && pos.y <= TILE_SIZE * data->map.height)
 	{
-		if ((int)pos.x % TILE_SIZE == 0 && check_tile(data, pos.x + ray.x, pos.y) == '1')
+		if ((int)pos.x % TILE_SIZE == 0
+			&& check_tile(data, pos.x + ray.x, pos.y) == '1')
 		{
 			find_direction(&inter, ray, 1);
 			break ;
@@ -123,11 +111,11 @@ t_intersect	*ray_casting_main(t_cube *data)
 	inter = safe_malloc(sizeof(t_intersect), WIDTH * 2 + 1);
 	if (inter == NULL)
 		return (NULL);
-	
 	i = 0;
 	while (i < WIDTH)
 	{
-		angle = normalize_angle(data->player.alpha + (FOV / 2) - (i * FOV / (WIDTH))); // current heading + left side of FOV - iterating angle to
+		angle = normalize_angle(data->player.alpha
+				+ (FOV / 2) - (i * FOV / (WIDTH)));
 		ray.x = cos(angle);
 		ray.y = sin(angle);
 		inter[i] = find_intersection(data, ray, angle);

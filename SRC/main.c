@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:29:19 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/06/01 12:22:39 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 16:52:24 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	game_start(t_cube *data)
 {
 	mlx_loop_hook(data->mlx_data.mlx_ptr, render_loop, data);
 	mlx_hook(data->mlx_data.win_ptr, 17, 0, handle_x_button, data);
-	mlx_hook(data->mlx_data.win_ptr, 2, 1L<<0, handle_keys, data);
+	mlx_hook(data->mlx_data.win_ptr, 2, 1L << 0, handle_keys, data);
 	mlx_hook(data->mlx_data.win_ptr, 6, 1L << 6, mouse_input, data);
 	mlx_loop(data->mlx_data.mlx_ptr);
 	return (0);
@@ -33,6 +33,7 @@ int	main(int ac, char **av)
 		exit_cleanup("Error - Parsing failed\n", &data, errno);
 	game_start(&data);
 	printf("REACHED END OF MAIN\n");
-	exit_cleanup("Thanks for playing our game, we hope you hated it!\n", &data, 0);
+	exit_cleanup("Thanks for playing our game, \
+		we hope you hated it!\n", &data, 0);
 	return (0);
 }

@@ -43,6 +43,7 @@ SRC = \
 		SRC/PARSE_CUB/parse_main.c \
 		SRC/PARSE_CUB/parse_first_six_lines.c \
 		SRC/PARSE_CUB/parse_first_six_lines_utils.c \
+		SRC/PARSE_CUB/init_textures.c \
 		SRC/PARSE_CUB/validate_map_lines.c \
 		SRC/PARSE_CUB/validate_player.c \
 		SRC/PARSE_CUB/open_cub_file.c \
@@ -52,6 +53,7 @@ SRC = \
 		SRC/INITIALIZE/init_structures.c \
 		SRC/MLX_and_INPUT/key_input.c \
 		SRC/MLX_and_INPUT/moveeeee.c \
+		SRC/MLX_and_INPUT/move_utils.c \
 		SRC/MLX_and_INPUT/turrrrrn.c \
 		SRC/RENDER/render_loop.c \
 		SRC/RENDER/get_asset.c \

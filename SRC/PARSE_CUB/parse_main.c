@@ -6,14 +6,14 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/06/01 14:00:27 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 17:16:13 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
 bool	load_all_textures(t_tex *txs, void *mlx)
-{	
+{
 	if (!mlx)
 		return (error_msg(0, "No mlx passed into load all textures.", NULL));
 	printf("Post load_all_textures pass: %p\n", mlx);
@@ -52,7 +52,7 @@ bool	validate_cub_data(t_map *map, t_tex *txs, t_ply *player, void *mlx)
 	printf("Pre load_all_textures pass: %p\n", mlx);
 	if (!load_all_textures(txs, mlx))
 		return (error_msg(0, "Failed to load all textures.", NULL));
-	return (true);	
+	return (true);
 }
 
 bool	parse_main(t_cube *data, char *filename)
@@ -61,7 +61,7 @@ bool	parse_main(t_cube *data, char *filename)
 	if (!open_cub_file_and_copy_data(data, filename))
 		return (error_msg(0, "failed to extract cub file data.", NULL));
 	if (!validate_cub_data(&data->map, &data->textures, &data->player,
-		data->mlx_data.mlx_ptr))
+			data->mlx_data.mlx_ptr))
 		return (error_msg(0, "failed to validate cub data.", NULL));
 	return (true);
 }

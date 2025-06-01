@@ -6,22 +6,22 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:27:07 by smoore            #+#    #+#             */
-/*   Updated: 2025/06/01 16:41:28 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 17:57:20 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-static void	init_wall_data(t_wall *w, t_intersect *inter, int i, t_tex *tx, t_image *buf)
+static void	init_wall_data(t_wall *w, int i, t_wall_input *in)
 {
 	w->i = i;
-	w->addr = buf->addr;
-	w->tex = get_wall_texture(tx, inter->side);
-	w->wall_h = wall_height(inter);
-	if (inter->side == EAST || inter->side == WEST)
-		w->tex_x = (int)inter->y % TILE_SIZE;
+	w->addr = in->buf->addr;
+	w->tex = get_wall_texture(in->tx, in->inter->side);
+	w->wall_h = wall_height(in->inter);
+	if (in->inter->side == EAST || in->inter->side == WEST)
+		w->tex_x = (int)in->inter->y % TILE_SIZE;
 	else
-		w->tex_x = (int)inter->x % TILE_SIZE;
+		w->tex_x = (int)in->inter->x % TILE_SIZE;
 	w->tex_x = w->tex_x * w->tex->width / TILE_SIZE;
 	w->step = (double)w->tex->height / w->wall_h;
 	w->tex_pos = 0.0;
@@ -40,7 +40,7 @@ static void	clamp_wall_drawing(t_wall *w)
 		w->draw_end = HEIGHT;
 }
 
-static void draw_wall_column(t_wall *w, t_image *buf)
+static void	draw_wall_column(t_wall *w, t_image *buf)
 {
 	int	tex_offset;
 	int	screen_offset;
@@ -65,9 +65,13 @@ static void draw_wall_column(t_wall *w, t_image *buf)
 
 void	paint_walls(t_image *buf, t_tex *tx, t_intersect *inter, int i)
 {
-	t_wall w;
+	t_wall			w;
+	t_wall_input	in;
 
-	init_wall_data(&w, inter, i, tx, buf);
+	in.buf = buf;
+	in.tx = tx;
+	in.inter = inter;
+	init_wall_data(&w, i, &in);
 	if (!w.tex || !w.tex->addr)
 		return ;
 	clamp_wall_drawing(&w);

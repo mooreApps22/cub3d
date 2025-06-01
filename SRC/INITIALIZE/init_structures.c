@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:56:15 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/06/01 15:05:28 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/01 16:54:28 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	init_mlx(t_cube *data)
 	if (!data->mlx_data.mlx_ptr)
 		exit_cleanup("Error - mlx could not be passed to init!\n", NULL, errno);
 	data->mlx_data.win_ptr = mlx_new_window(data->mlx_data.mlx_ptr,
-		WIDTH, HEIGHT, "cub3d");
+			WIDTH, HEIGHT, "cub3d");
 	if (!data->mlx_data.win_ptr)
 		exit_cleanup("Error - window could not be passed to init!\n",
 			NULL, errno);
