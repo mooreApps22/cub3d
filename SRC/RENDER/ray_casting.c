@@ -6,37 +6,11 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/28 15:06:58 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/06/01 18:00:24 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/03 15:09:38 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
-
-double	wall_height(t_intersect *inter)
-{
-	return (TILE_SIZE / inter->distance * DIST_TO_PP);
-}
-
-double	normalize_angle(double alpha)
-{
-	if (alpha <= 2 * M_PI || alpha >= 0)
-		return (alpha);
-	while (alpha > 2 * M_PI)
-		(alpha) -= M_PI;
-	while (alpha < 0)
-		(alpha) += 2 * M_PI;
-	return (alpha);
-}
-
-double	distance(t_tuple source, t_tuple destination) // there is a faster equation where dist(x)/cos(alpha)
-{
-	double	distance;
-
-	distance = 0;
-	distance = sqrt(pow((destination.x - source.x), 2)
-			+ pow((destination.y - source.y), 2));
-	return (distance);
-}
 
 static char	check_tile(t_cube *data, double x, double y)
 {
@@ -70,9 +44,29 @@ static void	find_direction(t_intersect *inter, t_tuple ray, int flag)
 	}
 }
 
+bool	check_tile_find_direction(t_cube *data,
+	t_tuple ray, t_tuple *pos, t_intersect *inter)
+{
+	if ((int)(*pos).x % TILE_SIZE == 0
+		&& check_tile(data, (*pos).x + ray.x, (*pos).y) == '1')
+	{
+		find_direction(inter, ray, 1);
+		return (false);
+	}
+	else if ((int)(*pos).y % TILE_SIZE == 0
+		&& check_tile(data, (*pos).x, (*pos).y + ray.y) == '1')
+	{
+		find_direction(inter, ray, 2);
+		return (false);
+	}
+	(*pos).x += ray.x;
+	(*pos).y += ray.y;
+	return (true);
+}
+
 t_intersect	find_intersection(t_cube *data, t_tuple ray, double alpha)
 {
-	t_tuple	pos;
+	t_tuple		pos;
 	t_intersect	inter;
 
 	pos.x = data->player.pos.x;
@@ -80,19 +74,8 @@ t_intersect	find_intersection(t_cube *data, t_tuple ray, double alpha)
 	while (pos.x >= 0 && pos.x <= TILE_SIZE * data->map.width
 		&& pos.y >= 0 && pos.y <= TILE_SIZE * data->map.height)
 	{
-		if ((int)pos.x % TILE_SIZE == 0
-			&& check_tile(data, pos.x + ray.x, pos.y) == '1')
-		{
-			find_direction(&inter, ray, 1);
+		if (!check_tile_find_direction(data, ray, &pos, &inter))
 			break ;
-		}
-		else if ((int)pos.y % TILE_SIZE == 0 && check_tile(data, pos.x, pos.y + ray.y) == '1')
-		{
-			find_direction(&inter, ray, 2);
-			break ;
-		}
-		pos.x += ray.x;
-		pos.y += ray.y;
 	}
 	inter.x = pos.x;
 	inter.y = pos.y;
@@ -115,7 +98,7 @@ t_intersect	*ray_casting_main(t_cube *data)
 	while (i < WIDTH)
 	{
 		angle = normalize_angle(data->player.alpha
-				+ (FOV / 2) - (i * FOV / (WIDTH)));
+				+ (data->cam.fov / 2) - (i * data->cam.fov / (WIDTH)));
 		ray.x = cos(angle);
 		ray.y = sin(angle);
 		inter[i] = find_intersection(data, ray, angle);

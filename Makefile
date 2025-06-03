@@ -56,10 +56,10 @@ SRC = \
 		SRC/MLX_and_INPUT/move_utils.c \
 		SRC/MLX_and_INPUT/turrrrrn.c \
 		SRC/RENDER/render_loop.c \
-		SRC/RENDER/get_asset.c \
 		SRC/RENDER/blit_utils.c \
 		SRC/RENDER/render_timing.c \
 		SRC/RENDER/ray_casting.c \
+		SRC/RENDER/ray_casting_utils.c \
 		SRC/RENDER/paint_wall.c \
 		SRC/debug_prints.c \
 

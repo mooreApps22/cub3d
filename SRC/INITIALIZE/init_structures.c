@@ -6,11 +6,22 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:56:15 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/06/01 16:54:28 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/03 15:45:26 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
+
+void	init_camera(t_camera *cam)
+{
+	cam->fov = M_PI / 3;
+	cam->turn_size = M_PI / (WIDTH * cam->fov);
+	cam->pp_size = WIDTH * HEIGHT;
+	cam->pp_x = WIDTH / 2;
+	cam->pp_y = HEIGHT / 2;
+	cam->dist_to_pp = cam->pp_x / tan(cam->fov / 2);
+	cam->delta_fov = cam->fov / WIDTH;
+}
 
 void	init_mlx(t_cube *data)
 {
@@ -52,4 +63,5 @@ void	clean_initialize(t_cube *data)
 	data->textures.ceiling = NULL;
 	data->textures.floor = NULL;
 	data->player.alpha = -1.0;
+	init_camera(&data->cam);
 }

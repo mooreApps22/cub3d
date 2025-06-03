@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:45:51 by mcoskune          #+#    #+#             */
-/*   Updated: 2024/11/26 16:29:41 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/06/03 15:44:18 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,5 @@ void	free_dptr(void **dptr)
 		dptr[i] = NULL;  // This can be useful to prevent use-after-free bugs
 		i++;
 	}
-	free(dptr);
-	// Note: setting dptr = NULL has no effect since dptr is passed by value
+	free(dptr);	// Note: setting dptr = NULL has no effect since dptr is passed by value
 }

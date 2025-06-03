@@ -6,18 +6,18 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:27:07 by smoore            #+#    #+#             */
-/*   Updated: 2025/06/01 17:57:20 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/03 15:21:27 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cube.h"
 
-static void	init_wall_data(t_wall *w, int i, t_wall_input *in)
+static void	init_wall_data(t_wall *w, int i, t_wall_input *in, t_cube *data)
 {
 	w->i = i;
 	w->addr = in->buf->addr;
 	w->tex = get_wall_texture(in->tx, in->inter->side);
-	w->wall_h = wall_height(in->inter);
+	w->wall_h = wall_height(in->inter, data);
 	if (in->inter->side == EAST || in->inter->side == WEST)
 		w->tex_x = (int)in->inter->y % TILE_SIZE;
 	else
@@ -63,17 +63,17 @@ static void	draw_wall_column(t_wall *w, t_image *buf)
 	}
 }
 
-void	paint_walls(t_image *buf, t_tex *tx, t_intersect *inter, int i)
+void	paint_walls(t_cube *data, t_intersect *inter, int i)
 {
 	t_wall			w;
 	t_wall_input	in;
 
-	in.buf = buf;
-	in.tx = tx;
+	in.buf = &data->image;
+	in.tx = &data->textures;
 	in.inter = inter;
-	init_wall_data(&w, i, &in);
+	init_wall_data(&w, i, &in, data);
 	if (!w.tex || !w.tex->addr)
 		return ;
 	clamp_wall_drawing(&w);
-	draw_wall_column(&w, buf);
+	draw_wall_column(&w, &data->image);
 }

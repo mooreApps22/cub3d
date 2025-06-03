@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:58:10 by smoore            #+#    #+#             */
-/*   Updated: 2025/06/01 16:43:06 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/03 15:33:23 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int	t_rgb_to_hex(t_rgb c)
 {
 	return (((int)c.r << 16) | ((int)c.g << 8) | (int)c.b);
 }
-
 
 void	paint_ceil_floor(t_cube *data, t_image *buf, t_tex *tx)
 {
@@ -62,7 +61,7 @@ t_image	*get_wall_texture(t_tex *tx, int side)
 void	render_frame(t_cube *data, t_image *buf, t_tex *tx)
 {
 	t_intersect	*inter;
-	int			i; //for x dir
+	int			i;
 
 	inter = ray_casting_main(data);
 	if (inter == NULL)
@@ -71,7 +70,7 @@ void	render_frame(t_cube *data, t_image *buf, t_tex *tx)
 	i = 0;
 	while (i < WIDTH)
 	{
-		paint_walls(buf, tx, &inter[WIDTH - i - 1], i);
+		paint_walls(data, &inter[WIDTH - i - 1], i);
 		i ++;
 	}
 	free(inter);
@@ -85,11 +84,11 @@ int	render_loop(t_cube *data)
 		if (data->image.img != NULL)
 			mlx_destroy_image(data->mlx_data.mlx_ptr, data->image.img);
 		data->image.img = mlx_new_image(data->mlx_data.mlx_ptr, WIDTH, HEIGHT);
-		data->image.addr = mlx_get_data_addr(data->image.img, &data->image.bpp, &data->image.line_len, &data->image.endian);
+		data->image.addr = get_image_addr(&data->image);
 		render_frame(data, &data->image, &data->textures);
-		mlx_put_image_to_window(data->mlx_data.mlx_ptr, data->mlx_data.win_ptr, data->image.img, 0, 0);
+		mlx_put_image_to_window(data->mlx_data.mlx_ptr,
+			data->mlx_data.win_ptr, data->image.img, 0, 0);
 		gettimeofday(&data->start, NULL);
 	}
 	return (0);
 }
-

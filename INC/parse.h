@@ -6,15 +6,14 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:58:58 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/06/01 17:10:10 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/03 14:42:53 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
 
-#include "cube.h"
-
+# include "cube.h"
 
 bool	error_msg(int fd, char *msg, char **cub);
 bool	load_cub_file_contents(char ***cub, int fd);

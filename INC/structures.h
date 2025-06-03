@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:40:00 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/06/01 17:57:15 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/03 15:40:36 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,36 +33,16 @@
 #  define TILE_SIZE 64
 # endif
 
-# ifndef FOV
-#  define FOV (M_PI / 3)
-# endif
-
-# ifndef TURN_SIZE
-#  define TURN_SIZE M_PI / (WIDTH * FOV)
-# endif
-
-// PP = Projection Plane
-# ifndef PP_SIZE
-#  define PP_SIZE (WIDTH * HEIGHT)
-# endif
-
-# ifndef PP_X
-#  define PP_X (WIDTH / 2)
-# endif
-
-# ifndef PP_Y
-#  define PP_Y (HEIGHT / 2)
-# endif
-
-# ifndef DIST_TO_PP
-#  define DIST_TO_PP (PP_X / tan(FOV / 2))
-# endif
-
-# ifndef DELTA_FOV
-#  define DELTA_FOV (FOV / WIDTH)
-# endif
-
-
+typedef struct s_camera
+{
+	double	fov;
+	double	turn_size;
+	double	pp_size; // projection plane
+	double	pp_x;
+	double	pp_y;
+	double	dist_to_pp;
+	double	delta_fov;
+}	t_camera;
 
 typedef enum e_dir
 {
@@ -106,7 +86,6 @@ typedef struct s_map
 	unsigned short	width;
 	int				map_line_start;
 }	t_map;
-
 
 /*~~~ Colour Data ~~~*/
 typedef struct s_rgb
@@ -176,9 +155,8 @@ typedef struct s_wall_input
 	t_intersect	*inter;
 }	t_wall_input;
 
-
 /*~~~ Player Info Structure ~~~*/
-typedef struct s_player_info 
+typedef struct s_player_info
 {
 	t_map	*map;
 	t_ply	*player;
@@ -188,15 +166,14 @@ typedef struct s_player_info
 /*~~~ Main Data Structure ~~~*/
 typedef struct s_cube
 {
-	t_mlx	mlx_data;
-	t_image	image;
-	t_map	map;
-	t_tex	textures;
-	t_ply	player;
-	int		reset_frame; // signal for resetting the frame
-
+	t_mlx			mlx_data;
+	t_image			image;
+	t_map			map;
+	t_tex			textures;
+	t_ply			player;
+	int				reset_frame; // signal for resetting the frame
 	struct timeval	start;
+	t_camera		cam;
 }	t_cube;
-
 
 #endif
