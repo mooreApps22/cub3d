@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/11 12:37:04 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/06/01 16:49:55 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/03 16:19:56 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,12 @@ void	exit_cleanup(char *msg, t_cube *data, int exit_code)
 {
 	if (msg)
 		ft_putstr_fd(msg, 2);
-	clean_texture_data(data);
-	clean_mlx_data(data);
-	if (data->map.data)
-		free_dptr((void **)data->map.data);
+	if (data)
+	{
+		clean_texture_data(data);
+		clean_mlx_data(data);
+		if (data->map.data)
+			free_dptr((void **)data->map.data);
+	}
 	exit(exit_code);
 }

@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/06/01 17:02:51 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/03 17:00:17 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ bool	load_cub_file_contents(char ***cub, int fd)
 		free(line);
 		if (tmp == NULL)
 		{
-			ft_putstr_fd("Error - failed to add line \
-				to cub double array.\n", 2);
+			ft_putstr_fd("Error - failed to add line to cub dbl arr.\n", 2);
 			ft_str_arr_free(cub);
 			return (false);
 		}

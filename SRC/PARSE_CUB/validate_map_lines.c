@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 12:36:19 by smoore            #+#    #+#             */
-/*   Updated: 2025/06/01 17:20:07 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/03 17:03:41 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ bool	extract_remaining_lines(t_map *map, t_tex *txs)
 	ft_str_arr_printf(dup);
 	ft_str_arr_free(&map->data);
 	map->data = dup;
+	printf("\n");
 	return (true);
 }
 
@@ -42,8 +43,7 @@ bool	validate_all_ones_line(char *line)
 	while (line[i])
 	{
 		if (line[i] != '1' && line[i] != ' ' && line[i] != '\n')
-			return (error_msg(0, "Top/Bottom map line should \
-				be 1's & spaces.", NULL));
+			return (error_msg(0, "Top/Bottom line has invalid char.", NULL));
 		i++;
 	}
 	return (true);
@@ -66,8 +66,7 @@ bool	validate_mid_line(char *line)
 	while (line[i])
 	{
 		if (check_mid_line_char(line[i]))
-			return (error_msg(0, "Mid map line \
-				should have 1 0NSEWnewline.", NULL));
+			return (error_msg(0, "Mid line has invalid char.", NULL));
 		i++;
 	}
 	return (true);
@@ -85,8 +84,7 @@ bool	validate_map_lines(t_map *map)
 		if ((i == 0 || i == ft_str_arr_len((const char **)map->data)))
 		{
 			if (!validate_all_ones_line(map->data[i]))
-				return (error_msg(0, "Failed to validate\
-					all top/bottom line.", NULL));
+				return (error_msg(0, "Invalid top/bottom line.", NULL));
 		}
 		else
 		{

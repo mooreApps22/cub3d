@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:32:32 by smoore            #+#    #+#             */
-/*   Updated: 2025/06/01 17:43:25 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/03 16:26:44 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ static bool	scan_map_for_player(t_player_info *info)
 			if (is_valid_player_char(info->map->data[i][j]))
 			{
 				if (!calculate_player_direction(info, i, j))
-					return (false);
+					return (error_msg(0, "Failed to calculate\
+						player direction.", NULL));
 			}
 			j++;
 		}

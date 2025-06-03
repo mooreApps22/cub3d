@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/27 14:13:43 by smoore            #+#    #+#             */
-/*   Updated: 2025/06/01 17:09:06 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/03 17:04:41 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,39 @@ bool	match_texture_path(char *line, t_tex *txs)
 	if (assign_color_values(line, "C ", txs->ceiling))
 		found = true;
 	return (found);
+}
+
+static void	report_missing_color_values(t_tex *txs)
+{
+	if (!txs)
+		return ;
+	if (txs->ceiling->r == -1)
+		printf("Missing ceiling red value\n");
+	if (txs->ceiling->g == -1)
+		printf("Missing ceiling green value\n");
+	if (txs->ceiling->b == -1)
+		printf("Missing ceiling blue value\n");
+	if (txs->floor->r == -1)
+		printf("Missing floor red value\n");
+	if (txs->floor->g == -1)
+		printf("Missing floor green value\n");
+	if (txs->floor->b == -1)
+		printf("Missing floor blue value\n");
+}
+
+static void	report_missing_textures(t_tex *txs)
+{
+	if (!txs)
+		return ;
+	if (!txs->north_wall->path)
+		printf("Missing pathway to north wall\n");
+	if (!txs->south_wall->path)
+		printf("Missing pathway to south wall\n");
+	if (!txs->east_wall->path)
+		printf("Missing pathway to east wall\n");
+	if (!txs->west_wall->path)
+		printf("Missing pathway to west wall\n");
+	report_missing_color_values(txs);
 }
 
 bool	validate_all_textures_are_found(t_tex *txs)
@@ -61,6 +94,7 @@ bool	validate_first_six_lines(char **map, t_tex *txs, int *map_line_start)
 		}
 		map++;
 	}
+	report_missing_textures(txs);
 	if (!validate_all_textures_are_found(txs))
 		return (error_msg(0, "Failed to match texture paths.", NULL));
 	return (true);

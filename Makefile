@@ -94,7 +94,7 @@ multipleplayer:
 	@./$(NAME) CUBFILES/INVALID/multipleplayer.cub
 
 opensidewall:
-	@./$(NAME) CUBFILES/INVALID/opensidewall.cub.
+	@./$(NAME) CUBFILES/INVALID/opensidewall.cub
 
 internalspace:
 	@./$(NAME) CUBFILES/INVALID/internalspace.cub
