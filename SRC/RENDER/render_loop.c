@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:58:10 by smoore            #+#    #+#             */
-/*   Updated: 2025/06/03 15:33:23 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/06 12:42:46 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	render_frame(t_cube *data, t_image *buf, t_tex *tx)
 int	render_loop(t_cube *data)
 {
 	data->reset_frame = 0;
+	process_keys(data);
 	if (data->reset_frame == 0)
 	{
 		if (data->image.img != NULL)

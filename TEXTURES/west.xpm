@@ -3,7 +3,7 @@ static char *block[] = {
 /* columns rows colors chars-per-pixel */
 "64 64 3 1 ",
 "  c #7A795E",
-". c #AAA982",
+". c #D4D464",
 "X c #FFFAC4",
 /* pixels */
 "                                                                ",

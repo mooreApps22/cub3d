@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:56:15 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/06/03 15:45:26 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/06 13:19:22 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,16 @@ void	init_mlx(t_cube *data)
 	data->reset_frame = 1;
 }
 
+void	init_keys(t_cube *data)
+{
+	data->keys.left = false;
+	data->keys.right = false;
+	data->keys.w = false;
+	data->keys.s = false;
+	data->keys.a = false;
+	data->keys.d = false;
+}
+
 void	clean_initialize(t_cube *data)
 {
 	data->mlx_data.mlx_ptr = NULL;
@@ -62,6 +72,7 @@ void	clean_initialize(t_cube *data)
 	data->textures.west_wall = NULL;
 	data->textures.ceiling = NULL;
 	data->textures.floor = NULL;
-	data->player.alpha = -1.0;
+	data->player.alpha = 0.0;
 	init_camera(&data->cam);
+	init_keys(data);
 }

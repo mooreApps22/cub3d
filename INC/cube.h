@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/03 14:36:32 by smoore            #+#    #+#             */
-/*   Updated: 2025/06/03 15:20:39 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/06 12:26:07 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ void			clean_initialize(t_cube *data);
 void			init_mlx(t_cube *data);
 /*~~~ KEY INPUTS ~~~*/
 int				handle_keys(int keysys, t_cube *data);
+void			process_keys(t_cube *data);
+int				key_press(int key, t_cube *data);
+int				key_release(int key, t_cube *data);
 int				handle_x_button(t_cube *data);
 int				mouse_input(int x, int y, t_cube *data);
 
@@ -66,6 +69,7 @@ void			iterate_across_image_buffer(t_image *buf, t_tex *assets);
 void			render_frame(t_cube *data, t_image *buf, t_tex *tx);
 
 t_intersect		*ray_casting_main(t_cube *data);
+t_intersect		find_inter_dda(t_cube *data, t_tuple ray, double alpha); // <===
 double			normalize_angle(double alpha);
 
 t_image			*get_wall_texture(t_tex *tx, int side);

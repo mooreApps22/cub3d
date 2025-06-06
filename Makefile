@@ -55,6 +55,7 @@ SRC = \
 		SRC/MLX_and_INPUT/moveeeee.c \
 		SRC/MLX_and_INPUT/move_utils.c \
 		SRC/MLX_and_INPUT/turrrrrn.c \
+		SRC/MLX_and_INPUT/process_keys.c \
 		SRC/RENDER/render_loop.c \
 		SRC/RENDER/blit_utils.c \
 		SRC/RENDER/render_timing.c \
@@ -79,6 +80,9 @@ all: $(NAME)
 ### ~~~ VALID MAPS ~~~ ###
 val1:
 	@./$(NAME) CUBFILES/VALID/valid_file_1.cub
+
+val2:
+	@./$(NAME) CUBFILES/VALID/valid_file_2.cub
 
 ### ~~~ INVALID MAPS ~~~ ###
 wrongextension:

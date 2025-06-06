@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/01 16:57:38 by smoore            #+#    #+#             */
-/*   Updated: 2025/06/01 16:58:10 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/06 13:29:48 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	validate_movement(t_ply *player, t_tuple dir, t_map *level)
 	double	check_x;
 	double	check_y;
 
-	check_x = (player->pos.x + dir.x * 3) / TILE_SIZE;
-	check_y = (player->pos.y + dir.y * 3) / TILE_SIZE;
+	check_x = (player->pos.x + dir.x * 7) / TILE_SIZE;
+	check_y = (player->pos.y + dir.y * 7) / TILE_SIZE;
 	printf("DIRECTION X IS %f\n", dir.x);
 	printf("DIRECTION Y IS %f\n", dir.y);
 	if ((level->data[(int)check_y][(int)check_x]) != '0')

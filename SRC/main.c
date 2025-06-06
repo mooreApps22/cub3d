@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:29:19 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/06/03 13:54:08 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/06 13:01:48 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ int	game_start(t_cube *data)
 {
 	mlx_loop_hook(data->mlx_data.mlx_ptr, render_loop, data);
 	mlx_hook(data->mlx_data.win_ptr, 17, 0, handle_x_button, data);
-	mlx_hook(data->mlx_data.win_ptr, 2, 1L << 0, handle_keys, data);
+	mlx_hook(data->mlx_data.win_ptr, 2, 1L << 0, key_press, data);
+	mlx_hook(data->mlx_data.win_ptr, 3, 1L << 1, key_release, data);
 	mlx_hook(data->mlx_data.win_ptr, 6, 1L << 6, mouse_input, data);
 	mlx_loop(data->mlx_data.mlx_ptr);
 	return (0);

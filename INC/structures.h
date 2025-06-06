@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:40:00 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/06/03 15:40:36 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/06 12:45:48 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,22 @@
 # endif
 
 # ifndef MOVE_SPEED
-#  define MOVE_SPEED 600
+#  define MOVE_SPEED 60 
 # endif
 
 # ifndef TILE_SIZE
 #  define TILE_SIZE 64
 # endif
+
+typedef struct s_keys
+{
+	bool	w;
+	bool	a;
+	bool	s;
+	bool	d;
+	bool	left;
+	bool	right;
+}	t_keys;
 
 typedef struct s_camera
 {
@@ -174,6 +184,7 @@ typedef struct s_cube
 	int				reset_frame; // signal for resetting the frame
 	struct timeval	start;
 	t_camera		cam;
+	t_keys			keys;
 }	t_cube;
 
 #endif
