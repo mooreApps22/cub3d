@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 14:00:30 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/05/19 17:11:39 by mcoskune         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:21:23 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,71 +57,11 @@ int	add_to_dptr(void ***dptr, void *to_add)
 	}
 	return (0);
 }
-/*
-// static void	copy_ptr(void **old_ptr, void **new_ptr, void *to_add)
-// {
-// 	int	i;
-
-// 	i = 0;
-// 	while ((old_ptr)[i] != NULL)
-// 	{
-// 		new_ptr[i] = (old_ptr)[i];
-// 		i++;
-// 	}
-// 	new_ptr[i] = to_add;
-// 	new_ptr[i + 1] = NULL;
-// 	free(*old_ptr);
-// 	old_ptr = new_ptr;
-// }
-
-// int	add_to_ptr(void **ptr, void *to_add)
-// {
-// 	void	*new_ptr;
-// 	t_plane	*temp;
-
-// 	new_ptr = NULL;
-// 	if (ptr == NULL || to_add == NULL)
-// 		return (1);
-// 	if (ptr == NULL)
-// 		(*ptr) = to_add;
-// 	else
-// 	{
-// 		temp = (t_plane *)to_add;
-// 		if (temp->type != AMBIENT)
-// 			free_matrix(temp->origin);
-// 		if (temp->type == CYLINDER || 
-// temp->type == PLANE || \
-// 		temp->type == CYLINDER 
-//|| temp->type == CAMERA || temp->type == SPHERE)
-// 			free_matrix(temp->v_orient);
-// 		free (*ptr);
-// 		*ptr = NULL;
-// 		copy_ptr(ptr, new_ptr, to_add);
-// 	}
-// 	return (0);
-// }
- */
 
 int	add_to_ptr(void **ptr, void *to_add)
 {
 	if (ptr == NULL || to_add == NULL)
 		return (1);
-	if (*ptr != NULL)
-	{
-		// if (((t_ambient *)*ptr)->type == AMBIENT)
-		// 	free(*ptr);
-		// else if (((t_camera *)*ptr)->type == CAMERA)
-		// {
-		// 	free_matrix(((t_camera *)*ptr)->origin);
-		// 	free_matrix(((t_camera *)*ptr)->v_orient);
-		// 	free(*ptr);
-		// }
-		// else if (((t_light *)*ptr)->type == LIGHT)
-		// {
-		// 	free_matrix(((t_light *)*ptr)->origin);
-		// 	free(*ptr);
-		// }
-	}
 	*ptr = to_add;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 12:45:51 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/06/03 15:44:18 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/06 16:21:59 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ void	free_dptr(void **dptr)
 	while (dptr[i] != NULL)
 	{
 		free(dptr[i]);
-		dptr[i] = NULL;  // This can be useful to prevent use-after-free bugs
+		dptr[i] = NULL;
 		i++;
 	}
-	free(dptr);	// Note: setting dptr = NULL has no effect since dptr is passed by value
+	free(dptr);
 }

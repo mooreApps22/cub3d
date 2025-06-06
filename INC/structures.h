@@ -6,7 +6,7 @@
 /*   By: mcoskune <mcoskune@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 15:40:00 by mcoskune          #+#    #+#             */
-/*   Updated: 2025/06/06 12:45:48 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/06 16:04:58 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # endif
 
 # ifndef MOVE_SPEED
-#  define MOVE_SPEED 60 
+#  define MOVE_SPEED 600
 # endif
 
 # ifndef TILE_SIZE
