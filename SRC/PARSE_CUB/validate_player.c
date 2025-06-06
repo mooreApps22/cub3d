@@ -6,7 +6,7 @@
 /*   By: smoore <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 17:32:32 by smoore            #+#    #+#             */
-/*   Updated: 2025/06/03 16:26:44 by smoore           ###   ########.fr       */
+/*   Updated: 2025/06/06 13:44:24 by smoore           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ bool	calculate_player_direction(t_player_info *info, int i, int j)
 	c = info->map->data[i][j];
 	ft_printf("Player char: %c\n", c);
 	if (c == 'N')
-		info->player->alpha = M_PI / 2;
-	else if (c == 'S')
 		info->player->alpha = -M_PI / 2;
+	else if (c == 'S')
+		info->player->alpha = M_PI / 2;
 	else if (c == 'E')
 		info->player->alpha = 0;
 	else if (c == 'W')
